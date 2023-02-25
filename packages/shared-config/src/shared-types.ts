@@ -3,6 +3,31 @@ import { Provider } from '@ethersproject/providers';
 import { ethers } from 'ethers';
 import { QueryObserverResult } from '@tanstack/react-query';
 
+export type Token = {
+  contract_decimals: number;
+  contract_name: string;
+  contract_ticker_symbol: string;
+  contract_address: string;
+  supports_erc: ['erc20' | 'erc721' | 'erc1155'];
+  logo_url: string;
+  last_transferred_at: string;
+  native_token: boolean;
+  type: 'cryptocurrency';
+  balance: string;
+  balance_24h: string;
+  quote_rate: number | null;
+  quote_rate_24h: number | null;
+  quote: number | null;
+  quote_24h: number | null;
+  nft_data?: {
+    token_id: string;
+    external_data?: {
+      image?: string;
+      name?: string;
+    };
+  }[];
+};
+
 export type _Awaited<T> = T extends Promise<infer R> ? Awaited<R> : T;
 
 export interface ContractFactory<T extends ContractInstance> {
