@@ -6,7 +6,6 @@ type Props = {
 };
 
 const TokenHoldings = ({ items }: Props) => {
-  console.log(items);
   return (
     <div>
       {items.map((item, i) => (

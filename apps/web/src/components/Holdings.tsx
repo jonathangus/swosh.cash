@@ -1,8 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { Token } from 'shared-config';
+import { ERC1155Token, ERC721Token, ERC721Token, Token } from 'shared-config';
 import { useAccount } from 'wagmi';
-import NFTHoldings from './NFTHoldings';
+import ERC1155Holdings from './ERC1155Holdings';
+import ERC721Holdings from './ERC721Holdings';
 import TokenHoldings from './TokenHoldings';
 
 type Props = {};
@@ -25,10 +26,12 @@ const Holdings = ({}: Props) => {
   );
 
   const items = holdingsQuery.data || [];
-  const nftItems = items
-    .filter(Boolean)
-    .filter((item) => item.supports_erc)
-    .filter((item) => item.supports_erc.includes('erc721'));
+  const ERC721Items = items.filter(
+    (item) => item.type === 'erc721'
+  ) as ERC721Token[];
+  const ERC1155Items = items.filter(
+    (item) => item.type === 'erc1155'
+  ) as ERC1155Token[];
 
   const tokenItems = items
     .filter(Boolean)
@@ -38,7 +41,9 @@ const Holdings = ({}: Props) => {
   return (
     <>
       {holdingsQuery.isLoading && <div>Loading..</div>}
-      <NFTHoldings items={nftItems} />
+      <ERC721Holdings items={ERC721Items} />
+      <ERC1155Holdings items={ERC1155Items} />
+
       <TokenHoldings items={tokenItems} />
     </>
   );

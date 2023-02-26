@@ -23,7 +23,8 @@
     "wagmi": "0.11.5",
     "wagmi-lfg": "*",
     "web3-config": "*",
-    "zod": "^3.20.6"
+    "zod": "^3.20.6",
+    "zustand": "^4.3.3"
   },
   "devDependencies": {
     "@types/node": "18.13.0",
