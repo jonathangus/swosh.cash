@@ -1,9 +1,7 @@
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
-import { expect, use } from 'chai';
 import { ContractFactory } from 'ethers';
 import { ethers } from 'hardhat';
 import { MockERC20, TransferCall } from 'web3-config';
-import { token } from 'web3-config/typechain/@openzeppelin/contracts';
 
 describe('Gas Comparison Tests', function () {
   /* Contracts & Mocks */
