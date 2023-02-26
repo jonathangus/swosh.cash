@@ -44,25 +44,6 @@ describe('Gas Comparison Tests', function () {
       .connect(deployer)
       .mint(user1.address, ethers.utils.parseEther('100'));
   });
-  describe('GAS ESTIMATE : normal ERC-20 token transfer', async () => {
-    it('transfer 5 distinct ERC-20 tokens', async () => {
-      await token0
-        .connect(user1)
-        .transfer(user2.address, ethers.utils.parseEther('10'));
-      await token0
-        .connect(user1)
-        .transfer(user3.address, ethers.utils.parseEther('10'));
-      await token0
-        .connect(user1)
-        .transfer(user4.address, ethers.utils.parseEther('10'));
-      await token0
-        .connect(user1)
-        .transfer(user5.address, ethers.utils.parseEther('10'));
-      await token0
-        .connect(user1)
-        .transfer(user6.address, ethers.utils.parseEther('10'));
-    });
-  });
 
   describe('GAS ESTIMATE : TransferCallGuys.xyz token transfer', async () => {
     it('approve & transfer 5 identical ERC-20 tokens', async () => {
@@ -117,6 +98,43 @@ describe('Gas Comparison Tests', function () {
       await TransferCall.connect(user3).multiTransferSingleAsset(
         token0.address,
         [cd1]
+      );
+    });
+    // it('single encode transfer ERC-20 tokens', async () => {
+    //   await token0
+    //     .connect(user1)
+    //     .approve(TransferCall.address, ethers.utils.parseEther('100'));
+
+    //   await TransferCall.connect(user1).singleEncodeTransfer(
+    //     token0.address,
+    //     user2.address,
+    //     ethers.utils.parseEther('10')
+    //   );
+    // });
+
+    it('single transfer ERC-20 tokens', async () => {
+      let cd1 = iface.encodeFunctionData('transferFrom', [
+        user1.address,
+        user2.address,
+        ethers.utils.parseEther('10'),
+      ]);
+
+      await token0
+        .connect(user1)
+        .approve(TransferCall.address, ethers.utils.parseEther('100'));
+
+      await TransferCall.connect(user3).singleTransfer(token0.address, cd1);
+    });
+
+    it('single interface transfer ERC-20 tokens', async () => {
+      await token0
+        .connect(user1)
+        .approve(TransferCall.address, ethers.utils.parseEther('100'));
+
+      await TransferCall.connect(user1).singleInterfaceTransfer(
+        token0.address,
+        user2.address,
+        ethers.utils.parseEther('10')
       );
     });
   });
