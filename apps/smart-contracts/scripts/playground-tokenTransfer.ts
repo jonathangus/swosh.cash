@@ -1,5 +1,4 @@
 import { ethers } from 'hardhat';
-import { token } from 'web3-config/typechain/@openzeppelin/contracts';
 
 async function main() {
   /////////////////////////////////////////////////////////////////////////////
@@ -17,6 +16,11 @@ async function main() {
 
   const mockERC20Factory = await ethers.getContractFactory(
     'MockERC20',
+    deployer
+  );
+
+  const mockERC721Factory = await ethers.getContractFactory(
+    'MockERC721',
     deployer
   );
 
@@ -39,6 +43,19 @@ async function main() {
   const token5 = await mockERC20Factory.deploy();
   await token5.deployed();
 
+  // Deploy MockERC721 contracts
+  const nft0 = await mockERC721Factory.deploy();
+  await nft0.deployed();
+
+  const nft1 = await mockERC721Factory.deploy();
+  await nft1.deployed();
+
+  const nft2 = await mockERC721Factory.deploy();
+  await nft2.deployed();
+
+  const nft3 = await mockERC721Factory.deploy();
+  await nft3.deployed();
+
   // Deploy TokenTransfer contract
   const tokenTransfer = await tokenTransferFactory.deploy();
   await tokenTransfer.deployed();
@@ -52,6 +69,18 @@ async function main() {
   await token2
     .connect(deployer)
     .mint(user1.address, ethers.utils.parseEther('10000'));
+
+  await nft0.connect(deployer).mint(user1.address);
+  await nft0.connect(deployer).mint(user1.address);
+  await nft0.connect(deployer).mint(user1.address);
+  await nft0.connect(deployer).mint(user1.address);
+  await nft0.connect(deployer).mint(user1.address);
+  await nft0.connect(deployer).mint(user1.address);
+  await nft0.connect(deployer).mint(user1.address);
+  await nft0.connect(deployer).mint(user1.address);
+  await nft1.connect(deployer).mint(user1.address);
+  await nft2.connect(deployer).mint(user1.address);
+  await nft3.connect(deployer).mint(user1.address);
 
   /////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////
@@ -157,6 +186,62 @@ async function main() {
   console.log('');
   console.log('           regular  : ', +totalRawTx);
   console.log('           sned dif : ', +totalCost2 - +totalRawTx);
+  console.log('');
+
+  let tokenIds = [0, 1, 2, 3];
+
+  approveTx = await nft0
+    .connect(user1)
+    .setApprovalForAll(tokenTransfer.address, true);
+
+  approveReceipt = await approveTx.wait();
+
+  batchTx = await tokenTransfer
+    .connect(user1)
+    .multi721Transfer(nft0.address, user2.address, tokenIds);
+
+  batchReceipt = await batchTx.wait();
+
+  totalCost = approveReceipt.gasUsed.add(batchReceipt.gasUsed);
+
+  rawTx1 = await nft0
+    .connect(user1)
+    .transferFrom(user1.address, user2.address, 4);
+  rawTx1Receipt = await rawTx1.wait();
+
+  rawTx2 = await nft0
+    .connect(user1)
+    .transferFrom(user1.address, user2.address, 5);
+  rawTx2Receipt = await rawTx2.wait();
+
+  rawTx3 = await nft0
+    .connect(user1)
+    .transferFrom(user1.address, user2.address, 6);
+  rawTx3Receipt = await rawTx3.wait();
+
+  let rawTx4 = await nft0
+    .connect(user1)
+    .transferFrom(user1.address, user2.address, 7);
+  let rawTx4Receipt = await rawTx4.wait();
+
+  totalRawTx = rawTx1Receipt.gasUsed
+    .add(rawTx2Receipt.gasUsed)
+    .add(rawTx3Receipt.gasUsed)
+    .add(rawTx4Receipt.gasUsed);
+
+  console.log('');
+  console.log(
+    'MULTI NFT TRANSFER : transfer 4 token IDs from 1 collection to 1 user'
+  );
+  console.log('');
+  console.log('       GAS USAGE STATS :');
+  console.log('');
+  console.log('           setApprovalForAll : ', +approveReceipt.gasUsed);
+  console.log('           batch             : ', +batchReceipt.gasUsed);
+  console.log('           total             : ', +totalCost);
+  console.log('');
+  console.log('           regular           : ', +totalRawTx);
+  console.log('           sned dif          : ', +totalCost - +totalRawTx);
   console.log('');
 }
 
