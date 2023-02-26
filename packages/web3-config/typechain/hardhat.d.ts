@@ -69,6 +69,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.MockERC20__factory>;
     getContractFactory(
+      name: "TokenTransfer",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.TokenTransfer__factory>;
+    getContractFactory(
       name: "TransferCall",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.TransferCall__factory>;
@@ -143,6 +147,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.MockERC20>;
+    getContractAt(
+      name: "TokenTransfer",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.TokenTransfer>;
     getContractAt(
       name: "TransferCall",
       address: string,

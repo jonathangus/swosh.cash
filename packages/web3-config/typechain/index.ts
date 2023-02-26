@@ -34,5 +34,7 @@ export type { IERC165 } from "./@openzeppelin/contracts/utils/introspection/IERC
 export { IERC165__factory } from "./factories/@openzeppelin/contracts/utils/introspection/IERC165__factory";
 export type { MockERC20 } from "./contracts/mock/MockERC20";
 export { MockERC20__factory } from "./factories/contracts/mock/MockERC20__factory";
+export type { TokenTransfer } from "./contracts/TokenTransfer";
+export { TokenTransfer__factory } from "./factories/contracts/TokenTransfer__factory";
 export type { TransferCall } from "./contracts/TransferCall";
 export { TransferCall__factory } from "./factories/contracts/TransferCall__factory";

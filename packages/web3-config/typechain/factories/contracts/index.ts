@@ -2,4 +2,5 @@
 /* tslint:disable */
 /* eslint-disable */
 export * as mock from "./mock";
+export { TokenTransfer__factory } from "./TokenTransfer__factory";
 export { TransferCall__factory } from "./TransferCall__factory";

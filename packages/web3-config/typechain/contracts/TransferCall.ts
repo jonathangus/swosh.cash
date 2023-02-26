@@ -4,6 +4,7 @@
 import type {
   BaseContract,
   BigNumber,
+  BigNumberish,
   BytesLike,
   CallOverrides,
   ContractTransaction,
@@ -26,6 +27,8 @@ export interface TransferCallInterface extends utils.Interface {
   functions: {
     "multiTransfer(address[],bytes[])": FunctionFragment;
     "multiTransferSingleAsset(address,bytes[])": FunctionFragment;
+    "singleEncodeTransfer(address,address,uint256)": FunctionFragment;
+    "singleTransfer(address,bytes)": FunctionFragment;
   };
 
   getFunction(
@@ -34,6 +37,10 @@ export interface TransferCallInterface extends utils.Interface {
       | "multiTransfer(address[],bytes[])"
       | "multiTransferSingleAsset"
       | "multiTransferSingleAsset(address,bytes[])"
+      | "singleEncodeTransfer"
+      | "singleEncodeTransfer(address,address,uint256)"
+      | "singleTransfer"
+      | "singleTransfer(address,bytes)"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -52,6 +59,30 @@ export interface TransferCallInterface extends utils.Interface {
     functionFragment: "multiTransferSingleAsset(address,bytes[])",
     values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>[]]
   ): string;
+  encodeFunctionData(
+    functionFragment: "singleEncodeTransfer",
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "singleEncodeTransfer(address,address,uint256)",
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "singleTransfer",
+    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "singleTransfer(address,bytes)",
+    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>]
+  ): string;
 
   decodeFunctionResult(
     functionFragment: "multiTransfer",
@@ -67,6 +98,22 @@ export interface TransferCallInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "multiTransferSingleAsset(address,bytes[])",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "singleEncodeTransfer",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "singleEncodeTransfer(address,address,uint256)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "singleTransfer",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "singleTransfer(address,bytes)",
     data: BytesLike
   ): Result;
 
@@ -123,6 +170,32 @@ export interface TransferCall extends BaseContract {
       _data: PromiseOrValue<BytesLike>[],
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
+
+    singleEncodeTransfer(
+      _token: PromiseOrValue<string>,
+      _receiver: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "singleEncodeTransfer(address,address,uint256)"(
+      _token: PromiseOrValue<string>,
+      _receiver: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    singleTransfer(
+      _token: PromiseOrValue<string>,
+      _data: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "singleTransfer(address,bytes)"(
+      _token: PromiseOrValue<string>,
+      _data: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
   };
 
   multiTransfer(
@@ -149,6 +222,32 @@ export interface TransferCall extends BaseContract {
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  singleEncodeTransfer(
+    _token: PromiseOrValue<string>,
+    _receiver: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "singleEncodeTransfer(address,address,uint256)"(
+    _token: PromiseOrValue<string>,
+    _receiver: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  singleTransfer(
+    _token: PromiseOrValue<string>,
+    _data: PromiseOrValue<BytesLike>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "singleTransfer(address,bytes)"(
+    _token: PromiseOrValue<string>,
+    _data: PromiseOrValue<BytesLike>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   callStatic: {
     multiTransfer(
       _tokens: PromiseOrValue<string>[],
@@ -171,6 +270,32 @@ export interface TransferCall extends BaseContract {
     "multiTransferSingleAsset(address,bytes[])"(
       _token: PromiseOrValue<string>,
       _data: PromiseOrValue<BytesLike>[],
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    singleEncodeTransfer(
+      _token: PromiseOrValue<string>,
+      _receiver: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "singleEncodeTransfer(address,address,uint256)"(
+      _token: PromiseOrValue<string>,
+      _receiver: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    singleTransfer(
+      _token: PromiseOrValue<string>,
+      _data: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "singleTransfer(address,bytes)"(
+      _token: PromiseOrValue<string>,
+      _data: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -201,6 +326,32 @@ export interface TransferCall extends BaseContract {
       _data: PromiseOrValue<BytesLike>[],
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
+
+    singleEncodeTransfer(
+      _token: PromiseOrValue<string>,
+      _receiver: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "singleEncodeTransfer(address,address,uint256)"(
+      _token: PromiseOrValue<string>,
+      _receiver: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    singleTransfer(
+      _token: PromiseOrValue<string>,
+      _data: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "singleTransfer(address,bytes)"(
+      _token: PromiseOrValue<string>,
+      _data: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -225,6 +376,32 @@ export interface TransferCall extends BaseContract {
     "multiTransferSingleAsset(address,bytes[])"(
       _token: PromiseOrValue<string>,
       _data: PromiseOrValue<BytesLike>[],
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    singleEncodeTransfer(
+      _token: PromiseOrValue<string>,
+      _receiver: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "singleEncodeTransfer(address,address,uint256)"(
+      _token: PromiseOrValue<string>,
+      _receiver: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    singleTransfer(
+      _token: PromiseOrValue<string>,
+      _data: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "singleTransfer(address,bytes)"(
+      _token: PromiseOrValue<string>,
+      _data: PromiseOrValue<BytesLike>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };

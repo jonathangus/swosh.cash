@@ -3,4 +3,5 @@
 /* eslint-disable */
 import type * as mock from "./mock";
 export type { mock };
+export type { TokenTransfer } from "./TokenTransfer";
 export type { TransferCall } from "./TransferCall";
