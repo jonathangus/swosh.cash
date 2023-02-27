@@ -189,7 +189,7 @@ const handler: NextApiHandler = async (req, res) => {
     // const itemz = await applyIPFSResolver(mock as any, chainId);
 
     // const mockItems = mock.filter((item) => Number(item.balance) > 0);
-    return res.status(200).send(mock);
+    // return res.status(200).send(mock);
 
     const url = `https://api.covalenthq.com/v1/${chainId}/address/${address}/balances_v2/?key=${process.env.COVALENT_API_KEY}&nft=${nft}&no-nft-fetch=${fetchNft}`;
     const { data } = await axios.get(url);
