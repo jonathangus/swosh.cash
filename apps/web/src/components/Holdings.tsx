@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { ERC1155Token, ERC721Token, ERC721Token, Token } from 'shared-config';
+import { ERC1155Token, ERC721Token, ERC20Token, Token } from 'shared-config';
 import { useAccount } from 'wagmi';
 import ERC1155Holdings from './ERC1155Holdings';
 import ERC721Holdings from './ERC721Holdings';
@@ -17,11 +17,11 @@ const Holdings = ({}: Props) => {
       const { data } = await axios.get(
         `/api/get-holdings?address=${address}&chainId=${chainId}`
       );
-
       return data;
     },
     {
       enabled: Boolean(address),
+      refetchOnMount: true,
     }
   );
 
@@ -33,18 +33,16 @@ const Holdings = ({}: Props) => {
     (item) => item.type === 'erc1155'
   ) as ERC1155Token[];
 
-  const tokenItems = items
-    .filter(Boolean)
-    .filter((item) => item.supports_erc?.length === 1)
-    .filter((item) => item.supports_erc.includes('erc20'));
+  const ERC20Items = items.filter(
+    (item) => item.type === 'erc20'
+  ) as ERC20Token[];
 
   return (
     <>
       {holdingsQuery.isLoading && <div>Loading..</div>}
       <ERC721Holdings items={ERC721Items} />
       <ERC1155Holdings items={ERC1155Items} />
-
-      <TokenHoldings items={tokenItems} />
+      <TokenHoldings items={ERC20Items} />
     </>
   );
 };

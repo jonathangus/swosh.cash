@@ -4,6 +4,8 @@ import Web3Provider from '../components/Web3Provider';
 import { NotificationsProvider } from 'reapop';
 import NotificationHandler from '../components/NotificationHandler';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import '../styles/main.css';
+import PageLayout from '../components/PageLayout';
 
 const queryClient = new QueryClient();
 
@@ -12,7 +14,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <NotificationsProvider>
         <Web3Provider>
-          <Component {...pageProps} />
+          <PageLayout>
+            <Component {...pageProps} />
+          </PageLayout>
           <NotificationHandler />
         </Web3Provider>
       </NotificationsProvider>

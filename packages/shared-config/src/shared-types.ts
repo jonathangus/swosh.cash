@@ -13,7 +13,7 @@ export type TokenBase = {
   last_transferred_at: string;
 };
 
-export type ExtxernalNftData = {
+export type ExternalNftData = {
   image?: string;
   name?: string;
 };
@@ -21,14 +21,16 @@ export type ExtxernalNftData = {
 export type ERC721Token = TokenBase & {
   type: 'erc721';
   token_id: string;
-  external_data: ExtxernalNftData;
+  external_data: ExternalNftData;
+  tokenURI?: string;
 };
 
 export type ERC1155Token = TokenBase & {
   type: 'erc1155';
   token_id: string;
-  external_data: ExtxernalNftData;
+  external_data: ExternalNftData;
   balance: number;
+  tokenURI?: string;
 };
 
 export type ERC20Token = TokenBase & {
@@ -37,6 +39,7 @@ export type ERC20Token = TokenBase & {
   quote_rate: number;
   quote: number;
   logo_url: string;
+  contract_decimals: number;
 };
 
 export type RawTokenResult = {

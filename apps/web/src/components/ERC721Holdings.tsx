@@ -1,5 +1,6 @@
 import { ERC721Token, Token } from 'shared-config';
 import { useSelectionStore } from '../stores/useSelectionStore';
+import NFTDisplay from './NFTDisplay';
 
 type Props = {
   items: ERC721Token[];
@@ -17,25 +18,13 @@ const ERC721Holdings = ({ items }: Props) => {
   return (
     <div>
       <h1>ERC 721</h1>
-
-      {mapedItems.map((item, i) => (
-        <div key={i}>
-          <h3>{item.contract_name}</h3>
-          <div>{item.contract_address}</div>
-          <input
-            type="checkbox"
-            value={item.isSelected ? 'checked' : 'unchecked'}
-            onChange={() =>
-              item.isSelected ? removeSelected(item) : setSelected(item)
-            }
-          />
-          <div>tokenId: {item.token_id}</div>
-          {item.external_data?.image && (
-            <img style={{ maxWidth: 200 }} src={item.external_data?.image} />
-          )}
-          {item.external_data?.name && <h3>{item.external_data.name}</h3>}
-        </div>
-      ))}
+      <div className="grid grid-rows-1 gap-10	">
+        {mapedItems.map((item, i) => (
+          <div key={i}>
+            <NFTDisplay nft={item} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

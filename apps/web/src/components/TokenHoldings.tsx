@@ -1,27 +1,42 @@
 import { ethers } from 'ethers';
-import { Token } from 'shared-config';
+import { ERC20Token } from 'shared-config';
+import { formatBigNumber, formatNumber } from '../utils/formatter';
+import TokenImage from './TokenImage';
+import TokenRow from './TokenRow';
 
 type Props = {
-  items: Token[];
+  items: ERC20Token[];
 };
 
 const TokenHoldings = ({ items }: Props) => {
   return (
     <div>
-      {items.map((item, i) => (
-        <div key={i}>
-          <h3>{item.contract_name}</h3>
-          <div>{item.contract_address}</div>
-          <div>
-            <img src={item.logo_url} />
+      <div className="grid grid-rows-1 gap-10	">
+        {items.map((item, i) => (
+          <div key={i}>
+            <TokenRow
+              image={
+                <TokenImage
+                  logoUrl={item.logo_url}
+                  contractAddress={item.contract_address}
+                />
+              }
+              title={item.contract_name || item.contract_address}
+              subText={item.contract_ticker_symbol}
+              footer={
+                <div>
+                  {formatBigNumber(item.balance, {
+                    decimals: item.contract_decimals,
+                    maxDecimals: 2,
+                  })}
+                  {item.contract_ticker_symbol} ($
+                  {formatNumber(item.quote, { maxDecimals: 2 })})
+                </div>
+              }
+            />
           </div>
-          <div>
-            Balance:{' '}
-            {ethers.utils.formatUnits(item.balance, item.contract_decimals)}{' '}
-            {item.contract_ticker_symbol}(${item.quote})
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };

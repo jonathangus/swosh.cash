@@ -4,9 +4,7 @@ import { useFeeData, useProvider, useSigner } from 'wagmi';
 import { useSelectionStore } from '../stores/useSelectionStore';
 import { useAccount } from 'wagmi';
 
-type Props = {};
-
-const Recap = ({}: Props) => {
+const Recap = () => {
   const selected = useSelectionStore((state) => state.selected);
   const { address } = useAccount();
   //   const address = '0xcd0dee491644db2d62bc7852fe7dea54e85a777c';
@@ -18,7 +16,6 @@ const Recap = ({}: Props) => {
   const receiver = '0xf3476b36fc9942083049c04e9404516703369ef3';
 
   const refresh = async () => {
-    console.log('refresh');
     setTotalGas(BigNumber.from(0));
     const promises = selected.map(async (item) => {
       const nftContract = new Contract(
@@ -30,7 +27,8 @@ const Recap = ({}: Props) => {
         signer
       );
 
-      const tokenid = item.nft_data && item.nft_data[0].token_id;
+      // @ts-ignore
+      const tokenid = item.token_id;
       const data = await nftContract.populateTransaction.transferFrom(
         address,
         receiver,
@@ -60,7 +58,6 @@ const Recap = ({}: Props) => {
     refresh();
   }, [selected.length]);
 
-  console.log('::::', feeInWei);
   return (
     <>
       <div>Selected: {selected.length}</div>
