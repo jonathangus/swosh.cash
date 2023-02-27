@@ -60,16 +60,22 @@ async function main() {
   const tokenTransfer = await tokenTransferFactory.deploy();
   await tokenTransfer.deployed();
 
+  // Mint 10k TOKEN_0 to User1
   await token0
     .connect(deployer)
     .mint(user1.address, ethers.utils.parseEther('10000'));
+
+  // Mint 10k TOKEN_1 to User1
   await token1
     .connect(deployer)
     .mint(user1.address, ethers.utils.parseEther('10000'));
+
+  // Mint 10k TOKEN_2 to User1
   await token2
     .connect(deployer)
     .mint(user1.address, ethers.utils.parseEther('10000'));
 
+  // Mint 8 NFT_0 to User 1
   await nft0.connect(deployer).mint(user1.address);
   await nft0.connect(deployer).mint(user1.address);
   await nft0.connect(deployer).mint(user1.address);
@@ -78,8 +84,25 @@ async function main() {
   await nft0.connect(deployer).mint(user1.address);
   await nft0.connect(deployer).mint(user1.address);
   await nft0.connect(deployer).mint(user1.address);
+
+  // Mint 4 NFT_1 to User 1
   await nft1.connect(deployer).mint(user1.address);
+  await nft1.connect(deployer).mint(user1.address);
+  await nft1.connect(deployer).mint(user1.address);
+  await nft1.connect(deployer).mint(user1.address);
+
+  // Mint 6 NFT_2 to User 1
   await nft2.connect(deployer).mint(user1.address);
+  await nft2.connect(deployer).mint(user1.address);
+  await nft2.connect(deployer).mint(user1.address);
+  await nft2.connect(deployer).mint(user1.address);
+  await nft2.connect(deployer).mint(user1.address);
+  await nft2.connect(deployer).mint(user1.address);
+
+  // Mint 4 NFT_3 to User 1
+  await nft3.connect(deployer).mint(user1.address);
+  await nft3.connect(deployer).mint(user1.address);
+  await nft3.connect(deployer).mint(user1.address);
   await nft3.connect(deployer).mint(user1.address);
 
   /////////////////////////////////////////////////////////////////////////////
@@ -131,6 +154,10 @@ async function main() {
   console.log('');
   console.log('           regular  : ', +totalRawTx);
   console.log('           sned dif : ', +totalCost - +totalRawTx);
+
+  /////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////
 
   let approveT0Tx = await token0
     .connect(user1)
@@ -188,6 +215,10 @@ async function main() {
   console.log('           sned dif : ', +totalCost2 - +totalRawTx);
   console.log('');
 
+  /////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////
+
   let tokenIds = [0, 1, 2, 3];
 
   approveTx = await nft0
@@ -237,6 +268,81 @@ async function main() {
   console.log('       GAS USAGE STATS :');
   console.log('');
   console.log('           setApprovalForAll : ', +approveReceipt.gasUsed);
+  console.log('           batch             : ', +batchReceipt.gasUsed);
+  console.log('           total             : ', +totalCost);
+  console.log('');
+  console.log('           regular           : ', +totalRawTx);
+  console.log('           sned dif          : ', +totalCost - +totalRawTx);
+  console.log('');
+
+  /////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////
+
+  let approveTx1 = await nft1
+    .connect(user1)
+    .setApprovalForAll(tokenTransfer.address, true);
+  let approveReceipt1 = await approveTx1.wait();
+
+  let approveTx2 = await nft2
+    .connect(user1)
+    .setApprovalForAll(tokenTransfer.address, true);
+  approveReceipt2 = await approveTx2.wait();
+
+  batchTx = await tokenTransfer
+    .connect(user1)
+    .multiCollection721Transfer(
+      [nft1.address, nft2.address],
+      user2.address,
+      [0, 1, 0, 1, 2],
+      [2, 3]
+    );
+
+  batchReceipt = await batchTx.wait();
+
+  let totalApproveCost = approveReceipt1.gasUsed.add(approveReceipt2.gasUsed);
+
+  totalCost = totalApproveCost.add(batchReceipt.gasUsed);
+
+  rawTx1 = await nft1
+    .connect(user1)
+    .transferFrom(user1.address, user2.address, 2);
+  rawTx1Receipt = await rawTx1.wait();
+
+  rawTx2 = await nft1
+    .connect(user1)
+    .transferFrom(user1.address, user2.address, 3);
+  rawTx2Receipt = await rawTx2.wait();
+
+  rawTx3 = await nft2
+    .connect(user1)
+    .transferFrom(user1.address, user2.address, 3);
+  rawTx3Receipt = await rawTx3.wait();
+
+  rawTx4 = await nft2
+    .connect(user1)
+    .transferFrom(user1.address, user2.address, 4);
+  rawTx4Receipt = await rawTx4.wait();
+
+  let rawTx5 = await nft2
+    .connect(user1)
+    .transferFrom(user1.address, user2.address, 5);
+  let rawTx5Receipt = await rawTx5.wait();
+
+  totalRawTx = rawTx1Receipt.gasUsed
+    .add(rawTx2Receipt.gasUsed)
+    .add(rawTx3Receipt.gasUsed)
+    .add(rawTx4Receipt.gasUsed)
+    .add(rawTx5Receipt.gasUsed);
+
+  console.log('');
+  console.log(
+    'MULTI NFT COLLECTION TRANSFER : transfer 2 token IDs of NFT_0 and 3 token IDs of NFT_1 to 1 user'
+  );
+  console.log('');
+  console.log('       GAS USAGE STATS :');
+  console.log('');
+  console.log('           setApprovalForAll : ', +totalApproveCost);
   console.log('           batch             : ', +batchReceipt.gasUsed);
   console.log('           total             : ', +totalCost);
   console.log('');
