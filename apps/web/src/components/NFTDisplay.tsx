@@ -3,6 +3,8 @@ import { ERC1155Token, ERC721Token, ExternalNftData } from 'shared-config';
 import { getMetadataFromTokenURI } from '../utils/ipfs';
 import Artwork from './Artwork';
 import TokenRow from './TokenRow';
+import Selection from './Selection';
+import { useSelectionStore } from '../stores/useSelectionStore';
 
 type Props = {
   nft: ERC721Token | ERC1155Token;
@@ -29,15 +31,27 @@ const NFTDisplay = ({ nft }: Props) => {
     }
   );
 
+  const isSelected = useSelectionStore((state) =>
+    state.selected.some((selectedItem) => selectedItem.id === nft.id)
+  );
+  const setSelected = useSelectionStore((state) => state.setSelected);
+  const removeSelected = useSelectionStore((state) => state.removeSelected);
+
   return (
     <TokenRow
       title={
         metadata?.name || nft.contract_ticker_symbol || nft.contract_address
       }
-      subText={nft.contract_name}
+      subText={nft.contract_name || `#${nft.token_id}`}
       image={
         <Artwork image={metadata?.image} fallback={!Boolean(metadata?.image)} />
       }
+      onSelect={() => {
+        isSelected ? removeSelected(nft) : setSelected(nft);
+      }}
+      isSelected={isSelected}
+      selection={<Selection />}
+      footer={nft.type === 'erc1155' ? <div>{nft.balance}</div> : null}
     />
   );
 };

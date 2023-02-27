@@ -36,6 +36,7 @@ module.exports = {
         white: '#FFF',
         gray: {
           400: '#9C9C9C',
+          700: '#1A1A1A',
         },
       },
       keyframes: {
