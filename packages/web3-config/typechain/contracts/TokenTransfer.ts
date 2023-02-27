@@ -26,6 +26,7 @@ import type {
 export interface TokenTransferInterface extends utils.Interface {
   functions: {
     "multi721Transfer(address,address,uint256[])": FunctionFragment;
+    "multiCollection721Transfer(address[],address,uint256[],uint256[])": FunctionFragment;
     "multiRecipientTransfer(address,address[],uint256[])": FunctionFragment;
     "multiTokenTransfer(address[],address,uint256[])": FunctionFragment;
   };
@@ -34,6 +35,8 @@ export interface TokenTransferInterface extends utils.Interface {
     nameOrSignatureOrTopic:
       | "multi721Transfer"
       | "multi721Transfer(address,address,uint256[])"
+      | "multiCollection721Transfer"
+      | "multiCollection721Transfer(address[],address,uint256[],uint256[])"
       | "multiRecipientTransfer"
       | "multiRecipientTransfer(address,address[],uint256[])"
       | "multiTokenTransfer"
@@ -53,6 +56,24 @@ export interface TokenTransferInterface extends utils.Interface {
     values: [
       PromiseOrValue<string>,
       PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>[]
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "multiCollection721Transfer",
+    values: [
+      PromiseOrValue<string>[],
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<BigNumberish>[]
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "multiCollection721Transfer(address[],address,uint256[],uint256[])",
+    values: [
+      PromiseOrValue<string>[],
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>[],
       PromiseOrValue<BigNumberish>[]
     ]
   ): string;
@@ -95,6 +116,14 @@ export interface TokenTransferInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "multi721Transfer(address,address,uint256[])",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "multiCollection721Transfer",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "multiCollection721Transfer(address[],address,uint256[],uint256[])",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -158,6 +187,22 @@ export interface TokenTransfer extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    multiCollection721Transfer(
+      _tokens: PromiseOrValue<string>[],
+      _receiver: PromiseOrValue<string>,
+      _tokenIds: PromiseOrValue<BigNumberish>[],
+      _offset: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "multiCollection721Transfer(address[],address,uint256[],uint256[])"(
+      _tokens: PromiseOrValue<string>[],
+      _receiver: PromiseOrValue<string>,
+      _tokenIds: PromiseOrValue<BigNumberish>[],
+      _offset: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     multiRecipientTransfer(
       _token: PromiseOrValue<string>,
       _receivers: PromiseOrValue<string>[],
@@ -201,6 +246,22 @@ export interface TokenTransfer extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  multiCollection721Transfer(
+    _tokens: PromiseOrValue<string>[],
+    _receiver: PromiseOrValue<string>,
+    _tokenIds: PromiseOrValue<BigNumberish>[],
+    _offset: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "multiCollection721Transfer(address[],address,uint256[],uint256[])"(
+    _tokens: PromiseOrValue<string>[],
+    _receiver: PromiseOrValue<string>,
+    _tokenIds: PromiseOrValue<BigNumberish>[],
+    _offset: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   multiRecipientTransfer(
     _token: PromiseOrValue<string>,
     _receivers: PromiseOrValue<string>[],
@@ -241,6 +302,22 @@ export interface TokenTransfer extends BaseContract {
       _token: PromiseOrValue<string>,
       _receiver: PromiseOrValue<string>,
       _tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    multiCollection721Transfer(
+      _tokens: PromiseOrValue<string>[],
+      _receiver: PromiseOrValue<string>,
+      _tokenIds: PromiseOrValue<BigNumberish>[],
+      _offset: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "multiCollection721Transfer(address[],address,uint256[],uint256[])"(
+      _tokens: PromiseOrValue<string>[],
+      _receiver: PromiseOrValue<string>,
+      _tokenIds: PromiseOrValue<BigNumberish>[],
+      _offset: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -290,6 +367,22 @@ export interface TokenTransfer extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    multiCollection721Transfer(
+      _tokens: PromiseOrValue<string>[],
+      _receiver: PromiseOrValue<string>,
+      _tokenIds: PromiseOrValue<BigNumberish>[],
+      _offset: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "multiCollection721Transfer(address[],address,uint256[],uint256[])"(
+      _tokens: PromiseOrValue<string>[],
+      _receiver: PromiseOrValue<string>,
+      _tokenIds: PromiseOrValue<BigNumberish>[],
+      _offset: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     multiRecipientTransfer(
       _token: PromiseOrValue<string>,
       _receivers: PromiseOrValue<string>[],
@@ -331,6 +424,22 @@ export interface TokenTransfer extends BaseContract {
       _token: PromiseOrValue<string>,
       _receiver: PromiseOrValue<string>,
       _tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    multiCollection721Transfer(
+      _tokens: PromiseOrValue<string>[],
+      _receiver: PromiseOrValue<string>,
+      _tokenIds: PromiseOrValue<BigNumberish>[],
+      _offset: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "multiCollection721Transfer(address[],address,uint256[],uint256[])"(
+      _tokens: PromiseOrValue<string>[],
+      _receiver: PromiseOrValue<string>,
+      _tokenIds: PromiseOrValue<BigNumberish>[],
+      _offset: PromiseOrValue<BigNumberish>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

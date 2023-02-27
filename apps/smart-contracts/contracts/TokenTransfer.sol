@@ -7,6 +7,28 @@ import {IERC721} from '@openzeppelin/contracts/token/ERC721/IERC721.sol';
 error INVALID_PARAM();
 
 contract TokenTransfer {
+    function multiCollection721Transfer(
+        address[] calldata _tokens,
+        address _receiver,
+        uint256[] calldata _tokenIds,
+        uint256[] calldata _offset
+    ) external {
+        if (_tokens.length != _offset.length) revert INVALID_PARAM();
+
+        uint256 offset = 0;
+
+        for (uint256 i = 0; i < _tokens.length; ++i) {
+            for (uint256 j = 0; j < _offset[i]; ++j) {
+                IERC721(_tokens[i]).transferFrom(
+                    msg.sender,
+                    _receiver,
+                    _tokenIds[j + offset]
+                );
+            }
+            offset += _offset[i];
+        }
+    }
+
     function multi721Transfer(
         address _token,
         address _receiver,
