@@ -5,10 +5,9 @@ import { useAccount } from 'wagmi';
 import ERC1155Holdings from './ERC1155Holdings';
 import ERC721Holdings from './ERC721Holdings';
 import TokenHoldings from './TokenHoldings';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/Tabs';
 
-type Props = {};
-
-const Holdings = ({}: Props) => {
+const Holdings = () => {
   const { address } = useAccount();
   const chainId = 1;
   const holdingsQuery = useQuery<Token[]>(
@@ -39,10 +38,26 @@ const Holdings = ({}: Props) => {
 
   return (
     <>
+      <Tabs defaultValue="erc20" className="mt-12">
+        <TabsList>
+          <TabsTrigger value="erc20">ERC20</TabsTrigger>
+          <TabsTrigger value="erc721">ERC721</TabsTrigger>{' '}
+          <TabsTrigger value="erc1155">ERC1155</TabsTrigger>
+        </TabsList>
+        <TabsContent value="erc20">
+          <TokenHoldings items={ERC20Items} />
+        </TabsContent>
+
+        <TabsContent value="erc721">
+          <ERC721Holdings items={ERC721Items} />
+        </TabsContent>
+
+        <TabsContent value="erc1155">
+          <ERC1155Holdings items={ERC1155Items} />
+        </TabsContent>
+      </Tabs>
+
       {holdingsQuery.isLoading && <div>Loading..</div>}
-      <ERC721Holdings items={ERC721Items} />
-      <ERC1155Holdings items={ERC1155Items} />
-      <TokenHoldings items={ERC20Items} />
     </>
   );
 };

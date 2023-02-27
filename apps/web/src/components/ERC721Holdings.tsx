@@ -17,7 +17,6 @@ const ERC721Holdings = ({ items }: Props) => {
 
   return (
     <div>
-      <h1>ERC 721</h1>
       <div className="grid grid-rows-1 gap-10	">
         {mapedItems.map((item, i) => (
           <div key={i}>

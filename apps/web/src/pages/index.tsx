@@ -7,7 +7,6 @@ const Page = () => {
     <div style={{ display: 'grid', gap: 20 }}>
       <div>
         <ConnectButton />
-        <Recap />
         <Holdings />
       </div>
     </div>

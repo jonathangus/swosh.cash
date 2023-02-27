@@ -8,7 +8,6 @@ type Props = {
 const ERC1155Holdings = ({ items }: Props) => {
   return (
     <div>
-      <h1>ERC 1155</h1>
       <div className="grid grid-rows-1 gap-10	">
         {items.map((item, i) => (
           <div key={i}>
