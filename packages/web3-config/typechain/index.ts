@@ -50,6 +50,8 @@ export type { ERC165 } from "./@openzeppelin/contracts/utils/introspection/ERC16
 export { ERC165__factory } from "./factories/@openzeppelin/contracts/utils/introspection/ERC165__factory";
 export type { IERC165 } from "./@openzeppelin/contracts/utils/introspection/IERC165";
 export { IERC165__factory } from "./factories/@openzeppelin/contracts/utils/introspection/IERC165__factory";
+export type { DataDecode } from "./contracts/DataDecode";
+export { DataDecode__factory } from "./factories/contracts/DataDecode__factory";
 export type { MockERC20 } from "./contracts/mock/MockERC20";
 export { MockERC20__factory } from "./factories/contracts/mock/MockERC20__factory";
 export type { MockERC721 } from "./contracts/mock/MockERC721";

@@ -101,6 +101,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IERC165__factory>;
     getContractFactory(
+      name: "DataDecode",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.DataDecode__factory>;
+    getContractFactory(
       name: "MockERC20",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.MockERC20__factory>;
@@ -227,6 +231,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.IERC165>;
+    getContractAt(
+      name: "DataDecode",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.DataDecode>;
     getContractAt(
       name: "MockERC20",
       address: string,
