@@ -9,6 +9,10 @@ type Props = {
   onRemove?: () => void;
   decimals?: number;
   onChange: (data: { receiver: string; amount: BigNumber }) => void;
+  initialState?: {
+    receiver: string;
+    amount: string;
+  };
 };
 
 const SelectionRow = ({
@@ -17,11 +21,10 @@ const SelectionRow = ({
   onRemove,
   onChange,
   decimals,
+  initialState,
 }: Props) => {
-  const [value, setValue] = useState('');
-  const [amount, setAmount] = useState<string | number>(
-    type === 'erc20' ? 0 : 1
-  );
+  const [value, setValue] = useState(initialState.receiver || '');
+  const [amount, setAmount] = useState<string | number>(initialState.amount);
 
   const handleDecrease = () => {
     if (Number(amount) - 1 > 0) {
@@ -41,15 +44,17 @@ const SelectionRow = ({
     setAmount(ethers.utils.formatUnits(maxBalance, decimals || 18));
   };
 
-  console.log(amount);
-
   const handleAmountChange = (value: string) => {
     if (value === '') {
       return setAmount(value);
     }
 
     try {
-      const val = ethers.utils.parseUnits(value, decimals || 18);
+      const val =
+        type === 'erc20'
+          ? ethers.utils.parseUnits(value, decimals || 18)
+          : BigNumber.from(value);
+
       if (val.lt(0)) {
         return;
       }

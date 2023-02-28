@@ -48,7 +48,8 @@ const TokenRow = ({
         </div>
         <div className="ml-auto text-xs text-gray-400">{footer}</div>
       </div>
-      <AnimatePresence>
+      {isSelected && selection}
+      {/* <AnimatePresence>
         {isSelected && (
           <motion.div
             key="selection"
@@ -87,7 +88,7 @@ const TokenRow = ({
             {selection}
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence> */}
     </div>
   );
 };

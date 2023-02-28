@@ -37,8 +37,9 @@ const Selection = ({
   const nothingAvailable = available.isZero();
 
   useEffect(() => {
-    addBase(id, contractAddress, type);
     if (txs.length === 0) {
+      addBase(id, contractAddress, type);
+      console.log('ADD BASE ENTRY');
       const result = {
         to: '',
         amount: BigNumber.from('0'),
@@ -82,20 +83,28 @@ const Selection = ({
   return (
     <div>
       <div className="grid grid-rows-1 gap-3	">
-        {txs.map((item) => (
-          <SelectionRow
-            key={item.rowId}
-            type={type}
-            maxBalance={BigNumber.from(balance)}
-            onRemove={() => {
-              if (multiple && txs.length > 1) {
-                removeEntry(id, item.rowId);
-              }
-            }}
-            decimals={decimals}
-            onChange={(data) => handleChange(data, item.rowId)}
-          />
-        ))}
+        {txs
+          .sort((a, b) => a.rowId.localeCompare(b.rowId))
+          .map((item) => {
+            return (
+              <SelectionRow
+                key={item.rowId}
+                type={type}
+                initialState={{
+                  receiver: item.to,
+                  amount: item.amount.toString(),
+                }}
+                maxBalance={BigNumber.from(balance)}
+                onRemove={() => {
+                  if (multiple && txs.length > 1) {
+                    removeEntry(id, item.rowId);
+                  }
+                }}
+                decimals={decimals}
+                onChange={(data) => handleChange(data, item.rowId)}
+              />
+            );
+          })}
       </div>
 
       {total.gt(BigNumber.from(balance)) && <div>To few funds</div>}

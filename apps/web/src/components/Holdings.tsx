@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { ERC1155Token, ERC721Token, ERC20Token, Token } from 'shared-config';
 import { useAccount } from 'wagmi';
+import { useTxStore } from '../stores/useTxStore';
 import ERC1155Holdings from './ERC1155Holdings';
 import ERC721Holdings from './ERC721Holdings';
 import TokenHoldings from './TokenHoldings';
