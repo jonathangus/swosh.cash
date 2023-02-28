@@ -1,6 +1,8 @@
 import { BigNumber, ethers } from 'ethers';
 import { useEffect, useState } from 'react';
 import { ERCType } from 'shared-config';
+import styled from 'styled-components';
+import AddressSelector from './AddressSelector';
 import { Input } from './ui/Input';
 
 type Props = {
@@ -14,6 +16,8 @@ type Props = {
     amount: string;
   };
 };
+
+const StyledTest = styled.div``;
 
 const SelectionRow = ({
   type,
@@ -84,11 +88,9 @@ const SelectionRow = ({
 
   return (
     <div className="flex">
-      <input
+      <AddressSelector
         value={value}
-        placeholder="receiver"
-        className="mr-4 text-black"
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(val) => setValue(val.address)}
       />
 
       {type === 'erc1155' && (
@@ -122,6 +124,10 @@ const SelectionRow = ({
           x
         </div>
       )}
+
+      <div>
+        <StyledTest />
+      </div>
     </div>
   );
 };
