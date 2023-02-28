@@ -15,10 +15,7 @@ async function main() {
   console.log('');
 
   // Deploy Swosh contract
-  const swosh = await swoshFactory.deploy({
-    pollingInterval: 50000,
-    timeout: 0,
-  });
+  const swosh = await swoshFactory.deploy();
   await swosh.deployed();
   let txReceipt = await ethers.provider.send('eth_getTransactionReceipt', [
     swosh.deployTransaction.hash,
