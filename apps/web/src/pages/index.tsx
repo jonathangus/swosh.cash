@@ -1,5 +1,6 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Holdings from '../components/Holdings';
+import Recap from '../components/Recap';
 
 const Page = () => {
   return (

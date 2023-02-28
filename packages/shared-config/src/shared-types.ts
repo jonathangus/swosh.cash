@@ -3,7 +3,47 @@ import { Provider } from '@ethersproject/providers';
 import { ethers } from 'ethers';
 import { QueryObserverResult } from '@tanstack/react-query';
 
-export type Token = {
+export type Token = ERC721Token | ERC1155Token | ERC20Token;
+
+export type TokenBase = {
+  contract_name: string;
+  contract_ticker_symbol: string;
+  contract_address: string;
+  id: string;
+  last_transferred_at: string;
+};
+
+export type ExternalNftData = {
+  image?: string;
+  name?: string;
+};
+
+export type ERC721Token = TokenBase & {
+  type: 'erc721';
+  token_id: string;
+  external_data: ExternalNftData;
+  tokenURI?: string;
+};
+
+export type ERC1155Token = TokenBase & {
+  type: 'erc1155';
+  token_id: string;
+  external_data: ExternalNftData;
+  balance: number;
+  tokenURI?: string;
+};
+
+export type ERC20Token = TokenBase & {
+  type: 'erc20';
+  balance: string;
+  quote_rate: number;
+  quote: number;
+  logo_url: string;
+  contract_decimals: number;
+};
+
+export type RawTokenResult = {
+  id: string;
   contract_decimals: number;
   contract_name: string;
   contract_ticker_symbol: string;

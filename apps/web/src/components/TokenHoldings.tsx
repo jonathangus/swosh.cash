@@ -1,28 +1,18 @@
-import { ethers } from 'ethers';
-import { Token } from 'shared-config';
+import { ERC20Token } from 'shared-config';
+import TokenDisplay from './TokenDisplay';
 
 type Props = {
-  items: Token[];
+  items: ERC20Token[];
 };
 
 const TokenHoldings = ({ items }: Props) => {
-  console.log(items);
   return (
     <div>
-      {items.map((item, i) => (
-        <div key={i}>
-          <h3>{item.contract_name}</h3>
-          <div>{item.contract_address}</div>
-          <div>
-            <img src={item.logo_url} />
-          </div>
-          <div>
-            Balance:{' '}
-            {ethers.utils.formatUnits(item.balance, item.contract_decimals)}{' '}
-            {item.contract_ticker_symbol}(${item.quote})
-          </div>
-        </div>
-      ))}
+      <div className="grid grid-rows-1 gap-10	">
+        {items.map((item, i) => (
+          <TokenDisplay key={i} token={item} />
+        ))}
+      </div>
     </div>
   );
 };

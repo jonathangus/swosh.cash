@@ -23,6 +23,16 @@ export const formatBigNumber = (
   return decimal.toDecimalPlaces(decimals).toString();
 };
 
+export const formatNumber = (
+  value: number | string,
+  config?: FormatOptions
+): string => {
+  const decimal = new Decimal(value);
+  const decimals = config?.maxDecimals || 5;
+
+  return decimal.toDecimalPlaces(decimals).toString();
+};
+
 export const formatBigNumberToDate = (value: BigNumber): string =>
   new Date(+value * 1000).toLocaleString();
 

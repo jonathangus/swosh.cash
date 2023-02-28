@@ -1,4 +1,4 @@
-import { Chain } from 'wagmi';
+import { Chain, mainnet } from 'wagmi';
 import { goerli } from 'wagmi/chains';
 
 type Config = {
@@ -9,6 +9,6 @@ type Config = {
 
 export const config: Config = {
   isProduction: process.env.NODE_ENV === 'production',
-  defaultChains: [goerli],
+  defaultChains: [goerli, mainnet],
   fallbackId: goerli.id,
 };
