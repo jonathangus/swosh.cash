@@ -5,5 +5,6 @@ import type * as mock from "./mock";
 export type { mock };
 export type { DataDecode } from "./DataDecode";
 export type { Sned } from "./Sned";
+export type { Swosh } from "./Swosh";
 export type { TokenTransfer } from "./TokenTransfer";
 export type { TransferCall } from "./TransferCall";

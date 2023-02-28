@@ -60,6 +60,8 @@ export type { MockERC721 } from "./contracts/mock/MockERC721";
 export { MockERC721__factory } from "./factories/contracts/mock/MockERC721__factory";
 export type { Sned } from "./contracts/Sned";
 export { Sned__factory } from "./factories/contracts/Sned__factory";
+export type { Swosh } from "./contracts/Swosh";
+export { Swosh__factory } from "./factories/contracts/Swosh__factory";
 export type { TokenTransfer } from "./contracts/TokenTransfer";
 export { TokenTransfer__factory } from "./factories/contracts/TokenTransfer__factory";
 export type { TransferCall } from "./contracts/TransferCall";

@@ -121,6 +121,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Sned__factory>;
     getContractFactory(
+      name: "Swosh",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Swosh__factory>;
+    getContractFactory(
       name: "TokenTransfer",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.TokenTransfer__factory>;
@@ -264,6 +268,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.Sned>;
+    getContractAt(
+      name: "Swosh",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Swosh>;
     getContractAt(
       name: "TokenTransfer",
       address: string,
