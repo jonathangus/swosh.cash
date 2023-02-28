@@ -1,5 +1,5 @@
 import { Chain, mainnet } from 'wagmi';
-import { goerli } from 'wagmi/chains';
+import { goerli, polygon, zkSync } from 'wagmi/chains';
 
 type Config = {
   isProduction: boolean;
@@ -9,6 +9,6 @@ type Config = {
 
 export const config: Config = {
   isProduction: process.env.NODE_ENV === 'production',
-  defaultChains: [goerli, mainnet],
+  defaultChains: [goerli, mainnet, polygon, zkSync],
   fallbackId: goerli.id,
 };
