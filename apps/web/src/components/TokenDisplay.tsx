@@ -39,7 +39,16 @@ const TokenDisplay = ({ token }: Props) => {
         isSelected ? removeSelected(token) : setSelected(token);
       }}
       isSelected={isSelected}
-      selection={<Selection />}
+      selection={
+        <Selection
+          multiple
+          type={token.type}
+          contractAddress={token.contract_address}
+          id={token.id}
+          balance={token.balance}
+          decimals={token.contract_decimals}
+        />
+      }
     />
   );
 };

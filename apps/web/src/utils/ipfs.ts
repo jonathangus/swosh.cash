@@ -12,7 +12,6 @@ export const getMetadataFromTokenURI = async (
     return data;
   } else {
     const url = `/api/get-metadata?uri=${encodeURIComponent(uri)}`;
-    console.log(url);
     const { data } = await axios.get(url);
     return data;
   }

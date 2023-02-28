@@ -1,7 +1,22 @@
 import { Signer } from '@ethersproject/abstract-signer';
 import { Provider } from '@ethersproject/providers';
-import { ethers } from 'ethers';
+import { BigNumber, ethers } from 'ethers';
 import { QueryObserverResult } from '@tanstack/react-query';
+
+export type ERCType = 'erc721' | 'erc1155' | 'erc20';
+
+export type TransferData = {
+  to: string;
+  amount: BigNumber;
+  rowId: string;
+};
+
+export type Transfer = {
+  contractAddress: string;
+  id: string;
+
+  type: ERCType;
+};
 
 export type Token = ERC721Token | ERC1155Token | ERC20Token;
 

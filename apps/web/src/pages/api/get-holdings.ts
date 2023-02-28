@@ -184,13 +184,14 @@ const handler: NextApiHandler = async (req, res) => {
     address = ethers.utils.getAddress(address);
     console.log('Request: chainId: ', chainId, ', address: ', address);
     const nft = true;
-    const fetchNft = true;
+    const fetchNft = false;
 
     // const itemz = await applyIPFSResolver(mock as any, chainId);
 
+    const url = `https://api.covalenthq.com/v1/${chainId}/address/${address}/balances_v2/?key=${process.env.COVALENT_API_KEY}&nft=${nft}&no-nft-fetch=${fetchNft}`;
+    console.log(url);
     return res.status(200).send(mock);
 
-    const url = `https://api.covalenthq.com/v1/${chainId}/address/${address}/balances_v2/?key=${process.env.COVALENT_API_KEY}&nft=${nft}&no-nft-fetch=${fetchNft}`;
     const { data } = await axios.get(url);
 
     const items = data.data.items

@@ -21,9 +21,9 @@ const NFTDisplay = ({ nft }: Props) => {
       if (nft.external_data) {
         return Promise.resolve(nft.external_data);
       }
-      if (nft.tokenURI) {
-        return getMetadataFromTokenURI(nft.tokenURI);
-      }
+      // if (nft.tokenURI) {
+      //   return getMetadataFromTokenURI(nft.tokenURI);
+      // }
       return Promise.reject();
     },
     {
@@ -50,7 +50,15 @@ const NFTDisplay = ({ nft }: Props) => {
         isSelected ? removeSelected(nft) : setSelected(nft);
       }}
       isSelected={isSelected}
-      selection={<Selection />}
+      selection={
+        <Selection
+          type={nft.type}
+          contractAddress={nft.contract_address}
+          id={nft.id}
+          balance={nft.type === 'erc1155' ? nft.balance : 1}
+          multiple={nft.type === 'erc1155'}
+        />
+      }
       footer={nft.type === 'erc1155' ? <div>{nft.balance}</div> : null}
     />
   );

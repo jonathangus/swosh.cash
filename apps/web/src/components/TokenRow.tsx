@@ -24,6 +24,7 @@ const TokenRow = ({
 }: Props) => {
   return (
     <div
+      onClick={() => !isSelected && onSelect()}
       className={clsx(
         'p-4 rounded-2xl transition-colors',
         isSelected ? 'bg-gray-700' : ''
