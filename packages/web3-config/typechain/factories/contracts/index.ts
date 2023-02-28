@@ -3,6 +3,6 @@
 /* eslint-disable */
 export * as mock from "./mock";
 export { DataDecode__factory } from "./DataDecode__factory";
-export { Sned__factory } from "./Sned__factory";
+export { Swosh__factory } from "./Swosh__factory";
 export { TokenTransfer__factory } from "./TokenTransfer__factory";
 export { TransferCall__factory } from "./TransferCall__factory";

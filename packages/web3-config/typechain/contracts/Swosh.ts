@@ -23,7 +23,7 @@ import type {
   PromiseOrValue,
 } from "../common";
 
-export interface SnedInterface extends utils.Interface {
+export interface SwoshInterface extends utils.Interface {
   functions: {
     "batchTransferERC1155(address[],address,uint256[],uint256[])": FunctionFragment;
     "batchTransferERC1155(address[],address[],uint256[],uint256[])": FunctionFragment;
@@ -122,12 +122,12 @@ export interface SnedInterface extends utils.Interface {
   events: {};
 }
 
-export interface Sned extends BaseContract {
+export interface Swosh extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: SnedInterface;
+  interface: SwoshInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

@@ -7,7 +7,7 @@ import {IERC1155} from '@openzeppelin/contracts/token/ERC1155/IERC1155.sol';
 
 error INVALID_PARAM();
 
-contract Sned {
+contract Swosh {
     //     ______     __                        __   ______                 __  _
     //    / ____/  __/ /____  _________  ____ _/ /  / ____/_  ______  _____/ /_(_)___  ____  _____
     //   / __/ | |/_/ __/ _ \/ ___/ __ \/ __ `/ /  / /_  / / / / __ \/ ___/ __/ / __ \/ __ \/ ___/

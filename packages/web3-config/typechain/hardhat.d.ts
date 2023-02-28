@@ -117,9 +117,9 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.MockERC721__factory>;
     getContractFactory(
-      name: "Sned",
+      name: "Swosh",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.Sned__factory>;
+    ): Promise<Contracts.Swosh__factory>;
     getContractFactory(
       name: "TokenTransfer",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -260,10 +260,10 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.MockERC721>;
     getContractAt(
-      name: "Sned",
+      name: "Swosh",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.Sned>;
+    ): Promise<Contracts.Swosh>;
     getContractAt(
       name: "TokenTransfer",
       address: string,

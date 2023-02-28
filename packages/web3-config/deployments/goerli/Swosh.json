@@ -1,0 +1,160 @@
+{
+  "address": "0xd38d6E006d14BC5DDe85A914D6c2b99ABFfD76A1",
+  "constructorArguments": [],
+  "abi": [
+    {
+      "inputs": [],
+      "name": "INVALID_PARAM",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address[]",
+          "name": "_tokens",
+          "type": "address[]"
+        },
+        {
+          "internalType": "address",
+          "name": "_to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "_tokenIds",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "_amounts",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "batchTransferERC1155",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address[]",
+          "name": "_tokens",
+          "type": "address[]"
+        },
+        {
+          "internalType": "address[]",
+          "name": "_to",
+          "type": "address[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "_tokenIds",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "_amounts",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "batchTransferERC1155",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address[]",
+          "name": "_tokens",
+          "type": "address[]"
+        },
+        {
+          "internalType": "address[]",
+          "name": "_to",
+          "type": "address[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "_amounts",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "batchTransferERC20",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address[]",
+          "name": "_tokens",
+          "type": "address[]"
+        },
+        {
+          "internalType": "address",
+          "name": "_to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "_amounts",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "batchTransferERC20",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address[]",
+          "name": "_tokens",
+          "type": "address[]"
+        },
+        {
+          "internalType": "address[]",
+          "name": "_to",
+          "type": "address[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "_tokenIds",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "batchTransferERC721",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address[]",
+          "name": "_tokens",
+          "type": "address[]"
+        },
+        {
+          "internalType": "address",
+          "name": "_to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "_tokenIds",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "batchTransferERC721",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "blockNumber": 8574674
+}

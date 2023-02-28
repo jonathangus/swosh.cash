@@ -24,6 +24,7 @@ task('accounts', 'Prints the list of accounts', async (taskArgs, hre) => {
 
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const ALCHEMY_KEY = process.env.ALCHEMY_KEY;
+const GOERLI_ALCHEMY_KEY = process.env.GOERLI_ALCHEMY_KEY;
 
 const config: HardhatUserConfig = {
   solidity: '0.8.18',
@@ -51,9 +52,9 @@ const config: HardhatUserConfig = {
     },
     goerli: {
       chainId: 5,
-      url: `https://eth-goerli.g.alchemy.com/v2/${ALCHEMY_KEY}`,
+      url: `https://eth-goerli.g.alchemy.com/v2/${GOERLI_ALCHEMY_KEY}`,
       accounts: [`${PRIVATE_KEY}`],
-      // deploy: ['deploy/testnet/goerli'],
+      deploy: ['deploy/goerli'],
     },
     optimismGoerli: {
       chainId: 420,
