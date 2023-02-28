@@ -16,6 +16,8 @@ export type { IAccessControlEnumerable } from "./@openzeppelin/contracts/access/
 export { IAccessControlEnumerable__factory } from "./factories/@openzeppelin/contracts/access/IAccessControlEnumerable__factory";
 export type { Pausable } from "./@openzeppelin/contracts/security/Pausable";
 export { Pausable__factory } from "./factories/@openzeppelin/contracts/security/Pausable__factory";
+export type { IERC1155 } from "./@openzeppelin/contracts/token/ERC1155/IERC1155";
+export { IERC1155__factory } from "./factories/@openzeppelin/contracts/token/ERC1155/IERC1155__factory";
 export type { ERC20 } from "./@openzeppelin/contracts/token/ERC20/ERC20";
 export { ERC20__factory } from "./factories/@openzeppelin/contracts/token/ERC20/ERC20__factory";
 export type { ERC20Burnable } from "./@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable";
@@ -50,10 +52,14 @@ export type { ERC165 } from "./@openzeppelin/contracts/utils/introspection/ERC16
 export { ERC165__factory } from "./factories/@openzeppelin/contracts/utils/introspection/ERC165__factory";
 export type { IERC165 } from "./@openzeppelin/contracts/utils/introspection/IERC165";
 export { IERC165__factory } from "./factories/@openzeppelin/contracts/utils/introspection/IERC165__factory";
+export type { DataDecode } from "./contracts/DataDecode";
+export { DataDecode__factory } from "./factories/contracts/DataDecode__factory";
 export type { MockERC20 } from "./contracts/mock/MockERC20";
 export { MockERC20__factory } from "./factories/contracts/mock/MockERC20__factory";
 export type { MockERC721 } from "./contracts/mock/MockERC721";
 export { MockERC721__factory } from "./factories/contracts/mock/MockERC721__factory";
+export type { Sned } from "./contracts/Sned";
+export { Sned__factory } from "./factories/contracts/Sned__factory";
 export type { TokenTransfer } from "./contracts/TokenTransfer";
 export { TokenTransfer__factory } from "./factories/contracts/TokenTransfer__factory";
 export type { TransferCall } from "./contracts/TransferCall";
