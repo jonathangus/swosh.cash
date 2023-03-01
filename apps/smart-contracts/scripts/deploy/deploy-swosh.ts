@@ -1,5 +1,6 @@
 import { ethers, network } from 'hardhat';
-import { printDetails, writeDeploymentDetails } from '../utils/utils';
+import { printDetails, writeDeploymentDetails } from './utils/utils';
+
 import SWOSH_ABI from '../../abi/Swosh.json';
 
 async function main() {

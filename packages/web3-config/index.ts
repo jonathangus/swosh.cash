@@ -4,7 +4,22 @@ import * as _typechain from './typechain';
 import { localhost, goerli } from 'wagmi/chains';
 
 export const contracts = {
-  Counter: _typechain.Counter__factory.name,
+  MockERC20_1: _typechain.MockERC20__factory.name,
+  MockERC20_2: _typechain.MockERC20__factory.name,
+  MockERC20_3: _typechain.MockERC20__factory.name,
+  MockERC20_4: _typechain.MockERC20__factory.name,
+  MockERC20_5: _typechain.MockERC20__factory.name,
+  MockERC20_6: _typechain.MockERC20__factory.name,
+  MockERC721_1: _typechain.MockERC721__factory.name,
+  MockERC721_2: _typechain.MockERC721__factory.name,
+  MockERC721_3: _typechain.MockERC721__factory.name,
+  MockERC721_4: _typechain.MockERC721__factory.name,
+  MockERC721_5: _typechain.MockERC721__factory.name,
+  MockERC1155_1: _typechain.MockERC1155__factory.name,
+  MockERC1155_2: _typechain.MockERC1155__factory.name,
+  MockERC1155_3: _typechain.MockERC1155__factory.name,
+  MockERC1155_4: _typechain.MockERC1155__factory.name,
+  MockERC1155_5: _typechain.MockERC1155__factory.name,
 };
 
 export type AvailableContractNames = keyof typeof contracts;

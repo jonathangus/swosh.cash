@@ -33,9 +33,33 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Pausable__factory>;
     getContractFactory(
+      name: "ERC1155",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ERC1155__factory>;
+    getContractFactory(
+      name: "ERC1155Burnable",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ERC1155Burnable__factory>;
+    getContractFactory(
+      name: "ERC1155Pausable",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ERC1155Pausable__factory>;
+    getContractFactory(
+      name: "IERC1155MetadataURI",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IERC1155MetadataURI__factory>;
+    getContractFactory(
       name: "IERC1155",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IERC1155__factory>;
+    getContractFactory(
+      name: "IERC1155Receiver",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IERC1155Receiver__factory>;
+    getContractFactory(
+      name: "ERC1155PresetMinterPauser",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ERC1155PresetMinterPauser__factory>;
     getContractFactory(
       name: "ERC20",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -109,6 +133,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.DataDecode__factory>;
     getContractFactory(
+      name: "MockERC1155",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.MockERC1155__factory>;
+    getContractFactory(
       name: "MockERC20",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.MockERC20__factory>;
@@ -155,10 +183,40 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.Pausable>;
     getContractAt(
+      name: "ERC1155",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ERC1155>;
+    getContractAt(
+      name: "ERC1155Burnable",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ERC1155Burnable>;
+    getContractAt(
+      name: "ERC1155Pausable",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ERC1155Pausable>;
+    getContractAt(
+      name: "IERC1155MetadataURI",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC1155MetadataURI>;
+    getContractAt(
       name: "IERC1155",
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.IERC1155>;
+    getContractAt(
+      name: "IERC1155Receiver",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC1155Receiver>;
+    getContractAt(
+      name: "ERC1155PresetMinterPauser",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ERC1155PresetMinterPauser>;
     getContractAt(
       name: "ERC20",
       address: string,
@@ -249,6 +307,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.DataDecode>;
+    getContractAt(
+      name: "MockERC1155",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.MockERC1155>;
     getContractAt(
       name: "MockERC20",
       address: string,
