@@ -12,6 +12,7 @@ type Props = {
   id: string;
   decimals?: number;
   balance: string | number;
+  tokenId?: string;
 };
 
 const Selection = ({
@@ -21,8 +22,8 @@ const Selection = ({
   contractAddress,
   decimals,
   id,
+  tokenId,
 }: Props) => {
-  // const [rows, setRows] = useState(1);
   const txs = useTxStore((state) => state.parts[id]?.txs || []);
   const addEntry = useTxStore((state) => state.addEntry);
   const addBase = useTxStore((state) => state.addBase);
@@ -38,11 +39,18 @@ const Selection = ({
 
   useEffect(() => {
     if (txs.length === 0) {
-      addBase(id, contractAddress, type);
+      addBase({
+        id,
+        contractAddress,
+        type,
+        tokenId,
+      });
 
+      const amount =
+        type === 'erc721' ? BigNumber.from('1') : BigNumber.from('0');
       const result = {
         to: '',
-        amount: BigNumber.from('0'),
+        amount,
         rowId: id + '-' + txs.length,
       };
 
