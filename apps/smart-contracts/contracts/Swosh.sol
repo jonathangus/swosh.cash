@@ -19,6 +19,18 @@ contract Swosh {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+    function megaTransfer(
+        address[] calldata _tokens,
+        address[] calldata _recipients,
+        uint256[] calldata _amounts,
+        uint256 _offset
+    ) external {
+    
+    
+    }
+
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //     __________  ______   ___   ____
@@ -32,26 +44,26 @@ contract Swosh {
 
     function batchTransferERC20(
         address[] calldata _tokens,
-        address _to,
+        address _recipient,
         uint256[] calldata _amounts
     ) external {
         if (_tokens.length != _amounts.length) revert INVALID_PARAM();
 
         for (uint256 i = 0; i < _tokens.length; ++i) {
-            _transferERC20(_tokens[i], _to, _amounts[i]);
+            _transferERC20(_tokens[i], _recipient, _amounts[i]);
         }
     }
 
-    function batchTransferERC20(
+    function multiBatchTransferERC20(
         address[] calldata _tokens,
-        address[] calldata _to,
+        address[] calldata _recipients,
         uint256[] calldata _amounts
     ) external {
-        if (_tokens.length != _to.length) revert INVALID_PARAM();
+        if (_tokens.length != _recipients.length) revert INVALID_PARAM();
         if (_tokens.length != _amounts.length) revert INVALID_PARAM();
 
         for (uint256 i = 0; i < _tokens.length; ++i) {
-            _transferERC20(_tokens[i], _to[i], _amounts[i]);
+            _transferERC20(_tokens[i], _recipients[i], _amounts[i]);
         }
     }
 
@@ -69,26 +81,26 @@ contract Swosh {
 
     function batchTransferERC721(
         address[] calldata _tokens,
-        address _to,
+        address _recipient,
         uint256[] calldata _tokenIds
     ) external {
         if (_tokens.length != _tokenIds.length) revert INVALID_PARAM();
 
         for (uint256 i = 0; i < _tokens.length; ++i) {
-            _transferERC721(_tokens[i], _to, _tokenIds[i]);
+            _transferERC721(_tokens[i], _recipient, _tokenIds[i]);
         }
     }
 
-    function batchTransferERC721(
+    function multiBatchTransferERC721(
         address[] calldata _tokens,
-        address[] calldata _to,
+        address[] calldata _recipients,
         uint256[] calldata _tokenIds
     ) external {
         if (_tokens.length != _tokenIds.length) revert INVALID_PARAM();
-        if (_tokens.length != _to.length) revert INVALID_PARAM();
+        if (_tokens.length != _recipients.length) revert INVALID_PARAM();
 
         for (uint256 i = 0; i < _tokens.length; ++i) {
-            _transferERC721(_tokens[i], _to[i], _tokenIds[i]);
+            _transferERC721(_tokens[i], _recipients[i], _tokenIds[i]);
         }
     }
 
@@ -106,28 +118,33 @@ contract Swosh {
 
     function batchTransferERC1155(
         address[] calldata _tokens,
-        address _to,
+        address _recipient,
         uint256[] calldata _tokenIds,
         uint256[] calldata _amounts
     ) external {
         if (_tokens.length != _tokenIds.length) revert INVALID_PARAM();
 
         for (uint256 i = 0; i < _tokens.length; ++i) {
-            _transferERC1155(_tokens[i], _to, _tokenIds[i], _amounts[i]);
+            _transferERC1155(_tokens[i], _recipient, _tokenIds[i], _amounts[i]);
         }
     }
 
-    function batchTransferERC1155(
+    function multiBatchTransferERC1155(
         address[] calldata _tokens,
-        address[] calldata _to,
+        address[] calldata _recipients,
         uint256[] calldata _tokenIds,
         uint256[] calldata _amounts
     ) external {
         if (_tokens.length != _tokenIds.length) revert INVALID_PARAM();
-        if (_tokens.length != _to.length) revert INVALID_PARAM();
+        if (_tokens.length != _recipients.length) revert INVALID_PARAM();
 
         for (uint256 i = 0; i < _tokens.length; ++i) {
-            _transferERC1155(_tokens[i], _to[i], _tokenIds[i], _amounts[i]);
+            _transferERC1155(
+                _tokens[i],
+                _recipients[i],
+                _tokenIds[i],
+                _amounts[i]
+            );
         }
     }
 
