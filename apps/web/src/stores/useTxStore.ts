@@ -1,26 +1,50 @@
-import { ERCType, Token, Transfer, TransferData } from 'shared-config';
+import {
+  ERCType,
+  Token,
+  Transfer,
+  TransferData,
+  TransferPart,
+} from 'shared-config';
 import { create } from 'zustand';
 
 interface TxStoreState {
-  transfers: Transfer[];
   addEntry: (id: string, data: TransferData) => void;
-  addBase: (id: string, contractAddress: string, type: ERCType) => void;
+  addBase: ({
+    id,
+    contractAddress,
+    type,
+    tokenId,
+  }: {
+    id: string;
+    contractAddress: string;
+    type: ERCType;
+    tokenId?: string;
+  }) => void;
   removeEntry: (id: string, rowId: string) => void;
-  parts: Record<
-    string,
-    {
-      id: string;
-      contractAddress: string;
-      type: ERCType;
-      txs: TransferData[];
-    }
-  >;
+  reset: () => void;
+  parts: Record<string, TransferPart>;
 }
 
 export const useTxStore = create<TxStoreState>((set) => ({
-  transfers: [],
   parts: {},
-  addBase: (id: string, contractAddress: string, type: ERCType) => {
+  reset: () =>
+    set((state) => {
+      return {
+        ...state,
+        parts: {},
+      };
+    }),
+  addBase: ({
+    id,
+    contractAddress,
+    type,
+    tokenId,
+  }: {
+    id: string;
+    contractAddress: string;
+    type: ERCType;
+    tokenId?: string;
+  }) => {
     return set((state) => {
       if (state.parts[id]) {
         return { ...state };
@@ -34,6 +58,7 @@ export const useTxStore = create<TxStoreState>((set) => ({
             id,
             contractAddress,
             type,
+            tokenId,
             txs: [],
           },
         },
