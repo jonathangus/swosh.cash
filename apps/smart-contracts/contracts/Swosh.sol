@@ -6,6 +6,7 @@ import {IERC721} from '@openzeppelin/contracts/token/ERC721/IERC721.sol';
 import {IERC1155} from '@openzeppelin/contracts/token/ERC1155/IERC1155.sol';
 
 error INVALID_PARAM();
+error FORBIDDEN();
 
 contract Swosh {
     struct ERC20Param {
@@ -28,14 +29,11 @@ contract Swosh {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     //     ______     __                        __   ______                 __  _
     //    / ____/  __/ /____  _________  ____ _/ /  / ____/_  ______  _____/ /_(_)___  ____  _____
     //   / __/ | |/_/ __/ _ \/ ___/ __ \/ __ `/ /  / /_  / / / / __ \/ ___/ __/ / __ \/ __ \/ ___/
     //  / /____>  </ /_/  __/ /  / / / / /_/ / /  / __/ / /_/ / / / / /__/ /_/ / /_/ / / / (__  )
     // /_____/_/|_|\__/\___/_/  /_/ /_/\__,_/_/  /_/    \__,_/_/ /_/\___/\__/_/\____/_/ /_/____/
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     function megaTransfer(
@@ -43,6 +41,8 @@ contract Swosh {
         ERC721Param calldata _erc721Params,
         ERC1155Param calldata _erc1155Params
     ) external {
+        if (msg.sender != tx.origin) revert FORBIDDEN();
+
         if (_erc20Params.tokens.length > 0) {
             this.multiBatchTransferERC20(
                 _erc20Params.tokens,
@@ -70,13 +70,11 @@ contract Swosh {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     //     __________  ______   ___   ____
     //    / ____/ __ \/ ____/  |__ \ / __ \
     //   / __/ / /_/ / /       __/ // / / /
     //  / /___/ _, _/ /___    / __// /_/ /
     // /_____/_/ |_|\____/   /____/\____/
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     function batchTransferERC20(
@@ -84,6 +82,7 @@ contract Swosh {
         address _recipient,
         uint256[] calldata _amounts
     ) external {
+        if (msg.sender != tx.origin) revert FORBIDDEN();
         if (_tokens.length != _amounts.length) revert INVALID_PARAM();
 
         for (uint256 i = 0; i < _tokens.length; ++i) {
@@ -100,6 +99,7 @@ contract Swosh {
         address[] calldata _recipients,
         uint256[] calldata _amounts
     ) external {
+        if (msg.sender != tx.origin) revert FORBIDDEN();
         if (_tokens.length != _recipients.length) revert INVALID_PARAM();
         if (_tokens.length != _amounts.length) revert INVALID_PARAM();
 
@@ -113,13 +113,11 @@ contract Swosh {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     //     __________  ______   ________  ___
     //    / ____/ __ \/ ____/  /__  /__ \<  /
     //   / __/ / /_/ / /         / /__/ // /
     //  / /___/ _, _/ /___      / // __// /
     // /_____/_/ |_|\____/     /_//____/_/
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     function batchTransferERC721(
@@ -127,6 +125,7 @@ contract Swosh {
         address _recipient,
         uint256[] calldata _tokenIds
     ) external {
+        if (msg.sender != tx.origin) revert FORBIDDEN();
         if (_tokens.length != _tokenIds.length) revert INVALID_PARAM();
 
         for (uint256 i = 0; i < _tokens.length; ++i) {
@@ -143,6 +142,7 @@ contract Swosh {
         address[] calldata _recipients,
         uint256[] calldata _tokenIds
     ) external {
+        if (msg.sender != tx.origin) revert FORBIDDEN();
         if (_tokens.length != _tokenIds.length) revert INVALID_PARAM();
         if (_tokens.length != _recipients.length) revert INVALID_PARAM();
 
@@ -156,13 +156,11 @@ contract Swosh {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     //     __________  ______   __________________
     //    / ____/ __ \/ ____/  <  <  / ____/ ____/
     //   / __/ / /_/ / /       / // /___ \/___ \
     //  / /___/ _, _/ /___    / // /___/ /___/ /
     // /_____/_/ |_|\____/   /_//_/_____/_____/
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     function batchTransferERC1155(
@@ -171,6 +169,7 @@ contract Swosh {
         uint256[] calldata _tokenIds,
         uint256[] calldata _amounts
     ) external {
+        if (msg.sender != tx.origin) revert FORBIDDEN();
         if (_tokens.length != _tokenIds.length) revert INVALID_PARAM();
 
         for (uint256 i = 0; i < _tokens.length; ++i) {
@@ -190,6 +189,7 @@ contract Swosh {
         uint256[] calldata _tokenIds,
         uint256[] calldata _amounts
     ) external {
+        if (msg.sender != tx.origin) revert FORBIDDEN();
         if (_tokens.length != _tokenIds.length) revert INVALID_PARAM();
         if (_tokens.length != _recipients.length) revert INVALID_PARAM();
 
