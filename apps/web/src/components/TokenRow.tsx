@@ -8,6 +8,7 @@ type Props = {
   subText?: ReactNode;
   image?: ReactNode;
   footer?: ReactNode;
+  prefix?: ReactNode;
   selection?: ReactNode;
   isSelected: boolean;
   onSelect: () => void;
@@ -18,6 +19,7 @@ const TokenRow = ({
   title,
   subText,
   footer,
+  prefix,
   selection,
   isSelected,
   onSelect = () => {},
@@ -26,11 +28,11 @@ const TokenRow = ({
     <div
       onClick={() => !isSelected && onSelect()}
       className={clsx(
-        'p-4 rounded-2xl transition-colors',
+        'p-4 rounded-2xl transition-colors   cursor-pointer hover:bg-gray-800',
         isSelected ? 'bg-gray-700' : ''
       )}
     >
-      <div className="flex">
+      <div className="flex mb-4">
         <div className="self-center w-4 h-4 mr-4">
           <Checkbox
             onCheckedChange={() => {
@@ -39,14 +41,16 @@ const TokenRow = ({
             checked={isSelected}
           />
         </div>
-        <div className="w-12 h-12 overflow-hidden rounded-2xl mr-4">
+        <div className="w-12 h-12 overflow-hidden rounded-full mr-4">
           {image}
         </div>
         <div>
-          <h3>{title}</h3>
-          <div className="text-gray-400">{subText}</div>
+          <h3 className="flex gap-1 font-medium break-all">
+            {prefix} {subText}
+          </h3>
+          <div className="text-gray-400">{title}</div>
         </div>
-        <div className="ml-auto text-xs text-gray-400">{footer}</div>
+        <div className="ml-auto text-m text-gray-400">{footer}</div>
       </div>
       {isSelected && selection}
       {/* <AnimatePresence>

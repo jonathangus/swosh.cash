@@ -7,8 +7,8 @@ const AddressSelector = ({ onChange, value }: Props) => {
   return (
     <input
       value={value}
-      placeholder="receiver"
-      className="mr-4 text-black"
+      placeholder="Receiving address"
+      className="rounded text-white bg-black pl-2 pt-1 pr-2 pb-1 mr-2 w-full"
       onChange={(e) => onChange({ address: e.target.value })}
     />
   );

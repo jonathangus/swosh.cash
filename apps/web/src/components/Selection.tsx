@@ -107,11 +107,18 @@ const Selection = ({
           })}
       </div>
 
-      {total.gt(BigNumber.from(balance)) && <div>To few funds</div>}
+      {total.gt(BigNumber.from(balance)) && (
+        <div className="text-error mt-4">Insufficient funds</div>
+      )}
 
       {multiple && (
         <div
-          className={clsx(nothingAvailable ? 'text-gray-400' : '')}
+          className={clsx(
+            'cursor-pointer mt-4 flex justify-center font-medium',
+            nothingAvailable
+              ? 'text-gray-600 cursor-not-allowed'
+              : 'text-gray-600'
+          )}
           onClick={() => addRow()}
         >
           Add recipient
