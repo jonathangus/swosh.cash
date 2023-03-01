@@ -24,6 +24,7 @@
     "react-dom": "18.2.0",
     "react-query": "^3.39.3",
     "reapop": "4.2.1",
+    "styled-components": "^5.3.6",
     "ui": "*",
     "wagmi": "0.11.5",
     "wagmi-lfg": "*",
@@ -34,6 +35,7 @@
   "devDependencies": {
     "@types/node": "18.13.0",
     "@types/react": "18.0.27",
+    "@types/styled-components": "^5.1.26",
     "autoprefixer": "^10.4.13",
     "class-variance-authority": "^0.4.0",
     "clsx": "^1.2.1",

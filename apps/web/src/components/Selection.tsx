@@ -39,7 +39,7 @@ const Selection = ({
   useEffect(() => {
     if (txs.length === 0) {
       addBase(id, contractAddress, type);
-      console.log('ADD BASE ENTRY');
+
       const result = {
         to: '',
         amount: BigNumber.from('0'),

@@ -6,4 +6,7 @@ module.exports = {
     'ui',
     'web3-config',
   ],
+  compiler: {
+    styledComponents: true,
+  },
 };

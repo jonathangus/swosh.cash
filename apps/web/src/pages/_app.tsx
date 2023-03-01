@@ -6,6 +6,7 @@ import NotificationHandler from '../components/NotificationHandler';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import '../styles/main.css';
 import PageLayout from '../components/PageLayout';
+import Floater from '../components/Floater';
 
 const queryClient = new QueryClient();
 
@@ -16,6 +17,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Web3Provider>
           <PageLayout>
             <Component {...pageProps} />
+            <Floater />
           </PageLayout>
           <NotificationHandler />
         </Web3Provider>

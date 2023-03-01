@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { ERC1155Token, ERC721Token, ERC20Token, Token } from 'shared-config';
-import { useAccount } from 'wagmi';
+import { mainnet, useAccount, useChainId, useNetwork } from 'wagmi';
 import { useTxStore } from '../stores/useTxStore';
 import ERC1155Holdings from './ERC1155Holdings';
 import ERC721Holdings from './ERC721Holdings';
@@ -10,7 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/Tabs';
 
 const Holdings = () => {
   const { address } = useAccount();
-  const chainId = 1;
+  const chainId = useChainId() || mainnet.id;
   const holdingsQuery = useQuery<Token[]>(
     [address, chainId],
     async () => {
