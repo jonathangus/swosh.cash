@@ -58,7 +58,7 @@ async function main() {
   );
   console.log('');
 
-  for (let i = 1; i < 3; i++) {
+  for (let i = 2; i < 3; i++) {
     await m20_1
       .connect(deployer)
       .mint(TESTERS[i], ethers.utils.parseEther('1000'));

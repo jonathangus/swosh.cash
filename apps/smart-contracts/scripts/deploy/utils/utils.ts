@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 
 const DEPLOYMENT_PATH =
-  __dirname + '/../../../../packages/web3-config/deployments';
+  __dirname + '/../../../../../packages/web3-config/deployments';
 
 export const writeDeploymentDetails = (
   chain: string,

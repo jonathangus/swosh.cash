@@ -1,5 +1,5 @@
 import { ethers, network } from 'hardhat';
-import { printDetails, writeDeploymentDetails } from '../utils/utils';
+import { printDetails, writeDeploymentDetails } from './utils/utils';
 import MERC20_ABI from '../../abi/MockERC20.json';
 import MERC721_ABI from '../../abi/MockERC721.json';
 import MERC1155_ABI from '../../abi/MockERC1155.json';
