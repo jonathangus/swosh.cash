@@ -8,6 +8,25 @@ import {IERC1155} from '@openzeppelin/contracts/token/ERC1155/IERC1155.sol';
 error INVALID_PARAM();
 
 contract Swosh {
+    struct ERC20Param {
+        address[] tokens;
+        address[] recipients;
+        uint256[] amounts;
+    }
+
+    struct ERC721Param {
+        address[] tokens;
+        address[] recipients;
+        uint256[] tokenIds;
+    }
+
+    struct ERC1155Param {
+        address[] tokens;
+        address[] recipients;
+        uint256[] tokenIds;
+        uint256[] amounts;
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -19,17 +38,36 @@ contract Swosh {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
     function megaTransfer(
-        address[] calldata _tokens,
-        address[] calldata _recipients,
-        uint256[] calldata _amounts,
-        uint256 _offset
+        ERC20Param calldata _erc20Params,
+        ERC721Param calldata _erc721Params,
+        ERC1155Param calldata _erc1155Params
     ) external {
-    
-    
-    }
+        if (_erc20Params.tokens.length > 0) {
+            this.multiBatchTransferERC20(
+                _erc20Params.tokens,
+                _erc20Params.recipients,
+                _erc20Params.amounts
+            );
+        }
 
+        if (_erc721Params.tokens.length > 0) {
+            this.multiBatchTransferERC721(
+                _erc721Params.tokens,
+                _erc721Params.recipients,
+                _erc721Params.tokenIds
+            );
+        }
+
+        if (_erc1155Params.tokens.length > 0) {
+            this.multiBatchTransferERC1155(
+                _erc1155Params.tokens,
+                _erc1155Params.recipients,
+                _erc1155Params.tokenIds,
+                _erc1155Params.amounts
+            );
+        }
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -40,7 +78,6 @@ contract Swosh {
     // /_____/_/ |_|\____/   /____/\____/
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     function batchTransferERC20(
         address[] calldata _tokens,
@@ -50,7 +87,11 @@ contract Swosh {
         if (_tokens.length != _amounts.length) revert INVALID_PARAM();
 
         for (uint256 i = 0; i < _tokens.length; ++i) {
-            _transferERC20(_tokens[i], _recipient, _amounts[i]);
+            IERC20(_tokens[i]).transferFrom(
+                msg.sender,
+                _recipient,
+                _amounts[i]
+            );
         }
     }
 
@@ -63,11 +104,14 @@ contract Swosh {
         if (_tokens.length != _amounts.length) revert INVALID_PARAM();
 
         for (uint256 i = 0; i < _tokens.length; ++i) {
-            _transferERC20(_tokens[i], _recipients[i], _amounts[i]);
+            IERC20(_tokens[i]).transferFrom(
+                msg.sender,
+                _recipients[i],
+                _amounts[i]
+            );
         }
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //     __________  ______   ________  ___
@@ -76,7 +120,6 @@ contract Swosh {
     //  / /___/ _, _/ /___      / // __// /
     // /_____/_/ |_|\____/     /_//____/_/
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     function batchTransferERC721(
@@ -87,7 +130,11 @@ contract Swosh {
         if (_tokens.length != _tokenIds.length) revert INVALID_PARAM();
 
         for (uint256 i = 0; i < _tokens.length; ++i) {
-            _transferERC721(_tokens[i], _recipient, _tokenIds[i]);
+            IERC721(_tokens[i]).transferFrom(
+                msg.sender,
+                _recipient,
+                _tokenIds[i]
+            );
         }
     }
 
@@ -100,11 +147,14 @@ contract Swosh {
         if (_tokens.length != _recipients.length) revert INVALID_PARAM();
 
         for (uint256 i = 0; i < _tokens.length; ++i) {
-            _transferERC721(_tokens[i], _recipients[i], _tokenIds[i]);
+            IERC721(_tokens[i]).transferFrom(
+                msg.sender,
+                _recipients[i],
+                _tokenIds[i]
+            );
         }
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //     __________  ______   __________________
@@ -113,7 +163,6 @@ contract Swosh {
     //  / /___/ _, _/ /___    / // /___/ /___/ /
     // /_____/_/ |_|\____/   /_//_/_____/_____/
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     function batchTransferERC1155(
@@ -125,7 +174,13 @@ contract Swosh {
         if (_tokens.length != _tokenIds.length) revert INVALID_PARAM();
 
         for (uint256 i = 0; i < _tokens.length; ++i) {
-            _transferERC1155(_tokens[i], _recipient, _tokenIds[i], _amounts[i]);
+            IERC1155(_tokens[i]).safeTransferFrom(
+                msg.sender,
+                _recipient,
+                _tokenIds[i],
+                _amounts[i],
+                ''
+            );
         }
     }
 
@@ -139,49 +194,13 @@ contract Swosh {
         if (_tokens.length != _recipients.length) revert INVALID_PARAM();
 
         for (uint256 i = 0; i < _tokens.length; ++i) {
-            _transferERC1155(
-                _tokens[i],
+            IERC1155(_tokens[i]).safeTransferFrom(
+                msg.sender,
                 _recipients[i],
                 _tokenIds[i],
-                _amounts[i]
+                _amounts[i],
+                ''
             );
         }
-    }
-
-    //     ____      __                        __   ______                 __  _
-    //    /  _/___  / /____  _________  ____ _/ /  / ____/_  ______  _____/ /_(_)___  ____  _____
-    //    / // __ \/ __/ _ \/ ___/ __ \/ __ `/ /  / /_  / / / / __ \/ ___/ __/ / __ \/ __ \/ ___/
-    //  _/ // / / / /_/  __/ /  / / / / /_/ / /  / __/ / /_/ / / / / /__/ /_/ / /_/ / / / (__  )
-    // /___/_/ /_/\__/\___/_/  /_/ /_/\__,_/_/  /_/    \__,_/_/ /_/\___/\__/_/\____/_/ /_/____/
-
-    function _transferERC20(
-        address _token,
-        address _to,
-        uint256 _amount
-    ) internal {
-        IERC20(_token).transferFrom(msg.sender, _to, _amount);
-    }
-
-    function _transferERC721(
-        address _token,
-        address _to,
-        uint256 _tokenId
-    ) internal {
-        IERC721(_token).transferFrom(msg.sender, _to, _tokenId);
-    }
-
-    function _transferERC1155(
-        address _token,
-        address _to,
-        uint256 _tokenId,
-        uint256 _amount
-    ) internal {
-        IERC1155(_token).safeTransferFrom(
-            msg.sender,
-            _to,
-            _tokenId,
-            _amount,
-            ''
-        );
     }
 }
