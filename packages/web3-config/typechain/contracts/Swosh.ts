@@ -23,27 +23,90 @@ import type {
   PromiseOrValue,
 } from "../common";
 
+export declare namespace Swosh {
+  export type ERC20ParamStruct = {
+    tokens: PromiseOrValue<string>[];
+    recipients: PromiseOrValue<string>[];
+    amounts: PromiseOrValue<BigNumberish>[];
+  };
+
+  export type ERC20ParamStructOutput = [string[], string[], BigNumber[]] & {
+    tokens: string[];
+    recipients: string[];
+    amounts: BigNumber[];
+  };
+
+  export type ERC721ParamStruct = {
+    tokens: PromiseOrValue<string>[];
+    recipients: PromiseOrValue<string>[];
+    tokenIds: PromiseOrValue<BigNumberish>[];
+  };
+
+  export type ERC721ParamStructOutput = [string[], string[], BigNumber[]] & {
+    tokens: string[];
+    recipients: string[];
+    tokenIds: BigNumber[];
+  };
+
+  export type ERC1155ParamStruct = {
+    tokens: PromiseOrValue<string>[];
+    recipients: PromiseOrValue<string>[];
+    tokenIds: PromiseOrValue<BigNumberish>[];
+    amounts: PromiseOrValue<BigNumberish>[];
+  };
+
+  export type ERC1155ParamStructOutput = [
+    string[],
+    string[],
+    BigNumber[],
+    BigNumber[]
+  ] & {
+    tokens: string[];
+    recipients: string[];
+    tokenIds: BigNumber[];
+    amounts: BigNumber[];
+  };
+}
+
 export interface SwoshInterface extends utils.Interface {
   functions: {
     "batchTransferERC1155(address[],address,uint256[],uint256[])": FunctionFragment;
-    "batchTransferERC1155(address[],address[],uint256[],uint256[])": FunctionFragment;
-    "batchTransferERC20(address[],address[],uint256[])": FunctionFragment;
     "batchTransferERC20(address[],address,uint256[])": FunctionFragment;
-    "batchTransferERC721(address[],address[],uint256[])": FunctionFragment;
     "batchTransferERC721(address[],address,uint256[])": FunctionFragment;
+    "megaTransfer((address[],address[],uint256[]),(address[],address[],uint256[]),(address[],address[],uint256[],uint256[]))": FunctionFragment;
+    "multiBatchTransferERC1155(address[],address[],uint256[],uint256[])": FunctionFragment;
+    "multiBatchTransferERC20(address[],address[],uint256[])": FunctionFragment;
+    "multiBatchTransferERC721(address[],address[],uint256[])": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
+      | "batchTransferERC1155"
       | "batchTransferERC1155(address[],address,uint256[],uint256[])"
-      | "batchTransferERC1155(address[],address[],uint256[],uint256[])"
-      | "batchTransferERC20(address[],address[],uint256[])"
+      | "batchTransferERC20"
       | "batchTransferERC20(address[],address,uint256[])"
-      | "batchTransferERC721(address[],address[],uint256[])"
+      | "batchTransferERC721"
       | "batchTransferERC721(address[],address,uint256[])"
+      | "megaTransfer"
+      | "megaTransfer((address[],address[],uint256[]),(address[],address[],uint256[]),(address[],address[],uint256[],uint256[]))"
+      | "multiBatchTransferERC1155"
+      | "multiBatchTransferERC1155(address[],address[],uint256[],uint256[])"
+      | "multiBatchTransferERC20"
+      | "multiBatchTransferERC20(address[],address[],uint256[])"
+      | "multiBatchTransferERC721"
+      | "multiBatchTransferERC721(address[],address[],uint256[])"
   ): FunctionFragment;
 
   encodeFunctionData(
+    functionFragment: "batchTransferERC1155",
+    values: [
+      PromiseOrValue<string>[],
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<BigNumberish>[]
+    ]
+  ): string;
+  encodeFunctionData(
     functionFragment: "batchTransferERC1155(address[],address,uint256[],uint256[])",
     values: [
       PromiseOrValue<string>[],
@@ -53,19 +116,10 @@ export interface SwoshInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "batchTransferERC1155(address[],address[],uint256[],uint256[])",
+    functionFragment: "batchTransferERC20",
     values: [
       PromiseOrValue<string>[],
-      PromiseOrValue<string>[],
-      PromiseOrValue<BigNumberish>[],
-      PromiseOrValue<BigNumberish>[]
-    ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "batchTransferERC20(address[],address[],uint256[])",
-    values: [
-      PromiseOrValue<string>[],
-      PromiseOrValue<string>[],
+      PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>[]
     ]
   ): string;
@@ -78,10 +132,10 @@ export interface SwoshInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "batchTransferERC721(address[],address[],uint256[])",
+    functionFragment: "batchTransferERC721",
     values: [
       PromiseOrValue<string>[],
-      PromiseOrValue<string>[],
+      PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>[]
     ]
   ): string;
@@ -90,20 +144,86 @@ export interface SwoshInterface extends utils.Interface {
     values: [
       PromiseOrValue<string>[],
       PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>[]
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "megaTransfer",
+    values: [
+      Swosh.ERC20ParamStruct,
+      Swosh.ERC721ParamStruct,
+      Swosh.ERC1155ParamStruct
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "megaTransfer((address[],address[],uint256[]),(address[],address[],uint256[]),(address[],address[],uint256[],uint256[]))",
+    values: [
+      Swosh.ERC20ParamStruct,
+      Swosh.ERC721ParamStruct,
+      Swosh.ERC1155ParamStruct
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "multiBatchTransferERC1155",
+    values: [
+      PromiseOrValue<string>[],
+      PromiseOrValue<string>[],
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<BigNumberish>[]
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "multiBatchTransferERC1155(address[],address[],uint256[],uint256[])",
+    values: [
+      PromiseOrValue<string>[],
+      PromiseOrValue<string>[],
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<BigNumberish>[]
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "multiBatchTransferERC20",
+    values: [
+      PromiseOrValue<string>[],
+      PromiseOrValue<string>[],
+      PromiseOrValue<BigNumberish>[]
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "multiBatchTransferERC20(address[],address[],uint256[])",
+    values: [
+      PromiseOrValue<string>[],
+      PromiseOrValue<string>[],
+      PromiseOrValue<BigNumberish>[]
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "multiBatchTransferERC721",
+    values: [
+      PromiseOrValue<string>[],
+      PromiseOrValue<string>[],
+      PromiseOrValue<BigNumberish>[]
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "multiBatchTransferERC721(address[],address[],uint256[])",
+    values: [
+      PromiseOrValue<string>[],
+      PromiseOrValue<string>[],
       PromiseOrValue<BigNumberish>[]
     ]
   ): string;
 
   decodeFunctionResult(
+    functionFragment: "batchTransferERC1155",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "batchTransferERC1155(address[],address,uint256[],uint256[])",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "batchTransferERC1155(address[],address[],uint256[],uint256[])",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "batchTransferERC20(address[],address[],uint256[])",
+    functionFragment: "batchTransferERC20",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -111,11 +231,43 @@ export interface SwoshInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "batchTransferERC721(address[],address[],uint256[])",
+    functionFragment: "batchTransferERC721",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "batchTransferERC721(address[],address,uint256[])",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "megaTransfer",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "megaTransfer((address[],address[],uint256[]),(address[],address[],uint256[]),(address[],address[],uint256[],uint256[]))",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "multiBatchTransferERC1155",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "multiBatchTransferERC1155(address[],address[],uint256[],uint256[])",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "multiBatchTransferERC20",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "multiBatchTransferERC20(address[],address[],uint256[])",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "multiBatchTransferERC721",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "multiBatchTransferERC721(address[],address[],uint256[])",
     data: BytesLike
   ): Result;
 
@@ -149,136 +301,310 @@ export interface Swosh extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    batchTransferERC1155(
+      _tokens: PromiseOrValue<string>[],
+      _recipient: PromiseOrValue<string>,
+      _tokenIds: PromiseOrValue<BigNumberish>[],
+      _amounts: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     "batchTransferERC1155(address[],address,uint256[],uint256[])"(
       _tokens: PromiseOrValue<string>[],
-      _to: PromiseOrValue<string>,
+      _recipient: PromiseOrValue<string>,
       _tokenIds: PromiseOrValue<BigNumberish>[],
       _amounts: PromiseOrValue<BigNumberish>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    "batchTransferERC1155(address[],address[],uint256[],uint256[])"(
+    batchTransferERC20(
       _tokens: PromiseOrValue<string>[],
-      _to: PromiseOrValue<string>[],
-      _tokenIds: PromiseOrValue<BigNumberish>[],
-      _amounts: PromiseOrValue<BigNumberish>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    "batchTransferERC20(address[],address[],uint256[])"(
-      _tokens: PromiseOrValue<string>[],
-      _to: PromiseOrValue<string>[],
+      _recipient: PromiseOrValue<string>,
       _amounts: PromiseOrValue<BigNumberish>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     "batchTransferERC20(address[],address,uint256[])"(
       _tokens: PromiseOrValue<string>[],
-      _to: PromiseOrValue<string>,
+      _recipient: PromiseOrValue<string>,
       _amounts: PromiseOrValue<BigNumberish>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    "batchTransferERC721(address[],address[],uint256[])"(
+    batchTransferERC721(
       _tokens: PromiseOrValue<string>[],
-      _to: PromiseOrValue<string>[],
+      _recipient: PromiseOrValue<string>,
       _tokenIds: PromiseOrValue<BigNumberish>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     "batchTransferERC721(address[],address,uint256[])"(
       _tokens: PromiseOrValue<string>[],
-      _to: PromiseOrValue<string>,
+      _recipient: PromiseOrValue<string>,
+      _tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    megaTransfer(
+      _erc20Params: Swosh.ERC20ParamStruct,
+      _erc721Params: Swosh.ERC721ParamStruct,
+      _erc1155Params: Swosh.ERC1155ParamStruct,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "megaTransfer((address[],address[],uint256[]),(address[],address[],uint256[]),(address[],address[],uint256[],uint256[]))"(
+      _erc20Params: Swosh.ERC20ParamStruct,
+      _erc721Params: Swosh.ERC721ParamStruct,
+      _erc1155Params: Swosh.ERC1155ParamStruct,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    multiBatchTransferERC1155(
+      _tokens: PromiseOrValue<string>[],
+      _recipients: PromiseOrValue<string>[],
+      _tokenIds: PromiseOrValue<BigNumberish>[],
+      _amounts: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "multiBatchTransferERC1155(address[],address[],uint256[],uint256[])"(
+      _tokens: PromiseOrValue<string>[],
+      _recipients: PromiseOrValue<string>[],
+      _tokenIds: PromiseOrValue<BigNumberish>[],
+      _amounts: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    multiBatchTransferERC20(
+      _tokens: PromiseOrValue<string>[],
+      _recipients: PromiseOrValue<string>[],
+      _amounts: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "multiBatchTransferERC20(address[],address[],uint256[])"(
+      _tokens: PromiseOrValue<string>[],
+      _recipients: PromiseOrValue<string>[],
+      _amounts: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    multiBatchTransferERC721(
+      _tokens: PromiseOrValue<string>[],
+      _recipients: PromiseOrValue<string>[],
+      _tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "multiBatchTransferERC721(address[],address[],uint256[])"(
+      _tokens: PromiseOrValue<string>[],
+      _recipients: PromiseOrValue<string>[],
       _tokenIds: PromiseOrValue<BigNumberish>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
 
+  batchTransferERC1155(
+    _tokens: PromiseOrValue<string>[],
+    _recipient: PromiseOrValue<string>,
+    _tokenIds: PromiseOrValue<BigNumberish>[],
+    _amounts: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   "batchTransferERC1155(address[],address,uint256[],uint256[])"(
     _tokens: PromiseOrValue<string>[],
-    _to: PromiseOrValue<string>,
+    _recipient: PromiseOrValue<string>,
     _tokenIds: PromiseOrValue<BigNumberish>[],
     _amounts: PromiseOrValue<BigNumberish>[],
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  "batchTransferERC1155(address[],address[],uint256[],uint256[])"(
+  batchTransferERC20(
     _tokens: PromiseOrValue<string>[],
-    _to: PromiseOrValue<string>[],
-    _tokenIds: PromiseOrValue<BigNumberish>[],
-    _amounts: PromiseOrValue<BigNumberish>[],
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  "batchTransferERC20(address[],address[],uint256[])"(
-    _tokens: PromiseOrValue<string>[],
-    _to: PromiseOrValue<string>[],
+    _recipient: PromiseOrValue<string>,
     _amounts: PromiseOrValue<BigNumberish>[],
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   "batchTransferERC20(address[],address,uint256[])"(
     _tokens: PromiseOrValue<string>[],
-    _to: PromiseOrValue<string>,
+    _recipient: PromiseOrValue<string>,
     _amounts: PromiseOrValue<BigNumberish>[],
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  "batchTransferERC721(address[],address[],uint256[])"(
+  batchTransferERC721(
     _tokens: PromiseOrValue<string>[],
-    _to: PromiseOrValue<string>[],
+    _recipient: PromiseOrValue<string>,
     _tokenIds: PromiseOrValue<BigNumberish>[],
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   "batchTransferERC721(address[],address,uint256[])"(
     _tokens: PromiseOrValue<string>[],
-    _to: PromiseOrValue<string>,
+    _recipient: PromiseOrValue<string>,
+    _tokenIds: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  megaTransfer(
+    _erc20Params: Swosh.ERC20ParamStruct,
+    _erc721Params: Swosh.ERC721ParamStruct,
+    _erc1155Params: Swosh.ERC1155ParamStruct,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "megaTransfer((address[],address[],uint256[]),(address[],address[],uint256[]),(address[],address[],uint256[],uint256[]))"(
+    _erc20Params: Swosh.ERC20ParamStruct,
+    _erc721Params: Swosh.ERC721ParamStruct,
+    _erc1155Params: Swosh.ERC1155ParamStruct,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  multiBatchTransferERC1155(
+    _tokens: PromiseOrValue<string>[],
+    _recipients: PromiseOrValue<string>[],
+    _tokenIds: PromiseOrValue<BigNumberish>[],
+    _amounts: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "multiBatchTransferERC1155(address[],address[],uint256[],uint256[])"(
+    _tokens: PromiseOrValue<string>[],
+    _recipients: PromiseOrValue<string>[],
+    _tokenIds: PromiseOrValue<BigNumberish>[],
+    _amounts: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  multiBatchTransferERC20(
+    _tokens: PromiseOrValue<string>[],
+    _recipients: PromiseOrValue<string>[],
+    _amounts: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "multiBatchTransferERC20(address[],address[],uint256[])"(
+    _tokens: PromiseOrValue<string>[],
+    _recipients: PromiseOrValue<string>[],
+    _amounts: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  multiBatchTransferERC721(
+    _tokens: PromiseOrValue<string>[],
+    _recipients: PromiseOrValue<string>[],
+    _tokenIds: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "multiBatchTransferERC721(address[],address[],uint256[])"(
+    _tokens: PromiseOrValue<string>[],
+    _recipients: PromiseOrValue<string>[],
     _tokenIds: PromiseOrValue<BigNumberish>[],
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
+    batchTransferERC1155(
+      _tokens: PromiseOrValue<string>[],
+      _recipient: PromiseOrValue<string>,
+      _tokenIds: PromiseOrValue<BigNumberish>[],
+      _amounts: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     "batchTransferERC1155(address[],address,uint256[],uint256[])"(
       _tokens: PromiseOrValue<string>[],
-      _to: PromiseOrValue<string>,
+      _recipient: PromiseOrValue<string>,
       _tokenIds: PromiseOrValue<BigNumberish>[],
       _amounts: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides
     ): Promise<void>;
 
-    "batchTransferERC1155(address[],address[],uint256[],uint256[])"(
+    batchTransferERC20(
       _tokens: PromiseOrValue<string>[],
-      _to: PromiseOrValue<string>[],
-      _tokenIds: PromiseOrValue<BigNumberish>[],
-      _amounts: PromiseOrValue<BigNumberish>[],
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    "batchTransferERC20(address[],address[],uint256[])"(
-      _tokens: PromiseOrValue<string>[],
-      _to: PromiseOrValue<string>[],
+      _recipient: PromiseOrValue<string>,
       _amounts: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides
     ): Promise<void>;
 
     "batchTransferERC20(address[],address,uint256[])"(
       _tokens: PromiseOrValue<string>[],
-      _to: PromiseOrValue<string>,
+      _recipient: PromiseOrValue<string>,
       _amounts: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides
     ): Promise<void>;
 
-    "batchTransferERC721(address[],address[],uint256[])"(
+    batchTransferERC721(
       _tokens: PromiseOrValue<string>[],
-      _to: PromiseOrValue<string>[],
+      _recipient: PromiseOrValue<string>,
       _tokenIds: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides
     ): Promise<void>;
 
     "batchTransferERC721(address[],address,uint256[])"(
       _tokens: PromiseOrValue<string>[],
-      _to: PromiseOrValue<string>,
+      _recipient: PromiseOrValue<string>,
+      _tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    megaTransfer(
+      _erc20Params: Swosh.ERC20ParamStruct,
+      _erc721Params: Swosh.ERC721ParamStruct,
+      _erc1155Params: Swosh.ERC1155ParamStruct,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "megaTransfer((address[],address[],uint256[]),(address[],address[],uint256[]),(address[],address[],uint256[],uint256[]))"(
+      _erc20Params: Swosh.ERC20ParamStruct,
+      _erc721Params: Swosh.ERC721ParamStruct,
+      _erc1155Params: Swosh.ERC1155ParamStruct,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    multiBatchTransferERC1155(
+      _tokens: PromiseOrValue<string>[],
+      _recipients: PromiseOrValue<string>[],
+      _tokenIds: PromiseOrValue<BigNumberish>[],
+      _amounts: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "multiBatchTransferERC1155(address[],address[],uint256[],uint256[])"(
+      _tokens: PromiseOrValue<string>[],
+      _recipients: PromiseOrValue<string>[],
+      _tokenIds: PromiseOrValue<BigNumberish>[],
+      _amounts: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    multiBatchTransferERC20(
+      _tokens: PromiseOrValue<string>[],
+      _recipients: PromiseOrValue<string>[],
+      _amounts: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "multiBatchTransferERC20(address[],address[],uint256[])"(
+      _tokens: PromiseOrValue<string>[],
+      _recipients: PromiseOrValue<string>[],
+      _amounts: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    multiBatchTransferERC721(
+      _tokens: PromiseOrValue<string>[],
+      _recipients: PromiseOrValue<string>[],
+      _tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "multiBatchTransferERC721(address[],address[],uint256[])"(
+      _tokens: PromiseOrValue<string>[],
+      _recipients: PromiseOrValue<string>[],
       _tokenIds: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides
     ): Promise<void>;
@@ -287,92 +613,208 @@ export interface Swosh extends BaseContract {
   filters: {};
 
   estimateGas: {
+    batchTransferERC1155(
+      _tokens: PromiseOrValue<string>[],
+      _recipient: PromiseOrValue<string>,
+      _tokenIds: PromiseOrValue<BigNumberish>[],
+      _amounts: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     "batchTransferERC1155(address[],address,uint256[],uint256[])"(
       _tokens: PromiseOrValue<string>[],
-      _to: PromiseOrValue<string>,
+      _recipient: PromiseOrValue<string>,
       _tokenIds: PromiseOrValue<BigNumberish>[],
       _amounts: PromiseOrValue<BigNumberish>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    "batchTransferERC1155(address[],address[],uint256[],uint256[])"(
+    batchTransferERC20(
       _tokens: PromiseOrValue<string>[],
-      _to: PromiseOrValue<string>[],
-      _tokenIds: PromiseOrValue<BigNumberish>[],
-      _amounts: PromiseOrValue<BigNumberish>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    "batchTransferERC20(address[],address[],uint256[])"(
-      _tokens: PromiseOrValue<string>[],
-      _to: PromiseOrValue<string>[],
+      _recipient: PromiseOrValue<string>,
       _amounts: PromiseOrValue<BigNumberish>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     "batchTransferERC20(address[],address,uint256[])"(
       _tokens: PromiseOrValue<string>[],
-      _to: PromiseOrValue<string>,
+      _recipient: PromiseOrValue<string>,
       _amounts: PromiseOrValue<BigNumberish>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    "batchTransferERC721(address[],address[],uint256[])"(
+    batchTransferERC721(
       _tokens: PromiseOrValue<string>[],
-      _to: PromiseOrValue<string>[],
+      _recipient: PromiseOrValue<string>,
       _tokenIds: PromiseOrValue<BigNumberish>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     "batchTransferERC721(address[],address,uint256[])"(
       _tokens: PromiseOrValue<string>[],
-      _to: PromiseOrValue<string>,
+      _recipient: PromiseOrValue<string>,
+      _tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    megaTransfer(
+      _erc20Params: Swosh.ERC20ParamStruct,
+      _erc721Params: Swosh.ERC721ParamStruct,
+      _erc1155Params: Swosh.ERC1155ParamStruct,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "megaTransfer((address[],address[],uint256[]),(address[],address[],uint256[]),(address[],address[],uint256[],uint256[]))"(
+      _erc20Params: Swosh.ERC20ParamStruct,
+      _erc721Params: Swosh.ERC721ParamStruct,
+      _erc1155Params: Swosh.ERC1155ParamStruct,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    multiBatchTransferERC1155(
+      _tokens: PromiseOrValue<string>[],
+      _recipients: PromiseOrValue<string>[],
+      _tokenIds: PromiseOrValue<BigNumberish>[],
+      _amounts: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "multiBatchTransferERC1155(address[],address[],uint256[],uint256[])"(
+      _tokens: PromiseOrValue<string>[],
+      _recipients: PromiseOrValue<string>[],
+      _tokenIds: PromiseOrValue<BigNumberish>[],
+      _amounts: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    multiBatchTransferERC20(
+      _tokens: PromiseOrValue<string>[],
+      _recipients: PromiseOrValue<string>[],
+      _amounts: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "multiBatchTransferERC20(address[],address[],uint256[])"(
+      _tokens: PromiseOrValue<string>[],
+      _recipients: PromiseOrValue<string>[],
+      _amounts: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    multiBatchTransferERC721(
+      _tokens: PromiseOrValue<string>[],
+      _recipients: PromiseOrValue<string>[],
+      _tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "multiBatchTransferERC721(address[],address[],uint256[])"(
+      _tokens: PromiseOrValue<string>[],
+      _recipients: PromiseOrValue<string>[],
       _tokenIds: PromiseOrValue<BigNumberish>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
+    batchTransferERC1155(
+      _tokens: PromiseOrValue<string>[],
+      _recipient: PromiseOrValue<string>,
+      _tokenIds: PromiseOrValue<BigNumberish>[],
+      _amounts: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     "batchTransferERC1155(address[],address,uint256[],uint256[])"(
       _tokens: PromiseOrValue<string>[],
-      _to: PromiseOrValue<string>,
+      _recipient: PromiseOrValue<string>,
       _tokenIds: PromiseOrValue<BigNumberish>[],
       _amounts: PromiseOrValue<BigNumberish>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    "batchTransferERC1155(address[],address[],uint256[],uint256[])"(
+    batchTransferERC20(
       _tokens: PromiseOrValue<string>[],
-      _to: PromiseOrValue<string>[],
-      _tokenIds: PromiseOrValue<BigNumberish>[],
-      _amounts: PromiseOrValue<BigNumberish>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    "batchTransferERC20(address[],address[],uint256[])"(
-      _tokens: PromiseOrValue<string>[],
-      _to: PromiseOrValue<string>[],
+      _recipient: PromiseOrValue<string>,
       _amounts: PromiseOrValue<BigNumberish>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     "batchTransferERC20(address[],address,uint256[])"(
       _tokens: PromiseOrValue<string>[],
-      _to: PromiseOrValue<string>,
+      _recipient: PromiseOrValue<string>,
       _amounts: PromiseOrValue<BigNumberish>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    "batchTransferERC721(address[],address[],uint256[])"(
+    batchTransferERC721(
       _tokens: PromiseOrValue<string>[],
-      _to: PromiseOrValue<string>[],
+      _recipient: PromiseOrValue<string>,
       _tokenIds: PromiseOrValue<BigNumberish>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     "batchTransferERC721(address[],address,uint256[])"(
       _tokens: PromiseOrValue<string>[],
-      _to: PromiseOrValue<string>,
+      _recipient: PromiseOrValue<string>,
+      _tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    megaTransfer(
+      _erc20Params: Swosh.ERC20ParamStruct,
+      _erc721Params: Swosh.ERC721ParamStruct,
+      _erc1155Params: Swosh.ERC1155ParamStruct,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "megaTransfer((address[],address[],uint256[]),(address[],address[],uint256[]),(address[],address[],uint256[],uint256[]))"(
+      _erc20Params: Swosh.ERC20ParamStruct,
+      _erc721Params: Swosh.ERC721ParamStruct,
+      _erc1155Params: Swosh.ERC1155ParamStruct,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    multiBatchTransferERC1155(
+      _tokens: PromiseOrValue<string>[],
+      _recipients: PromiseOrValue<string>[],
+      _tokenIds: PromiseOrValue<BigNumberish>[],
+      _amounts: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "multiBatchTransferERC1155(address[],address[],uint256[],uint256[])"(
+      _tokens: PromiseOrValue<string>[],
+      _recipients: PromiseOrValue<string>[],
+      _tokenIds: PromiseOrValue<BigNumberish>[],
+      _amounts: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    multiBatchTransferERC20(
+      _tokens: PromiseOrValue<string>[],
+      _recipients: PromiseOrValue<string>[],
+      _amounts: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "multiBatchTransferERC20(address[],address[],uint256[])"(
+      _tokens: PromiseOrValue<string>[],
+      _recipients: PromiseOrValue<string>[],
+      _amounts: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    multiBatchTransferERC721(
+      _tokens: PromiseOrValue<string>[],
+      _recipients: PromiseOrValue<string>[],
+      _tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "multiBatchTransferERC721(address[],address[],uint256[])"(
+      _tokens: PromiseOrValue<string>[],
+      _recipients: PromiseOrValue<string>[],
       _tokenIds: PromiseOrValue<BigNumberish>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;

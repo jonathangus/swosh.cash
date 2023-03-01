@@ -7,7 +7,6 @@ import { useAccount } from 'wagmi';
 const Recap = () => {
   const selected = useSelectionStore((state) => state.selected);
   const { address } = useAccount();
-  //   const address = '0xcd0dee491644db2d62bc7852fe7dea54e85a777c';
   const { data: signer } = useSigner();
   const { data: fee } = useFeeData();
   const provider = useProvider();

@@ -5,6 +5,14 @@ import { QueryObserverResult } from '@tanstack/react-query';
 
 export type ERCType = 'erc721' | 'erc1155' | 'erc20';
 
+export type TransferPart = {
+  id: string;
+  contractAddress: string;
+  type: ERCType;
+  txs: TransferData[];
+  tokenId?: string;
+};
+
 export type TransferData = {
   to: string;
   amount: BigNumber;

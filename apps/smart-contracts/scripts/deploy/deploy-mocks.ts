@@ -1,16 +1,10 @@
 import { ethers, network } from 'hardhat';
-import { printDetails, writeDeploymentDetails } from '../utils/utils';
+import { printDetails, writeDeploymentDetails } from './utils/utils';
 import MERC20_ABI from '../../abi/MockERC20.json';
 import MERC721_ABI from '../../abi/MockERC721.json';
 import MERC1155_ABI from '../../abi/MockERC1155.json';
 
 async function main() {
-  const JONT = '0x5abbdbfe7257e30ffd40903bdc7d2e27557db60d';
-  const MORKE = '0xb17D45a7d3A130B44c9114A485DAFB721e08fCE7';
-  const PILOU = '0x301933aEf6bB308f090087e9075ed5bFcBd3e0B3';
-
-  const TESTERS = [JONT, MORKE, PILOU];
-
   const [deployer] = await ethers.getSigners();
 
   // Contract Factories
@@ -339,55 +333,6 @@ async function main() {
     '-----------------------------------------------------------------------------------------------------------------------------------'
   );
   console.log('');
-
-  for (let i = 0; i < TESTERS.length; i++) {
-    await m20_1
-      .connect(deployer)
-      .mint(TESTERS[i], ethers.utils.parseEther('1000'));
-    await m20_2
-      .connect(deployer)
-      .mint(TESTERS[i], ethers.utils.parseEther('1000'));
-    await m20_3
-      .connect(deployer)
-      .mint(TESTERS[i], ethers.utils.parseEther('1000'));
-    await m20_4
-      .connect(deployer)
-      .mint(TESTERS[i], ethers.utils.parseEther('1000'));
-    await m20_5
-      .connect(deployer)
-      .mint(TESTERS[i], ethers.utils.parseEther('1000'));
-    await m20_6
-      .connect(deployer)
-      .mint(TESTERS[i], ethers.utils.parseEther('1000'));
-
-    console.log('MINTED ERC-20s for : ', TESTERS[i]);
-
-    await m721_1.connect(deployer).mint(TESTERS[i]);
-    await m721_1.connect(deployer).mint(TESTERS[i]);
-    await m721_1.connect(deployer).mint(TESTERS[i]);
-    await m721_2.connect(deployer).mint(TESTERS[i]);
-    await m721_2.connect(deployer).mint(TESTERS[i]);
-    await m721_2.connect(deployer).mint(TESTERS[i]);
-    await m721_3.connect(deployer).mint(TESTERS[i]);
-    await m721_3.connect(deployer).mint(TESTERS[i]);
-    await m721_3.connect(deployer).mint(TESTERS[i]);
-    await m721_3.connect(deployer).mint(TESTERS[i]);
-    await m721_4.connect(deployer).mint(TESTERS[i]);
-    await m721_4.connect(deployer).mint(TESTERS[i]);
-    await m721_5.connect(deployer).mint(TESTERS[i]);
-    await m721_5.connect(deployer).mint(TESTERS[i]);
-    await m721_5.connect(deployer).mint(TESTERS[i]);
-
-    console.log('MINTED ERC-721s for : ', TESTERS[i]);
-
-    await m1155_1.connect(deployer).mintBatch(TESTERS[i], [0, 1, 2], [5, 5, 5]);
-    await m1155_2.connect(deployer).mintBatch(TESTERS[i], [0, 1, 2], [5, 5, 5]);
-    await m1155_3.connect(deployer).mintBatch(TESTERS[i], [0, 1, 2], [5, 5, 5]);
-    await m1155_4.connect(deployer).mintBatch(TESTERS[i], [0, 1, 2], [5, 5, 5]);
-    await m1155_5.connect(deployer).mintBatch(TESTERS[i], [0, 1, 2], [5, 5, 5]);
-    
-    console.log('MINTED ERC-1155s for : ', TESTERS[i]);
-  }
 }
 
 main();

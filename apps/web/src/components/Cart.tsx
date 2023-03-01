@@ -1,4 +1,7 @@
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { useTxStore } from '../stores/useTxStore';
+import { v4 as uuidv4 } from 'uuid';
 
 type Props = {};
 
@@ -9,7 +12,14 @@ const Cart = ({}: Props) => {
       .flatMap((val) => val);
   });
 
-  console.log(allTxs);
+  const parts = useTxStore((state) => state.parts);
+
+  const [uuid] = useState(uuidv4());
+
+  useEffect(() => {
+    window.localStorage.setItem(uuid, JSON.stringify({ parts }));
+  }, [uuid, parts]);
+
   return (
     <div>
       {allTxs.map((tx) => (
@@ -17,6 +27,7 @@ const Cart = ({}: Props) => {
           {tx.amount?.toString()} to {tx.to}
         </div>
       ))}
+      <Link href={`/${uuid}`}>Go checkout</Link>
     </div>
   );
 };

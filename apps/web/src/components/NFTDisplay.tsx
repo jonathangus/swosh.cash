@@ -57,6 +57,7 @@ const NFTDisplay = ({ nft }: Props) => {
           id={nft.id}
           balance={nft.type === 'erc1155' ? nft.balance : 1}
           multiple={nft.type === 'erc1155'}
+          tokenId={nft.token_id}
         />
       }
       footer={nft.type === 'erc1155' ? <div>{nft.balance}</div> : null}
