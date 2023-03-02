@@ -34,6 +34,7 @@ export type TokenBase = {
   contract_address: string;
   id: string;
   last_transferred_at: string;
+  uniqBy: string;
 };
 
 export type ExternalNftData = {
