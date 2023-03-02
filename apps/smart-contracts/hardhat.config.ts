@@ -28,7 +28,8 @@ const OPTIMISM_ALCHEMY_KEY = process.env.OPTIMISM_ALCHEMY_KEY;
 const GOERLI_ALCHEMY_KEY = process.env.GOERLI_ALCHEMY_KEY;
 const POLYGON_ALCHEMY_KEY = process.env.POLYGON_ALCHEMY_KEY;
 const ARBITRUM_ALCHEMY_KEY = process.env.ARBITRUM_ALCHEMY_KEY;
-  
+const OPTIMISM_GOERLI_ALCHEMY_KEY = process.env.OPTIMISM_GOERLI_ALCHEMY_KEY;
+
 const config: HardhatUserConfig = {
   solidity: '0.8.18',
   defaultNetwork: 'hardhat',
@@ -78,7 +79,7 @@ const config: HardhatUserConfig = {
     },
     optimismGoerli: {
       chainId: 420,
-      url: `https://opt-goerli.g.alchemy.com/v2/${ALCHEMY_KEY}`,
+      url: `https://opt-goerli.g.alchemy.com/v2/${OPTIMISM_GOERLI_ALCHEMY_KEY}`,
       accounts: [`${PRIVATE_KEY}`],
     },
   },
