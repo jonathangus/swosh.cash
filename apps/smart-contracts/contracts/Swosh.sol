@@ -11,17 +11,36 @@ error FORBIDDEN();
 contract Swosh {
     struct ERC20Param {
         address[] tokens;
-        address[] recipients;
+        address recipient;
         uint256[] amounts;
     }
 
     struct ERC721Param {
         address[] tokens;
-        address[] recipients;
+        address recipient;
         uint256[] tokenIds;
     }
 
     struct ERC1155Param {
+        address[] tokens;
+        address recipient;
+        uint256[] tokenIds;
+        uint256[] amounts;
+    }
+
+    struct MultiERC20Param {
+        address[] tokens;
+        address[] recipients;
+        uint256[] amounts;
+    }
+
+    struct MultiERC721Param {
+        address[] tokens;
+        address[] recipients;
+        uint256[] tokenIds;
+    }
+
+    struct MultiERC1155Param {
         address[] tokens;
         address[] recipients;
         uint256[] tokenIds;
@@ -41,8 +60,37 @@ contract Swosh {
         ERC721Param calldata _erc721Params,
         ERC1155Param calldata _erc1155Params
     ) external {
-        if (msg.sender != tx.origin) revert FORBIDDEN();
+        if (_erc20Params.tokens.length > 0) {
+            this.batchTransferERC20(
+                _erc20Params.tokens,
+                _erc20Params.recipient,
+                _erc20Params.amounts
+            );
+        }
 
+        if (_erc721Params.tokens.length > 0) {
+            this.batchTransferERC721(
+                _erc721Params.tokens,
+                _erc721Params.recipient,
+                _erc721Params.tokenIds
+            );
+        }
+
+        if (_erc1155Params.tokens.length > 0) {
+            this.batchTransferERC1155(
+                _erc1155Params.tokens,
+                _erc1155Params.recipient,
+                _erc1155Params.tokenIds,
+                _erc1155Params.amounts
+            );
+        }
+    }
+
+    function multiMegaTransfer(
+        MultiERC20Param calldata _erc20Params,
+        MultiERC721Param calldata _erc721Params,
+        MultiERC1155Param calldata _erc1155Params
+    ) external {
         if (_erc20Params.tokens.length > 0) {
             this.multiBatchTransferERC20(
                 _erc20Params.tokens,

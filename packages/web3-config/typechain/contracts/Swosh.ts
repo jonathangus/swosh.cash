@@ -26,36 +26,79 @@ import type {
 export declare namespace Swosh {
   export type ERC20ParamStruct = {
     tokens: PromiseOrValue<string>[];
-    recipients: PromiseOrValue<string>[];
+    recipient: PromiseOrValue<string>;
     amounts: PromiseOrValue<BigNumberish>[];
   };
 
-  export type ERC20ParamStructOutput = [string[], string[], BigNumber[]] & {
+  export type ERC20ParamStructOutput = [string[], string, BigNumber[]] & {
     tokens: string[];
-    recipients: string[];
+    recipient: string;
     amounts: BigNumber[];
   };
 
   export type ERC721ParamStruct = {
     tokens: PromiseOrValue<string>[];
-    recipients: PromiseOrValue<string>[];
+    recipient: PromiseOrValue<string>;
     tokenIds: PromiseOrValue<BigNumberish>[];
   };
 
-  export type ERC721ParamStructOutput = [string[], string[], BigNumber[]] & {
+  export type ERC721ParamStructOutput = [string[], string, BigNumber[]] & {
     tokens: string[];
-    recipients: string[];
+    recipient: string;
     tokenIds: BigNumber[];
   };
 
   export type ERC1155ParamStruct = {
+    tokens: PromiseOrValue<string>[];
+    recipient: PromiseOrValue<string>;
+    tokenIds: PromiseOrValue<BigNumberish>[];
+    amounts: PromiseOrValue<BigNumberish>[];
+  };
+
+  export type ERC1155ParamStructOutput = [
+    string[],
+    string,
+    BigNumber[],
+    BigNumber[]
+  ] & {
+    tokens: string[];
+    recipient: string;
+    tokenIds: BigNumber[];
+    amounts: BigNumber[];
+  };
+
+  export type MultiERC20ParamStruct = {
+    tokens: PromiseOrValue<string>[];
+    recipients: PromiseOrValue<string>[];
+    amounts: PromiseOrValue<BigNumberish>[];
+  };
+
+  export type MultiERC20ParamStructOutput = [
+    string[],
+    string[],
+    BigNumber[]
+  ] & { tokens: string[]; recipients: string[]; amounts: BigNumber[] };
+
+  export type MultiERC721ParamStruct = {
+    tokens: PromiseOrValue<string>[];
+    recipients: PromiseOrValue<string>[];
+    tokenIds: PromiseOrValue<BigNumberish>[];
+  };
+
+  export type MultiERC721ParamStructOutput = [
+    string[],
+    string[],
+    BigNumber[]
+  ] & { tokens: string[]; recipients: string[]; tokenIds: BigNumber[] };
+
+  export type MultiERC1155ParamStruct = {
     tokens: PromiseOrValue<string>[];
     recipients: PromiseOrValue<string>[];
     tokenIds: PromiseOrValue<BigNumberish>[];
     amounts: PromiseOrValue<BigNumberish>[];
   };
 
-  export type ERC1155ParamStructOutput = [
+  export type MultiERC1155ParamStructOutput = [
     string[],
     string[],
     BigNumber[],
@@ -73,10 +116,11 @@ export interface SwoshInterface extends utils.Interface {
     "batchTransferERC1155(address[],address,uint256[],uint256[])": FunctionFragment;
     "batchTransferERC20(address[],address,uint256[])": FunctionFragment;
     "batchTransferERC721(address[],address,uint256[])": FunctionFragment;
-    "megaTransfer((address[],address[],uint256[]),(address[],address[],uint256[]),(address[],address[],uint256[],uint256[]))": FunctionFragment;
+    "megaTransfer((address[],address,uint256[]),(address[],address,uint256[]),(address[],address,uint256[],uint256[]))": FunctionFragment;
     "multiBatchTransferERC1155(address[],address[],uint256[],uint256[])": FunctionFragment;
     "multiBatchTransferERC20(address[],address[],uint256[])": FunctionFragment;
     "multiBatchTransferERC721(address[],address[],uint256[])": FunctionFragment;
+    "multiMegaTransfer((address[],address[],uint256[]),(address[],address[],uint256[]),(address[],address[],uint256[],uint256[]))": FunctionFragment;
   };
 
   getFunction(
@@ -88,13 +132,15 @@ export interface SwoshInterface extends utils.Interface {
       | "batchTransferERC721"
       | "batchTransferERC721(address[],address,uint256[])"
       | "megaTransfer"
-      | "megaTransfer((address[],address[],uint256[]),(address[],address[],uint256[]),(address[],address[],uint256[],uint256[]))"
+      | "megaTransfer((address[],address,uint256[]),(address[],address,uint256[]),(address[],address,uint256[],uint256[]))"
       | "multiBatchTransferERC1155"
       | "multiBatchTransferERC1155(address[],address[],uint256[],uint256[])"
       | "multiBatchTransferERC20"
       | "multiBatchTransferERC20(address[],address[],uint256[])"
       | "multiBatchTransferERC721"
       | "multiBatchTransferERC721(address[],address[],uint256[])"
+      | "multiMegaTransfer"
+      | "multiMegaTransfer((address[],address[],uint256[]),(address[],address[],uint256[]),(address[],address[],uint256[],uint256[]))"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -156,7 +202,7 @@ export interface SwoshInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "megaTransfer((address[],address[],uint256[]),(address[],address[],uint256[]),(address[],address[],uint256[],uint256[]))",
+    functionFragment: "megaTransfer((address[],address,uint256[]),(address[],address,uint256[]),(address[],address,uint256[],uint256[]))",
     values: [
       Swosh.ERC20ParamStruct,
       Swosh.ERC721ParamStruct,
@@ -213,6 +259,22 @@ export interface SwoshInterface extends utils.Interface {
       PromiseOrValue<BigNumberish>[]
     ]
   ): string;
+  encodeFunctionData(
+    functionFragment: "multiMegaTransfer",
+    values: [
+      Swosh.MultiERC20ParamStruct,
+      Swosh.MultiERC721ParamStruct,
+      Swosh.MultiERC1155ParamStruct
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "multiMegaTransfer((address[],address[],uint256[]),(address[],address[],uint256[]),(address[],address[],uint256[],uint256[]))",
+    values: [
+      Swosh.MultiERC20ParamStruct,
+      Swosh.MultiERC721ParamStruct,
+      Swosh.MultiERC1155ParamStruct
+    ]
+  ): string;
 
   decodeFunctionResult(
     functionFragment: "batchTransferERC1155",
@@ -243,7 +305,7 @@ export interface SwoshInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "megaTransfer((address[],address[],uint256[]),(address[],address[],uint256[]),(address[],address[],uint256[],uint256[]))",
+    functionFragment: "megaTransfer((address[],address,uint256[]),(address[],address,uint256[]),(address[],address,uint256[],uint256[]))",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -268,6 +330,14 @@ export interface SwoshInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "multiBatchTransferERC721(address[],address[],uint256[])",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "multiMegaTransfer",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "multiMegaTransfer((address[],address[],uint256[]),(address[],address[],uint256[]),(address[],address[],uint256[],uint256[]))",
     data: BytesLike
   ): Result;
 
@@ -352,7 +422,7 @@ export interface Swosh extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    "megaTransfer((address[],address[],uint256[]),(address[],address[],uint256[]),(address[],address[],uint256[],uint256[]))"(
+    "megaTransfer((address[],address,uint256[]),(address[],address,uint256[]),(address[],address,uint256[],uint256[]))"(
       _erc20Params: Swosh.ERC20ParamStruct,
       _erc721Params: Swosh.ERC721ParamStruct,
       _erc1155Params: Swosh.ERC1155ParamStruct,
@@ -400,6 +470,20 @@ export interface Swosh extends BaseContract {
       _tokens: PromiseOrValue<string>[],
       _recipients: PromiseOrValue<string>[],
       _tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    multiMegaTransfer(
+      _erc20Params: Swosh.MultiERC20ParamStruct,
+      _erc721Params: Swosh.MultiERC721ParamStruct,
+      _erc1155Params: Swosh.MultiERC1155ParamStruct,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "multiMegaTransfer((address[],address[],uint256[]),(address[],address[],uint256[]),(address[],address[],uint256[],uint256[]))"(
+      _erc20Params: Swosh.MultiERC20ParamStruct,
+      _erc721Params: Swosh.MultiERC721ParamStruct,
+      _erc1155Params: Swosh.MultiERC1155ParamStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
@@ -455,7 +539,7 @@ export interface Swosh extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  "megaTransfer((address[],address[],uint256[]),(address[],address[],uint256[]),(address[],address[],uint256[],uint256[]))"(
+  "megaTransfer((address[],address,uint256[]),(address[],address,uint256[]),(address[],address,uint256[],uint256[]))"(
     _erc20Params: Swosh.ERC20ParamStruct,
     _erc721Params: Swosh.ERC721ParamStruct,
     _erc1155Params: Swosh.ERC1155ParamStruct,
@@ -503,6 +587,20 @@ export interface Swosh extends BaseContract {
     _tokens: PromiseOrValue<string>[],
     _recipients: PromiseOrValue<string>[],
     _tokenIds: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  multiMegaTransfer(
+    _erc20Params: Swosh.MultiERC20ParamStruct,
+    _erc721Params: Swosh.MultiERC721ParamStruct,
+    _erc1155Params: Swosh.MultiERC1155ParamStruct,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "multiMegaTransfer((address[],address[],uint256[]),(address[],address[],uint256[]),(address[],address[],uint256[],uint256[]))"(
+    _erc20Params: Swosh.MultiERC20ParamStruct,
+    _erc721Params: Swosh.MultiERC721ParamStruct,
+    _erc1155Params: Swosh.MultiERC1155ParamStruct,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -558,7 +656,7 @@ export interface Swosh extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    "megaTransfer((address[],address[],uint256[]),(address[],address[],uint256[]),(address[],address[],uint256[],uint256[]))"(
+    "megaTransfer((address[],address,uint256[]),(address[],address,uint256[]),(address[],address,uint256[],uint256[]))"(
       _erc20Params: Swosh.ERC20ParamStruct,
       _erc721Params: Swosh.ERC721ParamStruct,
       _erc1155Params: Swosh.ERC1155ParamStruct,
@@ -606,6 +704,20 @@ export interface Swosh extends BaseContract {
       _tokens: PromiseOrValue<string>[],
       _recipients: PromiseOrValue<string>[],
       _tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    multiMegaTransfer(
+      _erc20Params: Swosh.MultiERC20ParamStruct,
+      _erc721Params: Swosh.MultiERC721ParamStruct,
+      _erc1155Params: Swosh.MultiERC1155ParamStruct,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "multiMegaTransfer((address[],address[],uint256[]),(address[],address[],uint256[]),(address[],address[],uint256[],uint256[]))"(
+      _erc20Params: Swosh.MultiERC20ParamStruct,
+      _erc721Params: Swosh.MultiERC721ParamStruct,
+      _erc1155Params: Swosh.MultiERC1155ParamStruct,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -664,7 +776,7 @@ export interface Swosh extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    "megaTransfer((address[],address[],uint256[]),(address[],address[],uint256[]),(address[],address[],uint256[],uint256[]))"(
+    "megaTransfer((address[],address,uint256[]),(address[],address,uint256[]),(address[],address,uint256[],uint256[]))"(
       _erc20Params: Swosh.ERC20ParamStruct,
       _erc721Params: Swosh.ERC721ParamStruct,
       _erc1155Params: Swosh.ERC1155ParamStruct,
@@ -712,6 +824,20 @@ export interface Swosh extends BaseContract {
       _tokens: PromiseOrValue<string>[],
       _recipients: PromiseOrValue<string>[],
       _tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    multiMegaTransfer(
+      _erc20Params: Swosh.MultiERC20ParamStruct,
+      _erc721Params: Swosh.MultiERC721ParamStruct,
+      _erc1155Params: Swosh.MultiERC1155ParamStruct,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "multiMegaTransfer((address[],address[],uint256[]),(address[],address[],uint256[]),(address[],address[],uint256[],uint256[]))"(
+      _erc20Params: Swosh.MultiERC20ParamStruct,
+      _erc721Params: Swosh.MultiERC721ParamStruct,
+      _erc1155Params: Swosh.MultiERC1155ParamStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
@@ -768,7 +894,7 @@ export interface Swosh extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    "megaTransfer((address[],address[],uint256[]),(address[],address[],uint256[]),(address[],address[],uint256[],uint256[]))"(
+    "megaTransfer((address[],address,uint256[]),(address[],address,uint256[]),(address[],address,uint256[],uint256[]))"(
       _erc20Params: Swosh.ERC20ParamStruct,
       _erc721Params: Swosh.ERC721ParamStruct,
       _erc1155Params: Swosh.ERC1155ParamStruct,
@@ -816,6 +942,20 @@ export interface Swosh extends BaseContract {
       _tokens: PromiseOrValue<string>[],
       _recipients: PromiseOrValue<string>[],
       _tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    multiMegaTransfer(
+      _erc20Params: Swosh.MultiERC20ParamStruct,
+      _erc721Params: Swosh.MultiERC721ParamStruct,
+      _erc1155Params: Swosh.MultiERC1155ParamStruct,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "multiMegaTransfer((address[],address[],uint256[]),(address[],address[],uint256[]),(address[],address[],uint256[],uint256[]))"(
+      _erc20Params: Swosh.MultiERC20ParamStruct,
+      _erc721Params: Swosh.MultiERC721ParamStruct,
+      _erc1155Params: Swosh.MultiERC1155ParamStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };
