@@ -253,22 +253,142 @@ describe('Swosh Unit Tests', function () {
   });
 
   describe('METHOD : batchTransferERC721', async () => {
-    it('should send ERC-721 in batch to one receiver', async () => {});
-    it('should not send ERC-721 (Invalid Parameters)', async () => {});
+    it('should send ERC-721 in batch to one receiver', async () => {
+      const tokens = [
+        nft721_0.address,
+        nft721_1.address,
+        nft721_2.address,
+        nft721_2.address,
+      ];
+      const recipient = user2.address;
+      const tokenIds = [0, 0, 0, 1];
+
+      expect(await nft721_0.balanceOf(recipient)).to.eq(0);
+      expect(await nft721_1.balanceOf(recipient)).to.eq(0);
+      expect(await nft721_2.balanceOf(recipient)).to.eq(0);
+
+      await nft721_0.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft721_1.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft721_2.connect(user1).setApprovalForAll(swosh.address, true);
+
+      await swosh
+        .connect(user1)
+        .batchTransferERC721(tokens, recipient, tokenIds);
+
+      expect(await nft721_0.balanceOf(recipient)).to.eq(1);
+      expect(await nft721_1.balanceOf(recipient)).to.eq(1);
+      expect(await nft721_2.balanceOf(recipient)).to.eq(2);
+    });
+    it('should not send ERC-721 (Invalid Parameters)', async () => {
+      const tokens = [
+        nft721_0.address,
+        nft721_1.address,
+        nft721_2.address,
+        nft721_2.address,
+      ];
+      const recipient = user2.address;
+      const tokenIds = [0, 0, 0];
+
+      await nft721_0.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft721_1.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft721_2.connect(user1).setApprovalForAll(swosh.address, true);
+
+      await expect(
+        swosh.connect(user1).batchTransferERC721(tokens, recipient, tokenIds)
+      ).to.be.revertedWith('INVALID_PARAM');
+    });
     it('should not send ERC-721 (Caller is not EOA)', async () => {});
   });
 
-  // describe('METHOD : multiBatchTransferERC721', async () => {
-  //   it('should send ERC-721 in batch to multiple receivers', async () => {});
-  //   it('should not send ERC-721 (Invalid Parameters)', async () => {});
-  //   it('should not send ERC-721 (Caller is not EOA)', async () => {});
-  // });
+  describe('METHOD : multiBatchTransferERC721', async () => {
+    it('should send ERC-721 in batch to multiple receivers', async () => {
+      const tokens = [
+        nft721_0.address,
+        nft721_1.address,
+        nft721_2.address,
+        nft721_2.address,
+      ];
+      const recipients = [
+        user2.address,
+        user2.address,
+        user3.address,
+        user3.address,
+      ];
+      const tokenIds = [0, 0, 0, 1];
 
-  // describe('METHOD : batchTransferERC1155', async () => {
-  //   it('should send ERC-1155 in batch to one receiver', async () => {});
-  //   it('should not send ERC-1155 (Invalid Parameters)', async () => {});
-  //   it('should not send ERC-1155 (Caller is not EOA)', async () => {});
-  // });
+      expect(await nft721_0.balanceOf(recipients[0])).to.eq(0);
+      expect(await nft721_1.balanceOf(recipients[1])).to.eq(0);
+      expect(await nft721_2.balanceOf(recipients[2])).to.eq(0);
+      expect(await nft721_2.balanceOf(recipients[3])).to.eq(0);
+
+      await nft721_0.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft721_1.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft721_2.connect(user1).setApprovalForAll(swosh.address, true);
+
+      await swosh
+        .connect(user1)
+        .multiBatchTransferERC721(tokens, recipients, tokenIds);
+
+      expect(await nft721_0.balanceOf(recipients[0])).to.eq(1);
+      expect(await nft721_1.balanceOf(recipients[1])).to.eq(1);
+      expect(await nft721_2.balanceOf(recipients[2])).to.eq(2);
+    });
+    it('should not send ERC-721 (Invalid Parameters - tokenIds.length)', async () => {
+      const tokens = [
+        nft721_0.address,
+        nft721_1.address,
+        nft721_2.address,
+        nft721_2.address,
+      ];
+      const recipients = [
+        user2.address,
+        user2.address,
+        user3.address,
+        user3.address,
+      ];
+      const tokenIds = [0, 0, 0];
+
+      await nft721_0.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft721_1.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft721_2.connect(user1).setApprovalForAll(swosh.address, true);
+
+      await expect(
+        swosh
+          .connect(user1)
+          .multiBatchTransferERC721(tokens, recipients, tokenIds)
+      ).to.be.revertedWith('INVALID_PARAM');
+    });
+
+    it('should not send ERC-721 (Invalid Parameters - recipients.length)', async () => {
+      const tokens = [
+        nft721_0.address,
+        nft721_1.address,
+        nft721_2.address,
+        nft721_2.address,
+      ];
+      const recipients = [user2.address, user2.address, user3.address];
+      const tokenIds = [0, 0, 0, 1];
+
+      await nft721_0.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft721_1.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft721_2.connect(user1).setApprovalForAll(swosh.address, true);
+
+      await expect(
+        swosh
+          .connect(user1)
+          .multiBatchTransferERC721(tokens, recipients, tokenIds)
+      ).to.be.revertedWith('INVALID_PARAM');
+    });
+    it('should not send ERC-721 (Caller is not EOA)', async () => {});
+  });
+
+  describe('METHOD : batchTransferERC1155', async () => {
+    it('should send ERC-1155 in batch to one receiver', async () => {
+      
+    });
+    it('should not send ERC-1155 (Invalid Parameters)', async () => {});
+    it('should not send ERC-1155 (Caller is not EOA)', async () => {});
+  });
 
   // describe('METHOD : multiBatchTransferERC1155', async () => {
   //   it('should send ERC-1155 in batch to multiple receivers', async () => {});
