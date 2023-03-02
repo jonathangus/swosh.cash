@@ -2,10 +2,12 @@ import { BigNumber } from '@ethersproject/bignumber';
 import { Contract, ethers } from 'ethers';
 import { useEffect, useState } from 'react';
 import { TransferPart } from 'shared-config';
-import { useSigner } from 'wagmi';
+import { useProvider, useSigner } from 'wagmi';
 
 export const usePrepareTxs = (parts: TransferPart[], from: string) => {
   let [completeTxs, setCompleteTx] = useState([]);
+  const provider = useProvider();
+
   const preparedTxs = [];
   for (let part of parts) {
     let contractAddress;
@@ -40,7 +42,7 @@ export const usePrepareTxs = (parts: TransferPart[], from: string) => {
   const { data: signer } = useSigner();
   const populate = async () => {
     const promises = preparedTxs.map(async (tx) => {
-      let data;
+      let data, gas;
       try {
         if (tx.type === 'erc20') {
           const contract = new Contract(
@@ -50,7 +52,7 @@ export const usePrepareTxs = (parts: TransferPart[], from: string) => {
             ],
             signer
           );
-
+          console.log(tx.to, tx.amount);
           data = await contract.populateTransaction.transfer(tx.to, tx.amount);
           console.log(data);
         } else if (tx.type === 'erc721') {
@@ -84,6 +86,7 @@ export const usePrepareTxs = (parts: TransferPart[], from: string) => {
             'x0'
           );
         }
+        gas = await provider.estimateGas(data);
       } catch (e) {
         console.error(e);
       }
@@ -91,6 +94,7 @@ export const usePrepareTxs = (parts: TransferPart[], from: string) => {
       return {
         ...tx,
         txData: data,
+        gas,
       };
     });
 
