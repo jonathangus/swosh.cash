@@ -25,14 +25,15 @@ const TokenDisplay = ({ token }: Props) => {
       }
       title={token.contract_name || token.contract_address}
       subText={token.contract_ticker_symbol}
-      footer={
+      prefix={
         <div>
           {formatBigNumber(token.balance, {
             decimals: token.contract_decimals,
             maxDecimals: 2,
-          })}{' '}
+          })}
+          {/* {' '}
           {token.contract_ticker_symbol} ($
-          {formatNumber(token.quote, { maxDecimals: 2 })})
+          {formatNumber(token.quote, { maxDecimals: 2 })}) */}
         </div>
       }
       onSelect={() => {

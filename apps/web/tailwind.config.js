@@ -18,7 +18,7 @@
 //   plugins: [],
 // };
 
-const { fontFamily } = require('tailwindcss/defaultTheme');
+//const { fontFamily } = require('tailwindcss/defaultTheme');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -28,15 +28,19 @@ module.exports = {
     extend: {
       fontFamily: {
         // sans: ['var(--font-sans)', ...fontFamily.sans],
-        display: ['Inter', 'sans-serif'],
+        display: ['ui-rounded', 'sans-serif'],
       },
 
       colors: {
         black: '#000',
         white: '#FFF',
+        error: '#B72928',
+        primary: '#325FFF',
         gray: {
           400: '#9C9C9C',
+          600: '#3A3A3A',
           700: '#1A1A1A',
+          800: '#101010',
         },
       },
       keyframes: {
