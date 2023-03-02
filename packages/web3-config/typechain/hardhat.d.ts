@@ -129,10 +129,6 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IERC165__factory>;
     getContractFactory(
-      name: "DataDecode",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.DataDecode__factory>;
-    getContractFactory(
       name: "MockERC1155",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.MockERC1155__factory>;
@@ -148,14 +144,6 @@ declare module "hardhat/types/runtime" {
       name: "Swosh",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Swosh__factory>;
-    getContractFactory(
-      name: "TokenTransfer",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.TokenTransfer__factory>;
-    getContractFactory(
-      name: "TransferCall",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.TransferCall__factory>;
 
     getContractAt(
       name: "AccessControl",
@@ -303,11 +291,6 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.IERC165>;
     getContractAt(
-      name: "DataDecode",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.DataDecode>;
-    getContractAt(
       name: "MockERC1155",
       address: string,
       signer?: ethers.Signer
@@ -327,16 +310,6 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.Swosh>;
-    getContractAt(
-      name: "TokenTransfer",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.TokenTransfer>;
-    getContractAt(
-      name: "TransferCall",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.TransferCall>;
 
     // default types
     getContractFactory(

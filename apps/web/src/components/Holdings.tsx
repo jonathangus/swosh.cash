@@ -26,26 +26,28 @@ const Holdings = () => {
 
   return (
     <>
-      <Tabs defaultValue="erc20" className="mt-12">
+      <Tabs defaultValue="assets" className="mt-12">
         <TabsList>
-          <TabsTrigger value="erc20">ERC20</TabsTrigger>
-          <TabsTrigger value="erc721">ERC721</TabsTrigger>{' '}
-          <TabsTrigger value="erc1155">ERC1155</TabsTrigger>
+          <TabsTrigger value="assets">Assets</TabsTrigger>
+          <TabsTrigger value="nfts">NFTs</TabsTrigger>{' '}
+          {/* <TabsTrigger value="erc1155">ERC1155</TabsTrigger> */}
         </TabsList>
-        <TabsContent value="erc20">
+        <TabsContent value="assets">
           <TokenHoldings items={ERC20Items} />
         </TabsContent>
 
-        <TabsContent value="erc721">
-          <ERC721Holdings items={ERC721Items} />
+        <TabsContent value="nfts">
+          <ERC721Holdings items={[...ERC721Items, ...ERC1155Items]} />
         </TabsContent>
 
-        <TabsContent value="erc1155">
+        {/*         <TabsContent value="erc1155">
           <ERC1155Holdings items={ERC1155Items} />
-        </TabsContent>
+        </TabsContent> */}
       </Tabs>
 
-      {holdingsQuery.isLoading && <div>Loading..</div>}
+      {holdingsQuery.isLoading && (
+        <div className="animate-pulse text-2xl">⏳</div>
+      )}
     </>
   );
 };

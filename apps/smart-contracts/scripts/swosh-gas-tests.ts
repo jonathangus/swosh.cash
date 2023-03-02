@@ -137,7 +137,7 @@ async function main() {
 
   let batchTx = await swosh
     .connect(user1)
-    .batchTransferERC20(tokens, recipients, amounts);
+    .multiBatchTransferERC20(tokens, recipients, amounts);
 
   let batchReceipt = await batchTx.wait();
 

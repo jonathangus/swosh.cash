@@ -94,34 +94,45 @@ const SelectionRow = ({
       />
 
       {type === 'erc1155' && (
-        <div className="flex">
-          <div className="mr-2" onClick={handleDecrease}>
+        <div className="bg-black px-2 rounded flex min-w-fit text-gray-400 items-center">
+          <div
+            className="flex items-center mr-2 px-2 rounded-full bg-gray-700"
+            onClick={handleDecrease}
+          >
             -
           </div>
           <div>
             {amount} / {maxBalance.toString()}
           </div>
-          <div className="ml-2" onClick={handleIncrease}>
+          <div
+            className="flex items-center ml-2 px-2 rounded-full bg-gray-700"
+            onClick={handleIncrease}
+          >
             +
           </div>
         </div>
       )}
 
       {type === 'erc20' && (
-        <div className="flex">
+        <div className="flex rounded items-center text-white bg-black pl-2 pt-1 pr-2 pb-1 gap-2">
           <input
             // type="number"
-            className="text-black"
+            className="max-w-[64px] bg-black"
             value={amount}
             onChange={(e) => handleAmountChange(e.target.value)}
           />
-          <div onClick={setMax}>Max</div>
+          <div className="cursor-pointer text-gray-400" onClick={setMax}>
+            Max
+          </div>
         </div>
       )}
 
       {onRemove && (
-        <div onClick={() => onRemove()} className="ml-4">
-          x
+        <div
+          onClick={() => onRemove()}
+          className="flex items-center ml-4 saturate-0"
+        >
+          ❌
         </div>
       )}
 

@@ -8,7 +8,7 @@ type Props = {
 const TokenHoldings = ({ items }: Props) => {
   return (
     <div>
-      <div className="grid grid-rows-1 gap-10	">
+      <div className="grid grid-rows-1 gap-4	">
         {items.map((item, i) => (
           <TokenDisplay key={i} token={item} />
         ))}

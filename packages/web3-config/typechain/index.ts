@@ -64,8 +64,6 @@ export type { ERC165 } from "./@openzeppelin/contracts/utils/introspection/ERC16
 export { ERC165__factory } from "./factories/@openzeppelin/contracts/utils/introspection/ERC165__factory";
 export type { IERC165 } from "./@openzeppelin/contracts/utils/introspection/IERC165";
 export { IERC165__factory } from "./factories/@openzeppelin/contracts/utils/introspection/IERC165__factory";
-export type { DataDecode } from "./contracts/DataDecode";
-export { DataDecode__factory } from "./factories/contracts/DataDecode__factory";
 export type { MockERC1155 } from "./contracts/mock/MockERC1155";
 export { MockERC1155__factory } from "./factories/contracts/mock/MockERC1155__factory";
 export type { MockERC20 } from "./contracts/mock/MockERC20";
@@ -74,7 +72,3 @@ export type { MockERC721 } from "./contracts/mock/MockERC721";
 export { MockERC721__factory } from "./factories/contracts/mock/MockERC721__factory";
 export type { Swosh } from "./contracts/Swosh";
 export { Swosh__factory } from "./factories/contracts/Swosh__factory";
-export type { TokenTransfer } from "./contracts/TokenTransfer";
-export { TokenTransfer__factory } from "./factories/contracts/TokenTransfer__factory";
-export type { TransferCall } from "./contracts/TransferCall";
-export { TransferCall__factory } from "./factories/contracts/TransferCall__factory";
