@@ -170,7 +170,7 @@ contract Swosh {
     ) external {
         // Check if there are ERC20 tokens to be sent
         if (_erc20Params.tokens.length > 0) {
-            this.batchTransferERC20(
+            _batchTransferERC20(
                 _erc20Params.tokens,
                 _erc20Params.recipient,
                 _erc20Params.amounts
@@ -179,7 +179,7 @@ contract Swosh {
 
         // Check if there are ERC721 tokens to be sent
         if (_erc721Params.tokens.length > 0) {
-            this.batchTransferERC721(
+            _batchTransferERC721(
                 _erc721Params.tokens,
                 _erc721Params.recipient,
                 _erc721Params.tokenIds
@@ -188,7 +188,7 @@ contract Swosh {
 
         // Check if there are ERC1155 tokens to be sent
         if (_erc1155Params.tokens.length > 0) {
-            this.batchTransferERC1155(
+            _batchTransferERC1155(
                 _erc1155Params.tokens,
                 _erc1155Params.recipient,
                 _erc1155Params.tokenIds,
@@ -212,7 +212,7 @@ contract Swosh {
     ) external {
         // Check if there are ERC20 tokens to be sent
         if (_erc20Params.tokens.length > 0) {
-            this.multiBatchTransferERC20(
+            _multiBatchTransferERC20(
                 _erc20Params.tokens,
                 _erc20Params.recipients,
                 _erc20Params.amounts
@@ -221,7 +221,7 @@ contract Swosh {
 
         // Check if there are ERC721 tokens to be sent
         if (_erc721Params.tokens.length > 0) {
-            this.multiBatchTransferERC721(
+            _multiBatchTransferERC721(
                 _erc721Params.tokens,
                 _erc721Params.recipients,
                 _erc721Params.tokenIds
@@ -230,7 +230,7 @@ contract Swosh {
 
         // Check if there are ERC1155 tokens to be sent
         if (_erc1155Params.tokens.length > 0) {
-            this.multiBatchTransferERC1155(
+            _multiBatchTransferERC1155(
                 _erc1155Params.tokens,
                 _erc1155Params.recipients,
                 _erc1155Params.tokenIds,
@@ -258,19 +258,7 @@ contract Swosh {
         address _recipient,
         uint256[] calldata _amounts
     ) external {
-        // Check that the caller is an EOA
-        if (msg.sender != tx.origin) revert FORBIDDEN();
-
-        // Check parameters correctness
-        if (_tokens.length != _amounts.length) revert INVALID_PARAM();
-
-        for (uint256 i = 0; i < _tokens.length; ++i) {
-            IERC20(_tokens[i]).transferFrom(
-                msg.sender,
-                _recipient,
-                _amounts[i]
-            );
-        }
+        _batchTransferERC20(_tokens, _recipient, _amounts);
     }
 
     /**
@@ -286,20 +274,7 @@ contract Swosh {
         address[] calldata _recipients,
         uint256[] calldata _amounts
     ) external {
-        // Check that the caller is an EOA
-        if (msg.sender != tx.origin) revert FORBIDDEN();
-
-        // Check parameters correctness
-        if (_tokens.length != _recipients.length) revert INVALID_PARAM();
-        if (_tokens.length != _amounts.length) revert INVALID_PARAM();
-
-        for (uint256 i = 0; i < _tokens.length; ++i) {
-            IERC20(_tokens[i]).transferFrom(
-                msg.sender,
-                _recipients[i],
-                _amounts[i]
-            );
-        }
+        _multiBatchTransferERC20(_tokens, _recipients, _amounts);
     }
 
     //     __________  ______   ________  ___
@@ -321,19 +296,7 @@ contract Swosh {
         address _recipient,
         uint256[] calldata _tokenIds
     ) external {
-        // Check that the caller is an EOA
-        if (msg.sender != tx.origin) revert FORBIDDEN();
-
-        // Check parameters correctness
-        if (_tokens.length != _tokenIds.length) revert INVALID_PARAM();
-
-        for (uint256 i = 0; i < _tokens.length; ++i) {
-            IERC721(_tokens[i]).transferFrom(
-                msg.sender,
-                _recipient,
-                _tokenIds[i]
-            );
-        }
+        _batchTransferERC721(_tokens, _recipient, _tokenIds);
     }
 
     /**
@@ -349,20 +312,7 @@ contract Swosh {
         address[] calldata _recipients,
         uint256[] calldata _tokenIds
     ) external {
-        // Check that the caller is an EOA
-        if (msg.sender != tx.origin) revert FORBIDDEN();
-
-        // Check parameters correctness
-        if (_tokens.length != _tokenIds.length) revert INVALID_PARAM();
-        if (_tokens.length != _recipients.length) revert INVALID_PARAM();
-
-        for (uint256 i = 0; i < _tokens.length; ++i) {
-            IERC721(_tokens[i]).transferFrom(
-                msg.sender,
-                _recipients[i],
-                _tokenIds[i]
-            );
-        }
+        _multiBatchTransferERC721(_tokens, _recipients, _tokenIds);
     }
 
     //     __________  ______   __________________
@@ -386,9 +336,150 @@ contract Swosh {
         uint256[] calldata _tokenIds,
         uint256[] calldata _amounts
     ) external {
-        // Check that the caller is an EOA
-        if (msg.sender != tx.origin) revert FORBIDDEN();
+        _batchTransferERC1155(_tokens, _recipient, _tokenIds, _amounts);
+    }
 
+    /**
+     * @notice
+     *  Send multiple ERC1155 to multiple recipients
+     *
+     * @param _tokens ERC1155 token addresses to be sent
+     * @param _recipients recipients addresses
+     * @param _tokenIds tokenIds to be sent
+     * @param _amounts amounts to be sent
+     */
+    function multiBatchTransferERC1155(
+        address[] calldata _tokens,
+        address[] calldata _recipients,
+        uint256[] calldata _tokenIds,
+        uint256[] calldata _amounts
+    ) external {
+        _multiBatchTransferERC1155(_tokens, _recipients, _tokenIds, _amounts);
+    }
+
+    //      ____      __                        __   ______                 __  _
+    //     /  _/___  / /____  _________  ____ _/ /  / ____/_  ______  _____/ /_(_)___  ____  _____
+    //     / // __ \/ __/ _ \/ ___/ __ \/ __ `/ /  / /_  / / / / __ \/ ___/ __/ / __ \/ __ \/ ___/
+    //   _/ // / / / /_/  __/ /  / / / / /_/ / /  / __/ / /_/ / / / / /__/ /_/ / /_/ / / / (__  )
+    //  /___/_/ /_/\__/\___/_/  /_/ /_/\__,_/_/  /_/    \__,_/_/ /_/\___/\__/_/\____/_/ /_/____/
+
+    /**
+     * @notice
+     *  Send multiple ERC20 to one recipient
+     *
+     * @param _tokens ERC20 token addresses to be sent
+     * @param _recipient recipient address
+     * @param _amounts amounts to be sent
+     */
+    function _batchTransferERC20(
+        address[] calldata _tokens,
+        address _recipient,
+        uint256[] calldata _amounts
+    ) internal {
+        // Check parameters correctness
+        if (_tokens.length != _amounts.length) revert INVALID_PARAM();
+
+        for (uint256 i = 0; i < _tokens.length; ++i) {
+            IERC20(_tokens[i]).transferFrom(
+                msg.sender,
+                _recipient,
+                _amounts[i]
+            );
+        }
+    }
+
+    /**
+     * @notice
+     *  Send multiple ERC20 to multiple recipients
+     *
+     * @param _tokens ERC20 token addresses to be sent
+     * @param _recipients recipients addresses
+     * @param _amounts amounts to be sent
+     */
+    function _multiBatchTransferERC20(
+        address[] calldata _tokens,
+        address[] calldata _recipients,
+        uint256[] calldata _amounts
+    ) internal {
+        // Check parameters correctness
+        if (_tokens.length != _recipients.length) revert INVALID_PARAM();
+        if (_tokens.length != _amounts.length) revert INVALID_PARAM();
+
+        for (uint256 i = 0; i < _tokens.length; ++i) {
+            IERC20(_tokens[i]).transferFrom(
+                msg.sender,
+                _recipients[i],
+                _amounts[i]
+            );
+        }
+    }
+
+    /**
+     * @notice
+     *  Send multiple ERC721 to one recipient
+     *
+     * @param _tokens ERC721 token addresses to be sent
+     * @param _recipient recipient address
+     * @param _tokenIds tokenIds to be sent
+     */
+    function _batchTransferERC721(
+        address[] calldata _tokens,
+        address _recipient,
+        uint256[] calldata _tokenIds
+    ) internal {
+        // Check parameters correctness
+        if (_tokens.length != _tokenIds.length) revert INVALID_PARAM();
+
+        for (uint256 i = 0; i < _tokens.length; ++i) {
+            IERC721(_tokens[i]).transferFrom(
+                msg.sender,
+                _recipient,
+                _tokenIds[i]
+            );
+        }
+    }
+
+    /**
+     * @notice
+     *  Send multiple ERC721 to multiple recipients
+     *
+     * @param _tokens ERC721 token addresses to be sent
+     * @param _recipients recipients addresses
+     * @param _tokenIds tokenIds to be sent
+     */
+    function _multiBatchTransferERC721(
+        address[] calldata _tokens,
+        address[] calldata _recipients,
+        uint256[] calldata _tokenIds
+    ) internal {
+        // Check parameters correctness
+        if (_tokens.length != _tokenIds.length) revert INVALID_PARAM();
+        if (_tokens.length != _recipients.length) revert INVALID_PARAM();
+
+        for (uint256 i = 0; i < _tokens.length; ++i) {
+            IERC721(_tokens[i]).transferFrom(
+                msg.sender,
+                _recipients[i],
+                _tokenIds[i]
+            );
+        }
+    }
+
+    /**
+     * @notice
+     *  Send multiple ERC1155 to one recipient
+     *
+     * @param _tokens ERC1155 token addresses to be sent
+     * @param _recipient recipient address
+     * @param _tokenIds tokenIds to be sent
+     * @param _amounts amounts to be sent
+     */
+    function _batchTransferERC1155(
+        address[] calldata _tokens,
+        address _recipient,
+        uint256[] calldata _tokenIds,
+        uint256[] calldata _amounts
+    ) internal {
         // Check parameters correctness
         if (_tokens.length != _tokenIds.length) revert INVALID_PARAM();
 
@@ -412,15 +503,12 @@ contract Swosh {
      * @param _tokenIds tokenIds to be sent
      * @param _amounts amounts to be sent
      */
-    function multiBatchTransferERC1155(
+    function _multiBatchTransferERC1155(
         address[] calldata _tokens,
         address[] calldata _recipients,
         uint256[] calldata _tokenIds,
         uint256[] calldata _amounts
-    ) external {
-        // Check that the caller is an EOA
-        if (msg.sender != tx.origin) revert FORBIDDEN();
-
+    ) internal {
         // Check parameters correctness
         if (_tokens.length != _tokenIds.length) revert INVALID_PARAM();
         if (_tokens.length != _recipients.length) revert INVALID_PARAM();
