@@ -1,6 +1,6 @@
 import { ethers } from 'hardhat';
 
-async function main() {
+async function getGasCost() {
   /////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////
@@ -18,6 +18,11 @@ async function main() {
 
   const mockERC721Factory = await ethers.getContractFactory(
     'MockERC721',
+    deployer
+  );
+
+  const mockERC1155Factory = await ethers.getContractFactory(
+    'MockERC1155',
     deployer
   );
 
@@ -69,6 +74,19 @@ async function main() {
   );
   await nft3.deployed();
 
+  const nft1155_0 = await mockERC1155Factory.deploy(
+    'https://arweave.net/OYeIdxgQ7LQJqBL_VznWj0trqi9jqKHO3xHZcnt_Wn8'
+  );
+  const nft1155_1 = await mockERC1155Factory.deploy(
+    'ipfs://QmSqtwcqbRWUT3XCPfffcM6qrCPun8mDeBnGE4K7KiK5NF/'
+  );
+  const nft1155_2 = await mockERC1155Factory.deploy(
+    'https://nftdata.parallelnft.com/api/parallel-alpha'
+  );
+  const nft1155_3 = await mockERC1155Factory.deploy(
+    'ipfs://QmUfGyJx8phhTGbXSbTtjjX4x5UEytu5tVkSmf4DPF8WFe/'
+  );
+
   // Deploy TokenTransfer contract
   const swosh = await swoshFactory.deploy();
   await swosh.deployed();
@@ -88,81 +106,340 @@ async function main() {
     .connect(deployer)
     .mint(user1.address, ethers.utils.parseEther('10000'));
 
-  // Mint 8 NFT_0 to User 1
-  await nft0.connect(deployer).mint(user1.address);
-  await nft0.connect(deployer).mint(user1.address);
-  await nft0.connect(deployer).mint(user1.address);
-  await nft0.connect(deployer).mint(user1.address);
-  await nft0.connect(deployer).mint(user1.address);
-  await nft0.connect(deployer).mint(user1.address);
-  await nft0.connect(deployer).mint(user1.address);
-  await nft0.connect(deployer).mint(user1.address);
+  // Mint 10k TOKEN_3 to User1
+  await token3
+    .connect(deployer)
+    .mint(user1.address, ethers.utils.parseEther('10000'));
 
-  // Mint 4 NFT_1 to User 1
-  await nft1.connect(deployer).mint(user1.address);
-  await nft1.connect(deployer).mint(user1.address);
-  await nft1.connect(deployer).mint(user1.address);
-  await nft1.connect(deployer).mint(user1.address);
+  // Mint 10k TOKEN_4 to User1
+  await token4
+    .connect(deployer)
+    .mint(user1.address, ethers.utils.parseEther('10000'));
 
-  // Mint 6 NFT_2 to User 1
-  await nft2.connect(deployer).mint(user1.address);
-  await nft2.connect(deployer).mint(user1.address);
-  await nft2.connect(deployer).mint(user1.address);
-  await nft2.connect(deployer).mint(user1.address);
-  await nft2.connect(deployer).mint(user1.address);
-  await nft2.connect(deployer).mint(user1.address);
-
-  // Mint 4 NFT_3 to User 1
-  await nft3.connect(deployer).mint(user1.address);
-  await nft3.connect(deployer).mint(user1.address);
-  await nft3.connect(deployer).mint(user1.address);
-  await nft3.connect(deployer).mint(user1.address);
-
-  /////////////////////////////////////////////////////////////////////////////
-  /////////////////////////////////////////////////////////////////////////////
-  /////////////////////////////////////////////////////////////////////////////
-
-  // Batch Transfer ERC-20 to multiple recipients :
-
-  // Params
-  const amount = ethers.utils.parseEther('10');
-  const recipients = [user2.address, user3.address, user4.address];
-  const tokens = [token0.address, token1.address, token2.address];
-  const amounts = [amount, amount, amount];
+  // Mint 10k TOKEN_5 to User1
+  await token5
+    .connect(deployer)
+    .mint(user1.address, ethers.utils.parseEther('10000'));
 
   // Approve Transactions
-  let approveT0Tx = await token0
+  let approveTx = await token0
     .connect(user1)
     .approve(swosh.address, ethers.utils.parseEther('10000'));
 
-  let approveT0Receipt = await approveT0Tx.wait();
+  let approveReceipt = await approveTx.wait();
 
-  let approveT1Tx = await token1
+  const approveERC20 = approveReceipt.gasUsed;
+
+  await token1
     .connect(user1)
     .approve(swosh.address, ethers.utils.parseEther('10000'));
 
-  let approveT1Receipt = await approveT1Tx.wait();
+  await approveTx.wait();
 
-  let approveT2Tx = await token2
+  approveTx = await token2
     .connect(user1)
     .approve(swosh.address, ethers.utils.parseEther('10000'));
 
-  let approveT2Receipt = await approveT2Tx.wait();
+  await approveTx.wait();
 
-  // Batch Transfer Transaction
-
-  let batchTx = await swosh
+  approveTx = await token3
     .connect(user1)
-    .multiBatchTransferERC20(tokens, recipients, amounts);
+    .approve(swosh.address, ethers.utils.parseEther('10000'));
 
-  let batchReceipt = await batchTx.wait();
+  await approveTx.wait();
 
-  let totalGas = approveT0Receipt.gasUsed
-    .add(approveT1Receipt.gasUsed)
-    .add(approveT2Receipt.gasUsed)
-    .add(batchReceipt.gasUsed);
+  approveTx = await token4
+    .connect(user1)
+    .approve(swosh.address, ethers.utils.parseEther('10000'));
 
-  console.log('BATCH ERC-20 - MULTI RECIPIENT : ', +totalGas);
+  await approveTx.wait();
+
+  approveTx = await token5
+    .connect(user1)
+    .approve(swosh.address, ethers.utils.parseEther('10000'));
+
+  await approveTx.wait();
+
+  // Mint 100 NFT_0 to User 1
+  for (let i = 0; i < 100; i++) {
+    await nft0.connect(deployer).mint(user1.address);
+  }
+
+  approveTx = await nft0.connect(user1).setApprovalForAll(swosh.address, true);
+  approveReceipt = await approveTx.wait();
+
+  const approveERC721 = approveReceipt.gasUsed;
+
+  // Mint 100 NFT_1 to User 1
+  for (let i = 0; i < 100; i++) {
+    await nft1.connect(deployer).mint(user1.address);
+  }
+
+  approveTx = await nft1.connect(user1).setApprovalForAll(swosh.address, true);
+  await approveTx.wait();
+
+  // Mint 100 NFT_2 to User 1
+  for (let i = 0; i < 100; i++) {
+    await nft2.connect(deployer).mint(user1.address);
+  }
+
+  approveTx = await nft2.connect(user1).setApprovalForAll(swosh.address, true);
+  await approveTx.wait();
+
+  // Mint 100 NFT_3 to User 1
+  for (let i = 0; i < 100; i++) {
+    await nft3.connect(deployer).mint(user1.address);
+  }
+
+  approveTx = await nft3.connect(user1).setApprovalForAll(swosh.address, true);
+  await approveTx.wait();
+
+  await nft1155_0
+    .connect(deployer)
+    .mintBatch(user1.address, [0, 1, 2, 3, 4], [10, 10, 10, 10, 10], []);
+
+  await nft1155_1
+    .connect(deployer)
+    .mintBatch(user1.address, [0, 1, 2, 3, 4], [10, 10, 10, 10, 10], []);
+
+  await nft1155_2
+    .connect(deployer)
+    .mintBatch(user1.address, [0, 1, 2, 3, 4], [10, 10, 10, 10, 10], []);
+
+  await nft1155_3
+    .connect(deployer)
+    .mintBatch(user1.address, [0, 1, 2, 3, 4], [10, 10, 10, 10, 10], []);
+
+  approveTx = await nft1155_0
+    .connect(user1)
+    .setApprovalForAll(swosh.address, true);
+
+  approveReceipt = await approveTx.wait();
+
+  const approveERC1155 = approveReceipt.gasUsed;
+
+  await nft1155_1.connect(user1).setApprovalForAll(swosh.address, true);
+
+  await nft1155_2.connect(user1).setApprovalForAll(swosh.address, true);
+
+  await nft1155_3.connect(user1).setApprovalForAll(swosh.address, true);
+
+  /////////////////////////////////////////////////////////////////////////////
+
+  /////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////
+  const amount = ethers.utils.parseEther('10');
+
+  console.log(``);
+  console.log(`_________________________________________`);
+  console.log(``);
+  console.log(`ERC20`);
+  console.log(`TRANSFER`);
+  console.log(`_________________________________________`);
+  console.log(``);
+
+  let transferTx = await token0.connect(user1).transfer(user2.address, amount);
+  let transferReceipt = await transferTx.wait();
+  console.log(`1 ERC20 normal transfer  :`, +transferReceipt.gasUsed);
+
+  console.log(``);
+  console.log(`_________________________________________`);
+  console.log(``);
+  console.log(`ERC20`);
+  console.log(`BATCH TRANSFER`);
+  console.log(`_________________________________________`);
+  console.log(``);
+
+  const recipient = user2.address;
+
+  const tokens = [
+    token0.address,
+    token1.address,
+    token2.address,
+    token3.address,
+    token4.address,
+    token5.address,
+  ];
+
+  const amounts = [amount, amount, amount, amount, amount];
+
+  for (let i = 2; i < 6; i++) {
+    let batchTx = await swosh
+      .connect(user1)
+      .batchTransferERC20(
+        [...tokens].splice(0, i),
+        recipient,
+        [...amounts].splice(0, i)
+      );
+
+    let batchReceipt = await batchTx.wait();
+
+    console.log(`${i} ERC20 :`, +batchReceipt.gasUsed);
+  }
+
+  console.log(``);
+  console.log(`_________________________________________`);
+  console.log(``);
+  console.log(`ERC20`);
+  console.log(`MULTI BATCH TRANSFER`);
+  console.log(`_________________________________________`);
+  console.log(``);
+
+  const recipients = [
+    user2.address,
+    user3.address,
+    user4.address,
+    user5.address,
+    user6.address,
+  ];
+
+  for (let i = 2; i < 6; i++) {
+    let batchTx = await swosh
+      .connect(user1)
+      .multiBatchTransferERC20(
+        [...tokens].splice(0, i),
+        [...recipients].splice(0, i),
+        [...amounts].splice(0, i)
+      );
+
+    let batchReceipt = await batchTx.wait();
+    console.log(`${i} ERC20 :`, +batchReceipt.gasUsed);
+  }
+
+  console.log(``);
+  console.log(`_________________________________________`);
+  console.log(``);
+  console.log(`ERC721`);
+  console.log(`TRANSFER`);
+  console.log(`_________________________________________`);
+  console.log(``);
+
+  transferTx = await nft0
+    .connect(user1)
+    .transferFrom(user1.address, user2.address, 14);
+  transferReceipt = await transferTx.wait();
+  console.log(`1 ERC721 :`, +transferReceipt.gasUsed);
+
+  console.log(``);
+  console.log(`_________________________________________`);
+  console.log(``);
+  console.log(`ERC721`);
+  console.log(`BATCH TRANSFER - SAME COLLECTION`);
+  console.log(`_________________________________________`);
+  console.log(``);
+
+  let nfts = [
+    nft0.address,
+    nft0.address,
+    nft0.address,
+    nft0.address,
+    nft0.address,
+  ];
+
+  let tokenIds = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+
+  for (let i = 2; i < 6; i++) {
+    let batchTx = await swosh
+      .connect(user1)
+      .batchTransferERC721(
+        [...nfts].splice(0, i),
+        recipient,
+        tokenIds.splice(0, i)
+      );
+
+    let batchReceipt = await batchTx.wait();
+
+    console.log(`${i} ERC721 :`, +batchReceipt.gasUsed);
+  }
+
+  console.log(``);
+  console.log(`_________________________________________`);
+  console.log(``);
+  console.log(`ERC721`);
+  console.log(`BATCH TRANSFER - MULTI COLLECTION`);
+  console.log(`_________________________________________`);
+  console.log(``);
+
+  console.log(``);
+  console.log(`_________________________________________`);
+  console.log(``);
+  console.log(`ERC1155`);
+  console.log(`TRANSFER`);
+  console.log(`_________________________________________`);
+  console.log(``);
+
+  transferTx = await nft1155_0
+    .connect(user1)
+    .safeTransferFrom(user1.address, user2.address, 0, 1, []);
+  transferReceipt = await transferTx.wait();
+  console.log(`1 ERC1155 of 1 TokenID :`, +transferReceipt.gasUsed);
+
+  transferTx = await nft1155_0
+    .connect(user1)
+    .safeTransferFrom(user1.address, user2.address, 0, 2, []);
+  transferReceipt = await transferTx.wait();
+  console.log(`2 ERC1155 of 1 TokenID :`, +transferReceipt.gasUsed);
+
+  transferTx = await nft1155_0
+    .connect(user1)
+    .safeBatchTransferFrom(user1.address, user2.address, [0, 1], [1, 1], []);
+  transferReceipt = await transferTx.wait();
+  console.log(`1 ERC1155 of 2 TokenID :`, +transferReceipt.gasUsed);
+
+  transferTx = await nft1155_0
+    .connect(user1)
+    .safeBatchTransferFrom(user1.address, user2.address, [0, 1], [2, 2], []);
+  transferReceipt = await transferTx.wait();
+  console.log(`2 ERC1155 of 2 TokenID :`, +transferReceipt.gasUsed);
+
+  console.log(``);
+  console.log(`_________________________________________`);
+  console.log(``);
+  console.log(`ERC1155`);
+  console.log(`BATCH TRANSFER - SAME COLLECTION`);
+  console.log(`_________________________________________`);
+  console.log(``);
+
+  // nfts = [nft0.address, nft0.address, nft0.address, nft0.address, nft0.address];
+
+  // tokenIds = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+
+  // for (let i = 2; i < 6; i++) {
+  //   let batchTx = await swosh
+  //     .connect(user1)
+  //     .batchTransferERC721(
+  //       [...nfts].splice(0, i),
+  //       recipient,
+  //       tokenIds.splice(0, i)
+  //     );
+
+  //   let batchReceipt = await batchTx.wait();
+
+  //   console.log(`${i} ERC721 :`, +batchReceipt.gasUsed);
+  // }
+
+  console.log(``);
+  console.log(`_________________________________________`);
+  console.log(``);
+  console.log(`APPROVAL TXs`);
+  console.log(`ERC20 : `, +approveERC20);
+  console.log(`ERC721 : `, +approveERC721);
+  console.log(`ERC1155 : `, +approveERC1155);
+  console.log(`_________________________________________`);
+  console.log(``);
 }
+
+async function main() {
+  getGasCost();
+}
+
+async function multiBatchTransferERC721() {}
+
+async function batchTransferERC1155() {}
+async function multiBatchTransferERC1155() {}
+
+async function megaTransfer() {}
+async function multiMegaTransfer() {}
 
 main();
