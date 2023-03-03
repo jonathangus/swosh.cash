@@ -9,6 +9,7 @@ import PageLayout from '../components/PageLayout';
 import Floater from '../components/Floater';
 import { useAccount } from 'wagmi';
 import { useTxStore } from '../stores/useTxStore';
+import { OnChainProvider } from '../context/OnChainStateContext';
 
 const queryClient = new QueryClient();
 
@@ -24,11 +25,13 @@ function MyApp({ Component, pageProps }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <NotificationsProvider>
         <Web3Provider>
-          <PageLayout>
-            <Component {...pageProps} />
-            <Floater />
-          </PageLayout>
-          <NotificationHandler />
+          <OnChainProvider>
+            <PageLayout>
+              <Component {...pageProps} />
+              <Floater />
+            </PageLayout>
+            <NotificationHandler />
+          </OnChainProvider>
         </Web3Provider>
       </NotificationsProvider>
     </QueryClientProvider>

@@ -46,6 +46,7 @@ const convertResult = (item: RawTokenResult, i) => {
           external_data: nft.external_data,
           balance: Number(item.balance),
           id,
+          uniqBy: item.contract_address + nft.token_id,
           ...shared,
         };
       });
@@ -62,6 +63,7 @@ const convertResult = (item: RawTokenResult, i) => {
           type,
           token_id: nft.token_id,
           external_data: nft.external_data,
+          uniqBy: item.contract_address + nft.token_id,
           ...shared,
         };
       });
@@ -76,7 +78,7 @@ const convertResult = (item: RawTokenResult, i) => {
     }
     result = {
       id,
-
+      uniqBy: item.contract_address,
       balance: item.balance,
       quote_rate: item.quote_rate,
       quote: item.quote,

@@ -19,6 +19,7 @@ const TransferFlow = ({ parts }: Props) => {
           <div>type: {tx.type}</div>
           <div>tokenId: {tx.tokenId}</div>
           <div>data: {JSON.stringify(tx.txData)}</div>
+          <div>gas: {tx.gas && tx.gas.toString()} </div>
           <SendTx data={tx.txData} />
         </div>
       ))}
