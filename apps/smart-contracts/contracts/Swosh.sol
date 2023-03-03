@@ -50,105 +50,105 @@ import {IERC20} from '@openzeppelin/contracts/token/ERC20/IERC20.sol';
 import {IERC721} from '@openzeppelin/contracts/token/ERC721/IERC721.sol';
 import {IERC1155} from '@openzeppelin/contracts/token/ERC1155/IERC1155.sol';
 
-contract Swosh {
-    /**
+/**
     @notice Error thrown when invalid parameters are passed
-    **/
-    error INVALID_PARAM();
+*/
+error INVALID_PARAM();
 
-    /**
+/**
     @notice Error thrown when the operation is forbidden
-    **/
-    error FORBIDDEN();
+*/
+error FORBIDDEN();
 
-    /**
-     * @notice
-     *  ERC20 Batch Transfer Structure format
-     *
-     * @param tokens ERC20 token addresses to be sent
-     * @param recipient recipient address
-     * @param amounts amounts to be sent
-     */
-    struct ERC20Param {
-        address[] tokens;
-        address recipient;
-        uint256[] amounts;
-    }
+/**
+ * @notice
+ *  ERC20 Batch Transfer Structure format
+ *
+ * @param tokens ERC20 token addresses to be sent
+ * @param recipient recipient address
+ * @param amounts amounts to be sent
+ */
+struct ERC20Param {
+    address[] tokens;
+    address recipient;
+    uint256[] amounts;
+}
 
-    /**
-     * @notice
-     *  ERC721 Batch Transfer Structure format
-     *
-     * @param tokens ERC721 token addresses to be sent
-     * @param recipient recipient address
-     * @param tokenIds tokenIds to be sent
-     */
-    struct ERC721Param {
-        address[] tokens;
-        address recipient;
-        uint256[] tokenIds;
-    }
+/**
+ * @notice
+ *  ERC721 Batch Transfer Structure format
+ *
+ * @param tokens ERC721 token addresses to be sent
+ * @param recipient recipient address
+ * @param tokenIds tokenIds to be sent
+ */
+struct ERC721Param {
+    address[] tokens;
+    address recipient;
+    uint256[] tokenIds;
+}
 
-    /**
-     * @notice
-     *  ERC1155 Batch Transfer Structure format
-     *
-     * @param tokens ERC1155 token addresses to be sent
-     * @param recipient recipient address
-     * @param tokenIds tokenIds to be sent
-     * @param amounts amounts to be sent
-     */
-    struct ERC1155Param {
-        address[] tokens;
-        address recipient;
-        uint256[] tokenIds;
-        uint256[] amounts;
-    }
+/**
+ * @notice
+ *  ERC1155 Batch Transfer Structure format
+ *
+ * @param tokens ERC1155 token addresses to be sent
+ * @param recipient recipient address
+ * @param tokenIds tokenIds to be sent
+ * @param amounts amounts to be sent
+ */
+struct ERC1155Param {
+    address[] tokens;
+    address recipient;
+    uint256[] tokenIds;
+    uint256[] amounts;
+}
 
-    /**
-     * @notice
-     *  Multiple Recipients ERC20 Batch Transfer Structure format
-     *
-     * @param tokens ERC20 token addresses to be sent
-     * @param recipients recipients addresses
-     * @param amounts amounts to be sent
-     */
-    struct MultiERC20Param {
-        address[] tokens;
-        address[] recipients;
-        uint256[] amounts;
-    }
+/**
+ * @notice
+ *  Multiple Recipients ERC20 Batch Transfer Structure format
+ *
+ * @param tokens ERC20 token addresses to be sent
+ * @param recipients recipients addresses
+ * @param amounts amounts to be sent
+ */
+struct MultiERC20Param {
+    address[] tokens;
+    address[] recipients;
+    uint256[] amounts;
+}
 
-    /**
-     * @notice
-     *  Multiple Recipients ERC721 Batch Transfer Structure format
-     *
-     * @param tokens ERC721 token addresses to be sent
-     * @param recipients recipients addresses
-     * @param tokenIds tokenIds to be sent
-     */
-    struct MultiERC721Param {
-        address[] tokens;
-        address[] recipients;
-        uint256[] tokenIds;
-    }
+/**
+ * @notice
+ *  Multiple Recipients ERC721 Batch Transfer Structure format
+ *
+ * @param tokens ERC721 token addresses to be sent
+ * @param recipients recipients addresses
+ * @param tokenIds tokenIds to be sent
+ */
+struct MultiERC721Param {
+    address[] tokens;
+    address[] recipients;
+    uint256[] tokenIds;
+}
 
-    /**
-     * @notice
-     *  Multiple Recipients ERC1155 Batch Transfer Structure format
-     *
-     * @param tokens ERC1155 token addresses to be sent
-     * @param recipients recipients addresses
-     * @param tokenIds tokenIds to be sent
-     * @param amounts amounts to be sent
-     */
-    struct MultiERC1155Param {
-        address[] tokens;
-        address[] recipients;
-        uint256[] tokenIds;
-        uint256[] amounts;
-    }
+/**
+ * @notice
+ *  Multiple Recipients ERC1155 Batch Transfer Structure format
+ *
+ * @param tokens ERC1155 token addresses to be sent
+ * @param recipients recipients addresses
+ * @param tokenIds tokenIds to be sent
+ * @param amounts amounts to be sent
+ */
+struct MultiERC1155Param {
+    address[] tokens;
+    address[] recipients;
+    uint256[] tokenIds;
+    uint256[] amounts;
+}
 
+contract Swosh {
     //     ______     __                        __   ______                 __  _
     //    / ____/  __/ /____  _________  ____ _/ /  / ____/_  ______  _____/ /_(_)___  ____  _____
     //   / __/ | |/_/ __/ _ \/ ___/ __ \/ __ `/ /  / /_  / / / / __ \/ ___/ __/ / __ \/ __ \/ ___/
