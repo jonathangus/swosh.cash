@@ -64,6 +64,8 @@ export type { ERC165 } from "./@openzeppelin/contracts/utils/introspection/ERC16
 export { ERC165__factory } from "./factories/@openzeppelin/contracts/utils/introspection/ERC165__factory";
 export type { IERC165 } from "./@openzeppelin/contracts/utils/introspection/IERC165";
 export { IERC165__factory } from "./factories/@openzeppelin/contracts/utils/introspection/IERC165__factory";
+export type { ISwosh } from "./contracts/interfaces/ISwosh";
+export { ISwosh__factory } from "./factories/contracts/interfaces/ISwosh__factory";
 export type { MockERC1155 } from "./contracts/mock/MockERC1155";
 export { MockERC1155__factory } from "./factories/contracts/mock/MockERC1155__factory";
 export type { MockERC20 } from "./contracts/mock/MockERC20";
