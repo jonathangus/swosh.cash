@@ -6,8 +6,11 @@
     "test": "hardhat test",
     "recompile": "hardhat clean && hardhat compile",
     "test::gas": "hardhat run --network localhost scripts/swosh-gas-tests.ts",
-    "deploy::localhost": "hardhat --network localhost deploy",
-    "deploy::goerli": "hardhat --network goerli deploy"
+    "deploy::swosh::localhost": "hardhat run --network localhost scripts/deploy/deploy-swosh.ts",
+    "deploy::mocks::localhost": "hardhat run --network localhost scripts/deploy/deploy-mocks.ts",
+    "deploy::swosh::goerli": "hardhat run --network goerli scripts/deploy/deploy-swosh.ts",
+    "deploy::mocks::goerli": "hardhat run --network goerli scripts/deploy/deploy-mocks.ts",
+    "mint::mocks::goerli": "hardhat run --network goerli scripts/goerli/mint-mocks.ts"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "2.2.2",
