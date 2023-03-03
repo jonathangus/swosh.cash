@@ -23,8 +23,8 @@ const TokenDisplay = ({ token }: Props) => {
           contractAddress={token.contract_address}
         />
       }
-      title={token.contract_name || token.contract_address}
-      subText={token.contract_ticker_symbol}
+      title={token.symbol || token.contract_name || 'unknown name'}
+      subText={token.name || token.contract_ticker_symbol}
       prefix={
         <div>
           {formatBigNumber(token.balance, {

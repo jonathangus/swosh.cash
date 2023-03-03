@@ -2,7 +2,8 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { ERC1155Token, ERC721Token, ERC20Token, Token } from 'shared-config';
 import { mainnet, useAccount, useChainId, useNetwork } from 'wagmi';
-import useHoldings from '../hooks/useHoldings';
+import { erc1155 } from 'web3-config/typechain/@openzeppelin/contracts/token';
+import { useHoldingsStore } from '../stores/useHoldingsStore';
 import { useTxStore } from '../stores/useTxStore';
 import ERC1155Holdings from './ERC1155Holdings';
 import ERC721Holdings from './ERC721Holdings';
@@ -10,9 +11,8 @@ import TokenHoldings from './TokenHoldings';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/Tabs';
 
 const Holdings = () => {
-  const holdingsQuery = useHoldings();
-
-  const items = holdingsQuery.data || [];
+  const items = useHoldingsStore((state) => state.holdings || []);
+  const isLoading = useHoldingsStore((state) => state.loading);
   const ERC721Items = items.filter(
     (item) => item.type === 'erc721'
   ) as ERC721Token[];
@@ -23,7 +23,6 @@ const Holdings = () => {
   const ERC20Items = items.filter(
     (item) => item.type === 'erc20'
   ) as ERC20Token[];
-
   return (
     <>
       <Tabs defaultValue="assets" className="mt-12">
@@ -45,9 +44,7 @@ const Holdings = () => {
         </TabsContent> */}
       </Tabs>
 
-      {holdingsQuery.isLoading && (
-        <div className="animate-pulse text-2xl">⏳</div>
-      )}
+      {isLoading && <div className="animate-pulse text-2xl">⏳</div>}
     </>
   );
 };

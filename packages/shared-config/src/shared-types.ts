@@ -35,6 +35,7 @@ export type TokenBase = {
   id: string;
   last_transferred_at: string;
   uniqBy: string;
+  balance: string | number;
 };
 
 export type ExternalNftData = {
@@ -53,17 +54,19 @@ export type ERC1155Token = TokenBase & {
   type: 'erc1155';
   token_id: string;
   external_data: ExternalNftData;
-  balance: number;
+
   tokenURI?: string;
 };
 
 export type ERC20Token = TokenBase & {
   type: 'erc20';
-  balance: string;
   quote_rate: number;
   quote: number;
   logo_url: string;
   contract_decimals: number;
+  name?: string;
+  symbol?: string;
+  decimals?: number;
 };
 
 export type RawTokenResult = {

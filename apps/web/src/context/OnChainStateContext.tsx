@@ -6,8 +6,10 @@ import {
   ContractCallContext,
 } from 'ethereum-multicall';
 import { useAccount, useBlockNumber, useNetwork, useProvider } from 'wagmi';
-import useHoldings from '../hooks/useHoldings';
 import { getCalls } from '../utils/multicall';
+import { BigNumber } from 'ethers';
+import { useHoldingsQuery } from '../hooks/useHoldingsQuery';
+import { useHoldingsStore } from '../stores/useHoldingsStore';
 
 export const onChainContext = createContext<OnChainStateContext>(null);
 
@@ -17,7 +19,7 @@ type Props = {};
 
 export const OnChainProvider = ({ children }: PropsWithChildren<Props>) => {
   const result = {};
-  const { data: holdings = [] } = useHoldings();
+  const { data: holdings = [], isLoading } = useHoldingsQuery();
   const { address } = useAccount();
   const calls = getCalls(holdings, { user: address });
   const provider = useProvider();
@@ -32,6 +34,14 @@ export const OnChainProvider = ({ children }: PropsWithChildren<Props>) => {
       }),
     [provider, chainId]
   );
+  const setHoldings = useHoldingsStore((state) => state.setHoldings);
+  const setLoading = useHoldingsStore((state) => state.setLoading);
+
+  useEffect(() => {
+    if (isLoading) {
+      setLoading(true);
+    }
+  }, [isLoading]);
 
   const fetchMulticall = async () => {
     const finalState = {};
@@ -50,12 +60,49 @@ export const OnChainProvider = ({ children }: PropsWithChildren<Props>) => {
       }
     } catch (e) {
       console.error('fetchMulticall error: ', e);
+      setHoldings(holdings);
+      setLoading(false);
     }
 
+    const items = [];
     for (let key in finalState) {
       const match = holdings.find((holding) => holding.uniqBy === key);
-      console.log('match:', match, finalState[key]);
+      const val = finalState[key];
+      let balance = match.balance;
+      let symbol, name, decimals, tokenURI;
+
+      if (match) {
+        try {
+          if (match.type === 'erc1155') {
+            balance = BigNumber.from(val.balanceOf).toNumber();
+            tokenURI = val.tokenURI;
+          } else if (match.type === 'erc721') {
+            tokenURI = val.tokenURI;
+            name = val.name;
+            symbol = val.symbol;
+            balance =
+              val.ownerOf?.toLowerCase() === address?.toLowerCase() ? 1 : 0;
+          } else if (match.type === 'erc20') {
+            balance = BigNumber.from(val.balanceOf).toString();
+            symbol = val.symbol;
+            name = val.name;
+            decimals = val.decimals;
+          }
+        } catch (e) {
+          console.error(e);
+        }
+        items.push({
+          ...match,
+          balance,
+          symbol,
+          name,
+          decimals,
+        });
+      }
     }
+
+    setHoldings(items);
+    setLoading(false);
   };
 
   useEffect(() => {

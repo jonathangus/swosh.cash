@@ -23,6 +23,11 @@ export const getCalls = (holdings: Token[], { user }: { user: string }) => {
         { reference: 'symbol', methodName: 'symbol', methodParameters: [] },
         { reference: 'name', methodName: 'name', methodParameters: [] },
         { reference: 'decimals', methodName: 'decimals', methodParameters: [] },
+        {
+          reference: 'balanceOf',
+          methodName: 'balanceOf',
+          methodParameters: [user],
+        },
         // { reference: 'allowance', methodName: 'allowance', methodParameters: [owner, spender] },
       ],
     };

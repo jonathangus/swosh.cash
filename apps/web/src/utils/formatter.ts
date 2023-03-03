@@ -13,7 +13,7 @@ type FormatOptions = {
 };
 
 export const formatBigNumber = (
-  value: BigNumber | string,
+  value: BigNumber | string | number,
   config?: FormatOptions
 ): string => {
   const parsed = ethers.utils.formatUnits(value, config?.decimals || 18);
