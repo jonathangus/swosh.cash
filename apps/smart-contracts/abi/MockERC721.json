@@ -1,6 +1,22 @@
 [
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "symbol",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "baseTokenURI",
+        "type": "string"
+      }
+    ],
     "stateMutability": "nonpayable",
     "type": "constructor"
   },
