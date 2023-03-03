@@ -5,33 +5,29 @@ import {
   MockERC721__factory,
   MockERC20__factory,
 } from 'web3-config/typechain';
-import MERC20_1 from 'web3-config/deployments/goerli/MockERC20_1.json';
-import MERC20_2 from 'web3-config/deployments/goerli/MockERC20_2.json';
-import MERC20_3 from 'web3-config/deployments/goerli/MockERC20_3.json';
-import MERC20_4 from 'web3-config/deployments/goerli/MockERC20_4.json';
-import MERC20_5 from 'web3-config/deployments/goerli/MockERC20_5.json';
-import MERC20_6 from 'web3-config/deployments/goerli/MockERC20_6.json';
+import MERC20_1 from 'web3-config/deployments/localhost/MockERC20_1.json';
+import MERC20_2 from 'web3-config/deployments/localhost/MockERC20_2.json';
+import MERC20_3 from 'web3-config/deployments/localhost/MockERC20_3.json';
+import MERC20_4 from 'web3-config/deployments/localhost/MockERC20_4.json';
+import MERC20_5 from 'web3-config/deployments/localhost/MockERC20_5.json';
+import MERC20_6 from 'web3-config/deployments/localhost/MockERC20_6.json';
 
-import MERC721_1 from 'web3-config/deployments/goerli/MockERC721_1.json';
-import MERC721_2 from 'web3-config/deployments/goerli/MockERC721_2.json';
-import MERC721_3 from 'web3-config/deployments/goerli/MockERC721_3.json';
-import MERC721_4 from 'web3-config/deployments/goerli/MockERC721_4.json';
-import MERC721_5 from 'web3-config/deployments/goerli/MockERC721_5.json';
+import MERC721_1 from 'web3-config/deployments/localhost/MockERC721_1.json';
+import MERC721_2 from 'web3-config/deployments/localhost/MockERC721_2.json';
+import MERC721_3 from 'web3-config/deployments/localhost/MockERC721_3.json';
+import MERC721_4 from 'web3-config/deployments/localhost/MockERC721_4.json';
+import MERC721_5 from 'web3-config/deployments/localhost/MockERC721_5.json';
 
-import MERC1155_1 from 'web3-config/deployments/goerli/MockERC1155_1.json';
-import MERC1155_2 from 'web3-config/deployments/goerli/MockERC1155_2.json';
-import MERC1155_3 from 'web3-config/deployments/goerli/MockERC1155_3.json';
-import MERC1155_4 from 'web3-config/deployments/goerli/MockERC1155_4.json';
-import MERC1155_5 from 'web3-config/deployments/goerli/MockERC1155_5.json';
+import MERC1155_1 from 'web3-config/deployments/localhost/MockERC1155_1.json';
+import MERC1155_2 from 'web3-config/deployments/localhost/MockERC1155_2.json';
+import MERC1155_3 from 'web3-config/deployments/localhost/MockERC1155_3.json';
+import MERC1155_4 from 'web3-config/deployments/localhost/MockERC1155_4.json';
+import MERC1155_5 from 'web3-config/deployments/localhost/MockERC1155_5.json';
 
 async function main() {
-  const JONT = '0x5abbdbfe7257e30ffd40903bdc7d2e27557db60d';
-  const MORKE = '0xb17D45a7d3A130B44c9114A485DAFB721e08fCE7';
-  const PILOU = '0x301933aEf6bB308f090087e9075ed5bFcBd3e0B3';
+  const [deployer, user1, user2, user3] = await ethers.getSigners();
 
-  const TESTERS = [JONT, MORKE, PILOU];
-
-  const [deployer] = await ethers.getSigners();
+  const TESTERS = [user1.address, user2.address, user3.address];
 
   const m20_1 = MockERC20__factory.connect(MERC20_1.address, deployer);
   const m20_2 = MockERC20__factory.connect(MERC20_2.address, deployer);
@@ -58,7 +54,7 @@ async function main() {
   );
   console.log('');
 
-  for (let i = 2; i < 3; i++) {
+  for (let i = 0; i < TESTERS.length; i++) {
     await m20_1
       .connect(deployer)
       .mint(TESTERS[i], ethers.utils.parseEther('1000'));
@@ -110,9 +106,7 @@ async function main() {
     await m1155_4
       .connect(deployer)
       .mintBatch(TESTERS[i], [0, 1, 2], [5, 5, 5], []);
-    await m1155_5
-      .connect(deployer)
-      .mintBatch(TESTERS[i], [0, 1, 2], [5, 5, 5], []);
+    await m1155_5.connect(deployer).mintBatch(TESTERS[i], [0], [10], []);
 
     console.log('MINTED ERC-1155s for : ', TESTERS[i]);
   }

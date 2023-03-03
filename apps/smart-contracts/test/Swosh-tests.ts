@@ -51,17 +51,37 @@ describe('Swosh Unit Tests', function () {
     swosh = (await swoshFactory.deploy()) as Swosh;
 
     // Create Mock Token contracts
-    token0 = (await mockERC20Factory.deploy()) as MockERC20;
-    token1 = (await mockERC20Factory.deploy()) as MockERC20;
-    token2 = (await mockERC20Factory.deploy()) as MockERC20;
-    token3 = (await mockERC20Factory.deploy()) as MockERC20;
-    nft721_0 = (await mockERC721Factory.deploy()) as MockERC721;
-    nft721_1 = (await mockERC721Factory.deploy()) as MockERC721;
-    nft721_2 = (await mockERC721Factory.deploy()) as MockERC721;
-    nft1155_0 = (await mockERC1155Factory.deploy()) as MockERC1155;
-    nft1155_1 = (await mockERC1155Factory.deploy()) as MockERC1155;
-    nft1155_2 = (await mockERC1155Factory.deploy()) as MockERC1155;
-    nft1155_3 = (await mockERC1155Factory.deploy()) as MockERC1155;
+    token0 = (await mockERC20Factory.deploy('fake USDC', 'fUSDC')) as MockERC20;
+    token1 = (await mockERC20Factory.deploy('fake DAI', 'fDAI')) as MockERC20;
+    token2 = (await mockERC20Factory.deploy('fake BTC', 'fBTC')) as MockERC20;
+    token3 = (await mockERC20Factory.deploy('fake ETH', 'fETH')) as MockERC20;
+    nft721_0 = (await mockERC721Factory.deploy(
+      'Fake BAYC',
+      'fBAYC',
+      'ipfs://QmeSjSinHpPnmXmspMjwiXyN6zS4E9zccariGR3jxcaWtq/'
+    )) as MockERC721;
+    nft721_1 = (await mockERC721Factory.deploy(
+      'Fake AZUKI',
+      'fAZUKI',
+      'ipfs://QmZcH4YvBVVRJtdn4RdbaqgspFU8gH6P9vomDpBVpAL3u4/'
+    )) as MockERC721;
+    nft721_2 = (await mockERC721Factory.deploy(
+      'Fake WIZARD',
+      'fWIZARD',
+      'ipfs://QmU7pgaLsVkrP1ao7pn51wDE37PYNime6pV6mx8sUx1Nr4/'
+    )) as MockERC721;
+    nft1155_0 = (await mockERC1155Factory.deploy(
+      'https://arweave.net/OYeIdxgQ7LQJqBL_VznWj0trqi9jqKHO3xHZcnt_Wn8'
+    )) as MockERC1155;
+    nft1155_1 = (await mockERC1155Factory.deploy(
+      'ipfs://QmSqtwcqbRWUT3XCPfffcM6qrCPun8mDeBnGE4K7KiK5NF/'
+    )) as MockERC1155;
+    nft1155_2 = (await mockERC1155Factory.deploy(
+      'https://nftdata.parallelnft.com/api/parallel-alpha'
+    )) as MockERC1155;
+    nft1155_3 = (await mockERC1155Factory.deploy(
+      'ipfs://QmUfGyJx8phhTGbXSbTtjjX4x5UEytu5tVkSmf4DPF8WFe/'
+    )) as MockERC1155;
 
     // Mint ERC20 Tokens
     await token0
