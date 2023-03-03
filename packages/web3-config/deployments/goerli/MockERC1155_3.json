@@ -1,9 +1,15 @@
 {
-  "address": "0xb8C2c2723EA702c345d8068d57047Dc34525cB98",
+  "address": "0x7f2bA7DcC377F606D8C10c71702C4b26de13151F",
   "constructorArguments": [],
   "abi": [
     {
-      "inputs": [],
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "uri",
+          "type": "string"
+        }
+      ],
       "stateMutability": "nonpayable",
       "type": "constructor"
     },
@@ -729,5 +735,5 @@
       "type": "function"
     }
   ],
-  "blockNumber": 8579204
+  "blockNumber": 8587779
 }
