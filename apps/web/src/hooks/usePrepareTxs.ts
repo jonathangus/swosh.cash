@@ -1,14 +1,14 @@
 import { BigNumber } from '@ethersproject/bignumber';
 import { Contract, ethers } from 'ethers';
 import { useEffect, useState } from 'react';
-import { TransferPart } from 'shared-config';
+import { PopulatedTransferPart, TransferPart } from 'shared-config';
 import { useProvider, useSigner } from 'wagmi';
 
 export const usePrepareTxs = (parts: TransferPart[], from: string) => {
-  let [completeTxs, setCompleteTx] = useState([]);
+  let [completeTxs, setCompleteTx] = useState<PopulatedTransferPart[]>([]);
   const provider = useProvider();
-
   const preparedTxs = [];
+
   for (let part of parts) {
     let contractAddress;
     try {
@@ -32,6 +32,7 @@ export const usePrepareTxs = (parts: TransferPart[], from: string) => {
           contractAddress,
           type: part.type,
           tokenId: part.tokenId,
+          id: tx.rowId,
         });
       }
     } catch (e) {

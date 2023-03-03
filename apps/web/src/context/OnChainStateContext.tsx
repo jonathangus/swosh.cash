@@ -34,6 +34,7 @@ export const OnChainProvider = ({ children }: PropsWithChildren<Props>) => {
       }),
     [provider, chainId]
   );
+  const holdingsLength = useHoldingsStore((state) => state.holdings.length);
   const setHoldings = useHoldingsStore((state) => state.setHoldings);
   const setLoading = useHoldingsStore((state) => state.setLoading);
 
@@ -60,7 +61,9 @@ export const OnChainProvider = ({ children }: PropsWithChildren<Props>) => {
       }
     } catch (e) {
       console.error('fetchMulticall error: ', e);
-      setHoldings(holdings);
+      if (holdingsLength === 0) {
+        setHoldings(holdings);
+      }
       setLoading(false);
     }
 

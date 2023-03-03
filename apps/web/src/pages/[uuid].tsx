@@ -12,7 +12,9 @@ const ProgressPage = ({}: Props) => {
   useEffect(() => {
     try {
       const item = window.localStorage.getItem(query.uuid as string);
-      setParts(JSON.parse(item).parts);
+      if (item) {
+        setParts(JSON.parse(item).parts);
+      }
     } catch (e) {
       console.error(e);
     }

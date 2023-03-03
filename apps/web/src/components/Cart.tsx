@@ -22,11 +22,13 @@ const Cart = ({}: Props) => {
 
   return (
     <div>
-      {allTxs.map((tx) => (
-        <div key={tx.rowId}>
-          {tx.amount?.toString()} to {tx.to}
-        </div>
-      ))}
+      {allTxs
+        .filter((tx) => tx.to && tx.amount)
+        .map((tx) => (
+          <div key={tx.rowId}>
+            {tx.amount?.toString()} to {tx.to}
+          </div>
+        ))}
       <Link href={`/${uuid}`}>Go checkout</Link>
     </div>
   );
