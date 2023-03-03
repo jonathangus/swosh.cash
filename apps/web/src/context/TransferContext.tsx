@@ -15,9 +15,9 @@ import {
 import { useAccount, useBlockNumber, useNetwork, useProvider } from 'wagmi';
 import { getCalls } from '../utils/multicall';
 import { BigNumber } from 'ethers';
-import { useHoldingsQuery } from '../hooks/useHoldingsQuery';
-import { useHoldingsStore } from '../stores/useHoldingsStore';
 import { OnChainTransferItem, Token, TransferPart } from 'shared-config';
+import { Swosh__factory } from 'web3-config';
+import { useAddress } from 'wagmi-lfg';
 
 export const transferContext = createContext<TransferContext>(null);
 
@@ -25,11 +25,12 @@ type TransferContext = {
   items: OnChainTransferItem[];
 };
 
-type Props = { parts: TransferPart[] };
+type Props = { parts: TransferPart[]; chainId: number };
 
 export const TransferContextProvider = ({
   children,
   parts,
+  chainId,
 }: PropsWithChildren<Props>) => {
   const { address } = useAccount();
   const holdings = parts.map((holding) => ({
@@ -40,10 +41,11 @@ export const TransferContextProvider = ({
     uniqBy: holding.contractAddress + holding.tokenId,
     tokenURI: undefined,
   })) as any as Token[];
-  const calls = getCalls(holdings, { user: address });
+  const swoshAddress = useAddress(Swosh__factory, chainId) as string;
+
+  const calls = getCalls(holdings, { user: address, swoshAddress });
   const provider = useProvider();
   const { chain } = useNetwork();
-  const chainId = chain?.id || 1;
   const multicall = useMemo(
     () =>
       new Multicall({
@@ -53,7 +55,7 @@ export const TransferContextProvider = ({
     [provider, chainId]
   );
   const [items, setItems] = useState<OnChainTransferItem[]>([]);
-
+  console.log(items);
   const fetchMulticall = async () => {
     const finalState = {};
 
@@ -77,7 +79,7 @@ export const TransferContextProvider = ({
     for (let key in finalState) {
       const match = holdings.find((holding) => holding.uniqBy === key);
       const val = finalState[key];
-      let symbol, name, decimals, tokenURI;
+      let symbol, name, decimals, tokenURI, allowance;
 
       if (match) {
         let balance = match.balance;
@@ -97,6 +99,7 @@ export const TransferContextProvider = ({
             symbol = val.symbol;
             name = val.name;
             decimals = val.decimals;
+            allowance = BigNumber.from(val.allowance);
           }
         } catch (e) {
           console.error(e);
@@ -107,6 +110,7 @@ export const TransferContextProvider = ({
           symbol,
           name,
           decimals,
+          allowance,
         });
       }
     }

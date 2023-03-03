@@ -12,7 +12,10 @@ import erc20ABI from './abi/ERC20.json';
 import erc1155ABI from './abi/ERC1155.json';
 import erc721ABI from './abi/ERC721.json';
 
-export const getCalls = (holdings: Token[], { user }: { user: string }) => {
+export const getCalls = (
+  holdings: Token[],
+  { user, swoshAddress }: { user: string; swoshAddress: string }
+) => {
   const erc20 = holdings.filter((token) => token.type === 'erc20');
   const erc721 = holdings.filter((token) => token.type === 'erc721');
   const erc1155 = holdings.filter((token) => token.type === 'erc1155');
@@ -35,7 +38,11 @@ export const getCalls = (holdings: Token[], { user }: { user: string }) => {
           methodName: 'balanceOf',
           methodParameters: [user],
         },
-        // { reference: 'allowance', methodName: 'allowance', methodParameters: [owner, spender] },
+        {
+          reference: 'allowance',
+          methodName: 'allowance',
+          methodParameters: [user, swoshAddress],
+        },
       ],
     };
 

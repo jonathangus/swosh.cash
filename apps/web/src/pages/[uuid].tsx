@@ -25,7 +25,7 @@ const ProgressPage = ({}: Props) => {
 
   if (Object.values(parts).length > 0) {
     return (
-      <TransferContextProvider parts={Object.values(parts)}>
+      <TransferContextProvider chainId={chainId} parts={Object.values(parts)}>
         <TransferFlow chainId={chainId} parts={Object.values(parts)} />
       </TransferContextProvider>
     );

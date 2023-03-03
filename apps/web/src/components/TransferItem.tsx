@@ -15,8 +15,10 @@ const TransferItem = ({ tx }: Props) => {
       item.contract_address.toLowerCase() === tx.contractAddress.toLowerCase()
   );
 
+  console.log({ match });
   return (
     <div>
+      allowance: {match?.allowance?.toString()}
       send {ethers.utils.formatUnits(tx.amount)} {match?.name} to {tx.to}
     </div>
   );
