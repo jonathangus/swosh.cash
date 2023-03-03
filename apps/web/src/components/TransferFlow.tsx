@@ -1,6 +1,7 @@
 import { TransferPart } from 'shared-config';
 import { useAccount } from 'wagmi';
 import { usePrepareTxs } from '../hooks/usePrepareTxs';
+import { useHoldingsStore } from '../stores/useHoldingsStore';
 import SendTx from './SendTx';
 
 type Props = { parts: TransferPart[] };
@@ -8,6 +9,7 @@ type Props = { parts: TransferPart[] };
 const TransferFlow = ({ parts }: Props) => {
   const { address } = useAccount();
   const txs = usePrepareTxs(parts, address);
+  const holdings = useHoldingsStore((state) => state.holdings);
 
   return (
     <div>

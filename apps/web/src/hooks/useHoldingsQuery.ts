@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Token } from 'shared-config';
 import { mainnet, useAccount, useChainId, useNetwork } from 'wagmi';
 
-const useHoldings = () => {
+export const useHoldingsQuery = () => {
   const { address } = useAccount();
   const chainId = useChainId() || mainnet.id;
 
@@ -21,5 +21,3 @@ const useHoldings = () => {
     }
   );
 };
-
-export default useHoldings;

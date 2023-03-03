@@ -52,9 +52,7 @@ export const usePrepareTxs = (parts: TransferPart[], from: string) => {
             ],
             signer
           );
-          console.log(tx.to, tx.amount);
           data = await contract.populateTransaction.transfer(tx.to, tx.amount);
-          console.log(data);
         } else if (tx.type === 'erc721') {
           const contract = new Contract(
             tx.contractAddress,

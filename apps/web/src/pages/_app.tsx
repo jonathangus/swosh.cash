@@ -7,19 +7,24 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import '../styles/main.css';
 import PageLayout from '../components/PageLayout';
 import Floater from '../components/Floater';
-import { useAccount } from 'wagmi';
+import { useAccount, useNetwork } from 'wagmi';
 import { useTxStore } from '../stores/useTxStore';
 import { OnChainProvider } from '../context/OnChainStateContext';
+import { useHoldingsStore } from '../stores/useHoldingsStore';
+import { useDidMountEffect } from '../hooks/useDidMountEffect';
 
 const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { address } = useAccount();
   const reset = useTxStore((state) => state.reset);
+  const resetHoldings = useHoldingsStore((state) => state.resetHoldings);
+  const { chain } = useNetwork();
 
-  useEffect(() => {
+  useDidMountEffect(() => {
     reset();
-  }, [address]);
+    resetHoldings();
+  }, [address, chain?.id]);
 
   return (
     <QueryClientProvider client={queryClient}>
