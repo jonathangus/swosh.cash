@@ -53,9 +53,8 @@ export function useContractWrite<
   }) => Promise<void | SendTransactionResult>;
 } {
   const notice = useNotice();
-  const predefinedAddress = useAddress(typechainFactory);
   const args = options?.args || [];
-  const address = options?.address || predefinedAddress;
+  const address = options?.address;
   const enabled = (options?.enabled ?? true) && Boolean(address);
   const usePrepareContractWriteOptions =
     options?.usePrepareContractWriteOptions || {};
@@ -76,7 +75,7 @@ export function useContractWrite<
     }
   };
 
-  const { config } = usePrepareContractWrite({
+  const { config, ...rest } = usePrepareContractWrite({
     ...usePrepareContractWriteOptions,
     address: address as Address,
     abi: typechainFactory.abi as any,
@@ -92,7 +91,6 @@ export function useContractWrite<
     ...config,
     request: undefined,
     onError: _onError,
-    chainId: 5,
   };
 
   if (options?.reckless) {

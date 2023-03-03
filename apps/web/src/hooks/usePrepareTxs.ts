@@ -2,43 +2,53 @@ import { BigNumber } from '@ethersproject/bignumber';
 import { Contract, ethers } from 'ethers';
 import { useEffect, useState } from 'react';
 import { PopulatedTransferPart, TransferPart } from 'shared-config';
-import { useProvider, useSigner } from 'wagmi';
+import { useNetwork, useProvider, useSigner } from 'wagmi';
 
-export const usePrepareTxs = (parts: TransferPart[], from: string) => {
+export const usePrepareTxs = (
+  parts: TransferPart[],
+  from: string,
+  chainId: number
+) => {
   let [completeTxs, setCompleteTx] = useState<PopulatedTransferPart[]>([]);
+  const [preparedTxs, setPreparedTxs] = useState([]);
   const provider = useProvider();
-  const preparedTxs = [];
+  const { chain } = useNetwork();
+  const isCorrectChain = chain?.id == chainId;
 
-  for (let part of parts) {
-    let contractAddress;
-    try {
-      contractAddress = ethers.utils.getAddress(part.contractAddress);
-    } catch (e) {
-      continue;
-    }
-
-    try {
-      for (let tx of part.txs) {
-        let amount = BigNumber.from(tx.amount);
-        if (!amount.gt(0)) {
-          throw new Error('Bad amount');
-        }
-        let to = ethers.utils.getAddress(tx.to);
-
-        preparedTxs.push({
-          to,
-          from,
-          amount,
-          contractAddress,
-          type: part.type,
-          tokenId: part.tokenId,
-          id: tx.rowId,
-        });
+  useEffect(() => {
+    let arr = [];
+    for (let part of parts) {
+      let contractAddress;
+      try {
+        contractAddress = ethers.utils.getAddress(part.contractAddress);
+      } catch (e) {
+        continue;
       }
-    } catch (e) {
-      continue;
+
+      try {
+        for (let tx of part.txs) {
+          let amount = BigNumber.from(tx.amount);
+          if (!amount.gt(0)) {
+            throw new Error('Bad amount');
+          }
+          let to = ethers.utils.getAddress(tx.to);
+
+          arr.push({
+            to,
+            from,
+            amount,
+            contractAddress,
+            type: part.type,
+            tokenId: part.tokenId,
+            id: tx.rowId,
+          });
+        }
+      } catch (e) {
+        continue;
+      }
     }
-  }
+    setPreparedTxs(arr);
+  }, parts);
 
   const { data: signer } = useSigner();
   const populate = async () => {
@@ -54,6 +64,11 @@ export const usePrepareTxs = (parts: TransferPart[], from: string) => {
             signer
           );
           data = await contract.populateTransaction.transfer(tx.to, tx.amount);
+
+          console.log({
+            data,
+            tx,
+          });
         } else if (tx.type === 'erc721') {
           const contract = new Contract(
             tx.contractAddress,
@@ -85,8 +100,11 @@ export const usePrepareTxs = (parts: TransferPart[], from: string) => {
             'x0'
           );
         }
-        gas = await provider.estimateGas(data);
+
+        // gas = await provider.estimateGas(data);
+        console.log('GAS:', gas);
       } catch (e) {
+        console.log('COULD NOT GET GAS');
         console.error(e);
       }
 
@@ -102,8 +120,16 @@ export const usePrepareTxs = (parts: TransferPart[], from: string) => {
   };
 
   useEffect(() => {
-    populate();
-  }, [JSON.stringify(preparedTxs)]);
+    if (isCorrectChain) {
+      populate();
+    } else {
+      console.log('WRONG CHAIN');
+    }
+  }, [JSON.stringify(preparedTxs), isCorrectChain]);
 
   return completeTxs;
 };
+
+// 0xa9059cbb000000000000000000000000abc3cf61c8bfdd5dd0a13a77de62521911eccc20000000000000000000000000000000000000000000000000a688906bd8b00000;
+
+// 0xa9059cbb000000000000000000000000abc3cf61c8bfdd5dd0a13a77de62521911eccc20000000000000000000000000000000000000000000000000a688906bd8b00000;

@@ -1,7 +1,7 @@
-import counterDeploymentGoerli from './deployments/goerli/Counter.json';
 export * from './typechain';
 import * as _typechain from './typechain';
 import { localhost, goerli } from 'wagmi/chains';
+import swoshGoerli from './deployments/goerli/Swosh.json';
 
 export const contracts = {
   MockERC20_1: _typechain.MockERC20__factory.name,
@@ -20,6 +20,8 @@ export const contracts = {
   MockERC1155_3: _typechain.MockERC1155__factory.name,
   MockERC1155_4: _typechain.MockERC1155__factory.name,
   MockERC1155_5: _typechain.MockERC1155__factory.name,
+
+  Swosh: _typechain.Swosh__factory.name,
 };
 
 export type AvailableContractNames = keyof typeof contracts;
@@ -42,7 +44,7 @@ export const addresses: Record<number, AddressRecord> = {
   //   [contracts.Counter]: '0x000',
   // },
   [goerli.id]: {
-    [contracts.Counter]: counterDeploymentGoerli.address,
+    [contracts.Swosh]: swoshGoerli.address,
   },
 };
 

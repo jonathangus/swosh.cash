@@ -1,5 +1,6 @@
 import { ethers } from 'ethers';
 import { PopulatedTransferPart } from 'shared-config';
+import { useTransferContext } from '../context/TransferContext';
 import TokenImage from './TokenImage';
 import TokenRow from './TokenRow';
 
@@ -8,9 +9,15 @@ type Props = {
 };
 
 const TransferItem = ({ tx }: Props) => {
+  const { items } = useTransferContext();
+  const match = items.find(
+    (item) =>
+      item.contract_address.toLowerCase() === tx.contractAddress.toLowerCase()
+  );
+
   return (
     <div>
-      {ethers.utils.formatUnits(tx.amount)} to {tx.to}
+      send {ethers.utils.formatUnits(tx.amount)} {match?.name} to {tx.to}
     </div>
   );
 };
