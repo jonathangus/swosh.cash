@@ -22,35 +22,51 @@ async function main() {
   );
 
   // Deploy MockERC20 contracts
-  const token0 = await mockERC20Factory.deploy();
+  const token0 = await mockERC20Factory.deploy('fake USDC', 'fUSDC');
   await token0.deployed();
 
-  const token1 = await mockERC20Factory.deploy();
+  const token1 = await mockERC20Factory.deploy('fake DAI', 'fDAI');
   await token1.deployed();
 
-  const token2 = await mockERC20Factory.deploy();
+  const token2 = await mockERC20Factory.deploy('fake BTC', 'fBTC');
   await token2.deployed();
 
-  const token3 = await mockERC20Factory.deploy();
+  const token3 = await mockERC20Factory.deploy('fake ETH', 'fETH');
   await token3.deployed();
 
-  const token4 = await mockERC20Factory.deploy();
+  const token4 = await mockERC20Factory.deploy('fake CRV', 'fCRV');
   await token4.deployed();
 
-  const token5 = await mockERC20Factory.deploy();
+  const token5 = await mockERC20Factory.deploy('fake OP', 'fOP');
   await token5.deployed();
 
   // Deploy MockERC721 contracts
-  const nft0 = await mockERC721Factory.deploy();
+  const nft0 = await mockERC721Factory.deploy(
+    'Fake BAYC',
+    'fBAYC',
+    'ipfs://QmeSjSinHpPnmXmspMjwiXyN6zS4E9zccariGR3jxcaWtq/'
+  );
   await nft0.deployed();
 
-  const nft1 = await mockERC721Factory.deploy();
+  const nft1 = await mockERC721Factory.deploy(
+    'Fake AZUKI',
+    'fAZUKI',
+    'ipfs://QmZcH4YvBVVRJtdn4RdbaqgspFU8gH6P9vomDpBVpAL3u4/'
+  );
   await nft1.deployed();
 
-  const nft2 = await mockERC721Factory.deploy();
+  const nft2 = await mockERC721Factory.deploy(
+    'Fake PUDGY',
+    'fPUDGY',
+    'https://ipfs.io/ipfs/QmWXJXRdExse2YHRY21Wvh4pjRxNRQcWVhcKw4DLVnqGqs/'
+  );
   await nft2.deployed();
 
-  const nft3 = await mockERC721Factory.deploy();
+  const nft3 = await mockERC721Factory.deploy(
+    'Fake WIZARD',
+    'fWIZARD',
+    'ipfs://QmU7pgaLsVkrP1ao7pn51wDE37PYNime6pV6mx8sUx1Nr4/'
+  );
   await nft3.deployed();
 
   // Deploy TokenTransfer contract

@@ -103,9 +103,8 @@ describe('Swosh Unit Tests', function () {
       .connect(deployer)
       .mintBatch(user1.address, [0, 1], [2, 2], []);
   });
-
   describe('METHOD : batchTransferERC20', async () => {
-    it('should send ERC-20 in batch to one receiver', async () => {
+    it('should transfer ERC-20 in batch to one receiver', async () => {
       const tokens = [
         token0.address,
         token1.address,
@@ -133,7 +132,7 @@ describe('Swosh Unit Tests', function () {
       expect(await token2.balanceOf(recipient)).to.eq(amount);
       expect(await token3.balanceOf(recipient)).to.eq(amount);
     });
-    it('should not send ERC-20 (Invalid Parameters)', async () => {
+    it('should not transfer ERC-20 (Invalid Parameters)', async () => {
       const tokens = [token0.address, token1.address, token2.address];
       const recipient = user2.address;
       const amount = ethers.utils.parseEther('10');
@@ -148,11 +147,9 @@ describe('Swosh Unit Tests', function () {
         swosh.connect(user1).batchTransferERC20(tokens, recipient, amounts)
       ).to.be.revertedWith('INVALID_PARAM');
     });
-    it('should not send ERC-20 (Caller is not EOA)', async () => {});
   });
-
   describe('METHOD : multiBatchTransferERC20', async () => {
-    it('should send ERC-20 in batch to multiple receivers', async () => {
+    it('should transfer ERC-20 in batch to multiple receivers', async () => {
       const tokens = [
         token0.address,
         token1.address,
@@ -200,7 +197,7 @@ describe('Swosh Unit Tests', function () {
         ethers.utils.parseEther('90')
       );
     });
-    it('should not send ERC-20 (Invalid Parameters - recipients.length)', async () => {
+    it('should not transfer ERC-20 (Invalid Parameters - recipients.length)', async () => {
       const tokens = [token0.address, token1.address, token2.address];
       const recipients = [
         user2.address,
@@ -222,7 +219,7 @@ describe('Swosh Unit Tests', function () {
       ).to.be.revertedWith('INVALID_PARAM');
     });
 
-    it('should not send ERC-20 (Invalid Parameters - amounts.length)', async () => {
+    it('should not transfer ERC-20 (Invalid Parameters - amounts.length)', async () => {
       const tokens = [
         token0.address,
         token1.address,
@@ -249,11 +246,9 @@ describe('Swosh Unit Tests', function () {
           .multiBatchTransferERC20(tokens, recipients, amounts)
       ).to.be.revertedWith('INVALID_PARAM');
     });
-    it('should not send ERC-20 (Caller is not EOA)', async () => {});
   });
-
   describe('METHOD : batchTransferERC721', async () => {
-    it('should send ERC-721 in batch to one receiver', async () => {
+    it('should transfer ERC-721 in batch to one receiver', async () => {
       const tokens = [
         nft721_0.address,
         nft721_1.address,
@@ -279,7 +274,7 @@ describe('Swosh Unit Tests', function () {
       expect(await nft721_1.balanceOf(recipient)).to.eq(1);
       expect(await nft721_2.balanceOf(recipient)).to.eq(2);
     });
-    it('should not send ERC-721 (Invalid Parameters)', async () => {
+    it('should not transfer ERC-721 (Invalid Parameters)', async () => {
       const tokens = [
         nft721_0.address,
         nft721_1.address,
@@ -297,11 +292,9 @@ describe('Swosh Unit Tests', function () {
         swosh.connect(user1).batchTransferERC721(tokens, recipient, tokenIds)
       ).to.be.revertedWith('INVALID_PARAM');
     });
-    it('should not send ERC-721 (Caller is not EOA)', async () => {});
   });
-
   describe('METHOD : multiBatchTransferERC721', async () => {
-    it('should send ERC-721 in batch to multiple receivers', async () => {
+    it('should transfer ERC-721 in batch to multiple receivers', async () => {
       const tokens = [
         nft721_0.address,
         nft721_1.address,
@@ -333,7 +326,7 @@ describe('Swosh Unit Tests', function () {
       expect(await nft721_1.balanceOf(recipients[1])).to.eq(1);
       expect(await nft721_2.balanceOf(recipients[2])).to.eq(2);
     });
-    it('should not send ERC-721 (Invalid Parameters - tokenIds.length)', async () => {
+    it('should not transfer ERC-721 (Invalid Parameters - tokenIds.length)', async () => {
       const tokens = [
         nft721_0.address,
         nft721_1.address,
@@ -359,7 +352,7 @@ describe('Swosh Unit Tests', function () {
       ).to.be.revertedWith('INVALID_PARAM');
     });
 
-    it('should not send ERC-721 (Invalid Parameters - recipients.length)', async () => {
+    it('should not transfer ERC-721 (Invalid Parameters - recipients.length)', async () => {
       const tokens = [
         nft721_0.address,
         nft721_1.address,
@@ -379,34 +372,915 @@ describe('Swosh Unit Tests', function () {
           .multiBatchTransferERC721(tokens, recipients, tokenIds)
       ).to.be.revertedWith('INVALID_PARAM');
     });
-    it('should not send ERC-721 (Caller is not EOA)', async () => {});
   });
-
   describe('METHOD : batchTransferERC1155', async () => {
-    it('should send ERC-1155 in batch to one receiver', async () => {
-      
+    it('should transfer ERC-1155 in batch to one receiver', async () => {
+      const tokens = [
+        nft1155_0.address,
+        nft1155_1.address,
+        nft1155_2.address,
+        nft1155_3.address,
+      ];
+      const recipient = user2.address;
+      const tokenIds = [0, 1, 0, 1];
+      const amounts = [2, 1, 2, 1];
+
+      expect(await nft1155_0.balanceOf(recipient, tokenIds[0])).to.eq(0);
+      expect(await nft1155_1.balanceOf(recipient, tokenIds[1])).to.eq(0);
+      expect(await nft1155_2.balanceOf(recipient, tokenIds[2])).to.eq(0);
+      expect(await nft1155_3.balanceOf(recipient, tokenIds[3])).to.eq(0);
+
+      await nft1155_0.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft1155_1.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft1155_2.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft1155_3.connect(user1).setApprovalForAll(swosh.address, true);
+
+      await swosh
+        .connect(user1)
+        .batchTransferERC1155(tokens, recipient, tokenIds, amounts);
+
+      expect(await nft1155_0.balanceOf(recipient, tokenIds[0])).to.eq(
+        amounts[0]
+      );
+      expect(await nft1155_1.balanceOf(recipient, tokenIds[1])).to.eq(
+        amounts[1]
+      );
+      expect(await nft1155_2.balanceOf(recipient, tokenIds[2])).to.eq(
+        amounts[2]
+      );
+      expect(await nft1155_3.balanceOf(recipient, tokenIds[3])).to.eq(
+        amounts[3]
+      );
     });
-    it('should not send ERC-1155 (Invalid Parameters)', async () => {});
-    it('should not send ERC-1155 (Caller is not EOA)', async () => {});
+    it('should not transfer ERC-1155 (Invalid Parameters)', async () => {
+      const tokens = [
+        nft1155_0.address,
+        nft1155_1.address,
+        nft1155_2.address,
+        nft1155_3.address,
+      ];
+      const recipient = user2.address;
+      const tokenIds = [0, 1, 0];
+      const amounts = [2, 1, 2, 1];
+
+      await nft1155_0.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft1155_1.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft1155_2.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft1155_3.connect(user1).setApprovalForAll(swosh.address, true);
+
+      await expect(
+        swosh
+          .connect(user1)
+          .batchTransferERC1155(tokens, recipient, tokenIds, amounts)
+      ).to.be.revertedWith('INVALID_PARAM');
+    });
   });
+  describe('METHOD : multiBatchTransferERC1155', async () => {
+    it('should transfer ERC-1155 in batch to multiple receivers', async () => {
+      const tokens = [
+        nft1155_0.address,
+        nft1155_1.address,
+        nft1155_2.address,
+        nft1155_3.address,
+      ];
+      const recipients = [
+        user2.address,
+        user2.address,
+        user3.address,
+        user4.address,
+      ];
+      const tokenIds = [0, 1, 0, 1];
+      const amounts = [2, 1, 2, 1];
 
-  // describe('METHOD : multiBatchTransferERC1155', async () => {
-  //   it('should send ERC-1155 in batch to multiple receivers', async () => {});
-  //   it('should not send ERC-1155 (Invalid Parameters)', async () => {});
-  //   it('should not send ERC-1155 (Caller is not EOA)', async () => {});
-  // });
+      expect(await nft1155_0.balanceOf(recipients[0], tokenIds[0])).to.eq(0);
+      expect(await nft1155_1.balanceOf(recipients[1], tokenIds[1])).to.eq(0);
+      expect(await nft1155_2.balanceOf(recipients[2], tokenIds[2])).to.eq(0);
+      expect(await nft1155_3.balanceOf(recipients[3], tokenIds[3])).to.eq(0);
 
-  // describe('METHOD : megaTransfer', async () => {
-  //   it('should send all types of tokens in batch to one receiver', async () => {});
-  //   it('should send ERC-20 & ERC-721 tokens in batch to one receiver', async () => {});
-  //   it('should send ERC-20 & ERC-1155 tokens in batch to one receiver', async () => {});
-  //   it('should send ERC-721 & ERC-1155 tokens in batch to one receiver', async () => {});
-  // });
+      await nft1155_0.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft1155_1.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft1155_2.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft1155_3.connect(user1).setApprovalForAll(swosh.address, true);
 
-  // describe('METHOD : multiMegaTransfer', async () => {
-  //   it('should send all types of tokens in batch to multiple receivers', async () => {});
-  //   it('should send ERC-20 & ERC-721 tokens in batch to multiple receivers', async () => {});
-  //   it('should send ERC-20 & ERC-1155 tokens in batch to multiple receivers', async () => {});
-  //   it('should send ERC-721 & ERC-1155 tokens in batch to multiple receivers', async () => {});
-  // });
+      await swosh
+        .connect(user1)
+        .multiBatchTransferERC1155(tokens, recipients, tokenIds, amounts);
+
+      expect(await nft1155_0.balanceOf(recipients[0], tokenIds[0])).to.eq(
+        amounts[0]
+      );
+      expect(await nft1155_1.balanceOf(recipients[1], tokenIds[1])).to.eq(
+        amounts[1]
+      );
+      expect(await nft1155_2.balanceOf(recipients[2], tokenIds[2])).to.eq(
+        amounts[2]
+      );
+      expect(await nft1155_3.balanceOf(recipients[3], tokenIds[3])).to.eq(
+        amounts[3]
+      );
+    });
+    it('should not transfer ERC-1155 (Invalid Parameters - tokenIds.length)', async () => {
+      const tokens = [
+        nft1155_0.address,
+        nft1155_1.address,
+        nft1155_2.address,
+        nft1155_3.address,
+      ];
+      const recipients = [
+        user2.address,
+        user2.address,
+        user3.address,
+        user4.address,
+      ];
+      const tokenIds = [0, 1, 0];
+      const amounts = [2, 1, 2, 1];
+
+      await nft1155_0.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft1155_1.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft1155_2.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft1155_3.connect(user1).setApprovalForAll(swosh.address, true);
+
+      await expect(
+        swosh
+          .connect(user1)
+          .multiBatchTransferERC1155(tokens, recipients, tokenIds, amounts)
+      ).to.be.revertedWith('INVALID_PARAM');
+    });
+    it('should not transfer ERC-1155 (Invalid Parameters - recipients.length)', async () => {
+      const tokens = [
+        nft1155_0.address,
+        nft1155_1.address,
+        nft1155_2.address,
+        nft1155_3.address,
+      ];
+      const recipients = [user2.address, user2.address, user3.address];
+      const tokenIds = [0, 1, 0, 2];
+      const amounts = [2, 1, 2, 1];
+
+      await nft1155_0.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft1155_1.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft1155_2.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft1155_3.connect(user1).setApprovalForAll(swosh.address, true);
+
+      await expect(
+        swosh
+          .connect(user1)
+          .multiBatchTransferERC1155(tokens, recipients, tokenIds, amounts)
+      ).to.be.revertedWith('INVALID_PARAM');
+    });
+  });
+  describe('METHOD : megaTransfer', async () => {
+    it('should transfer all types of tokens in batch to one receiver', async () => {
+      const recipient = user2.address;
+
+      const tokensERC20 = [
+        token0.address,
+        token1.address,
+        token2.address,
+        token3.address,
+      ];
+      const amountERC20 = ethers.utils.parseEther('10');
+      const amountsERC20 = [amountERC20, amountERC20, amountERC20, amountERC20];
+
+      const tokensERC721 = [
+        nft721_0.address,
+        nft721_1.address,
+        nft721_2.address,
+      ];
+      const tokenIdsERC721 = [0, 0, 0];
+
+      const tokensERC1155 = [
+        nft1155_0.address,
+        nft1155_1.address,
+        nft1155_2.address,
+        nft1155_3.address,
+      ];
+      const tokenIdsERC1155 = [0, 1, 0, 1];
+      const amountsERC1155 = [2, 1, 2, 1];
+
+      const erc20Params = {
+        tokens: tokensERC20,
+        recipient: recipient,
+        amounts: amountsERC20,
+      };
+      const erc721Params = {
+        tokens: tokensERC721,
+        recipient: recipient,
+        tokenIds: tokenIdsERC721,
+      };
+      const erc1155Params = {
+        tokens: tokensERC1155,
+        recipient: recipient,
+        tokenIds: tokenIdsERC1155,
+        amounts: amountsERC1155,
+      };
+
+      expect(await token0.balanceOf(recipient)).to.eq(0);
+      expect(await token1.balanceOf(recipient)).to.eq(0);
+      expect(await token2.balanceOf(recipient)).to.eq(0);
+      expect(await token3.balanceOf(recipient)).to.eq(0);
+      expect(await nft721_0.balanceOf(recipient)).to.eq(0);
+      expect(await nft721_1.balanceOf(recipient)).to.eq(0);
+      expect(await nft721_2.balanceOf(recipient)).to.eq(0);
+      expect(await nft1155_0.balanceOf(recipient, tokenIdsERC1155[0])).to.eq(0);
+      expect(await nft1155_1.balanceOf(recipient, tokenIdsERC1155[1])).to.eq(0);
+      expect(await nft1155_2.balanceOf(recipient, tokenIdsERC1155[2])).to.eq(0);
+      expect(await nft1155_3.balanceOf(recipient, tokenIdsERC1155[3])).to.eq(0);
+
+      await token0.connect(user1).approve(swosh.address, amountERC20);
+      await token1.connect(user1).approve(swosh.address, amountERC20);
+      await token2.connect(user1).approve(swosh.address, amountERC20);
+      await token3.connect(user1).approve(swosh.address, amountERC20);
+      await nft721_0.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft721_1.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft721_2.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft1155_0.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft1155_1.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft1155_2.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft1155_3.connect(user1).setApprovalForAll(swosh.address, true);
+
+      await swosh
+        .connect(user1)
+        .megaTransfer(erc20Params, erc721Params, erc1155Params);
+
+      expect(await token0.balanceOf(recipient)).to.eq(amountsERC20[0]);
+      expect(await token1.balanceOf(recipient)).to.eq(amountsERC20[1]);
+      expect(await token2.balanceOf(recipient)).to.eq(amountsERC20[2]);
+      expect(await token3.balanceOf(recipient)).to.eq(amountsERC20[3]);
+      expect(await nft721_0.balanceOf(recipient)).to.eq(1);
+      expect(await nft721_1.balanceOf(recipient)).to.eq(1);
+      expect(await nft721_2.balanceOf(recipient)).to.eq(1);
+      expect(await nft1155_0.balanceOf(recipient, tokenIdsERC1155[0])).to.eq(
+        amountsERC1155[0]
+      );
+      expect(await nft1155_1.balanceOf(recipient, tokenIdsERC1155[1])).to.eq(
+        amountsERC1155[1]
+      );
+      expect(await nft1155_2.balanceOf(recipient, tokenIdsERC1155[2])).to.eq(
+        amountsERC1155[2]
+      );
+      expect(await nft1155_3.balanceOf(recipient, tokenIdsERC1155[3])).to.eq(
+        amountsERC1155[3]
+      );
+    });
+
+    it('should transfer ERC-20 & ERC-721 tokens in batch to one receiver', async () => {
+      const recipient = user2.address;
+
+      const tokensERC20 = [
+        token0.address,
+        token1.address,
+        token2.address,
+        token3.address,
+      ];
+      const amountERC20 = ethers.utils.parseEther('10');
+
+      const amountsERC20 = [amountERC20, amountERC20, amountERC20, amountERC20];
+
+      const tokensERC721 = [
+        nft721_0.address,
+        nft721_1.address,
+        nft721_2.address,
+      ];
+      const tokenIdsERC721 = [0, 0, 0];
+
+      const tokensERC1155: any[] = [];
+      const tokenIdsERC1155: any[] = [];
+      const amountsERC1155: any[] = [];
+
+      const erc20Params = {
+        tokens: tokensERC20,
+        recipient: recipient,
+        amounts: amountsERC20,
+      };
+      const erc721Params = {
+        tokens: tokensERC721,
+        recipient: recipient,
+        tokenIds: tokenIdsERC721,
+      };
+      const erc1155Params = {
+        tokens: tokensERC1155,
+        recipient: recipient,
+        tokenIds: tokenIdsERC1155,
+        amounts: amountsERC1155,
+      };
+
+      expect(await token0.balanceOf(recipient)).to.eq(0);
+      expect(await token1.balanceOf(recipient)).to.eq(0);
+      expect(await token2.balanceOf(recipient)).to.eq(0);
+      expect(await token3.balanceOf(recipient)).to.eq(0);
+      expect(await nft721_0.balanceOf(recipient)).to.eq(0);
+      expect(await nft721_1.balanceOf(recipient)).to.eq(0);
+      expect(await nft721_2.balanceOf(recipient)).to.eq(0);
+      expect(await nft1155_0.balanceOf(recipient, 0)).to.eq(0);
+      expect(await nft1155_1.balanceOf(recipient, 0)).to.eq(0);
+      expect(await nft1155_2.balanceOf(recipient, 0)).to.eq(0);
+      expect(await nft1155_3.balanceOf(recipient, 0)).to.eq(0);
+
+      await token0.connect(user1).approve(swosh.address, amountERC20);
+      await token1.connect(user1).approve(swosh.address, amountERC20);
+      await token2.connect(user1).approve(swosh.address, amountERC20);
+      await token3.connect(user1).approve(swosh.address, amountERC20);
+      await nft721_0.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft721_1.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft721_2.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft1155_0.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft1155_1.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft1155_2.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft1155_3.connect(user1).setApprovalForAll(swosh.address, true);
+
+      await swosh
+        .connect(user1)
+        .megaTransfer(erc20Params, erc721Params, erc1155Params);
+
+      expect(await token0.balanceOf(recipient)).to.eq(amountsERC20[0]);
+      expect(await token1.balanceOf(recipient)).to.eq(amountsERC20[1]);
+      expect(await token2.balanceOf(recipient)).to.eq(amountsERC20[2]);
+      expect(await token3.balanceOf(recipient)).to.eq(amountsERC20[3]);
+      expect(await nft721_0.balanceOf(recipient)).to.eq(1);
+      expect(await nft721_1.balanceOf(recipient)).to.eq(1);
+      expect(await nft721_2.balanceOf(recipient)).to.eq(1);
+      expect(await nft1155_0.balanceOf(recipient, 0)).to.eq(0);
+      expect(await nft1155_1.balanceOf(recipient, 0)).to.eq(0);
+      expect(await nft1155_2.balanceOf(recipient, 0)).to.eq(0);
+      expect(await nft1155_3.balanceOf(recipient, 0)).to.eq(0);
+    });
+    it('should transfer ERC-20 & ERC-1155 tokens in batch to one receiver', async () => {
+      const recipient = user2.address;
+
+      const tokensERC20 = [
+        token0.address,
+        token1.address,
+        token2.address,
+        token3.address,
+      ];
+      const amountERC20 = ethers.utils.parseEther('10');
+      const amountsERC20 = [amountERC20, amountERC20, amountERC20, amountERC20];
+
+      const tokensERC721: any[] = [];
+      const tokenIdsERC721: any[] = [];
+
+      const tokensERC1155 = [
+        nft1155_0.address,
+        nft1155_1.address,
+        nft1155_2.address,
+        nft1155_3.address,
+      ];
+      const tokenIdsERC1155 = [0, 1, 0, 1];
+      const amountsERC1155 = [2, 1, 2, 1];
+
+      const erc20Params = {
+        tokens: tokensERC20,
+        recipient: recipient,
+        amounts: amountsERC20,
+      };
+      const erc721Params = {
+        tokens: tokensERC721,
+        recipient: recipient,
+        tokenIds: tokenIdsERC721,
+      };
+      const erc1155Params = {
+        tokens: tokensERC1155,
+        recipient: recipient,
+        tokenIds: tokenIdsERC1155,
+        amounts: amountsERC1155,
+      };
+
+      expect(await token0.balanceOf(recipient)).to.eq(0);
+      expect(await token1.balanceOf(recipient)).to.eq(0);
+      expect(await token2.balanceOf(recipient)).to.eq(0);
+      expect(await token3.balanceOf(recipient)).to.eq(0);
+      expect(await nft721_0.balanceOf(recipient)).to.eq(0);
+      expect(await nft721_1.balanceOf(recipient)).to.eq(0);
+      expect(await nft721_2.balanceOf(recipient)).to.eq(0);
+      expect(await nft1155_0.balanceOf(recipient, tokenIdsERC1155[0])).to.eq(0);
+      expect(await nft1155_1.balanceOf(recipient, tokenIdsERC1155[1])).to.eq(0);
+      expect(await nft1155_2.balanceOf(recipient, tokenIdsERC1155[2])).to.eq(0);
+      expect(await nft1155_3.balanceOf(recipient, tokenIdsERC1155[3])).to.eq(0);
+
+      await token0.connect(user1).approve(swosh.address, amountERC20);
+      await token1.connect(user1).approve(swosh.address, amountERC20);
+      await token2.connect(user1).approve(swosh.address, amountERC20);
+      await token3.connect(user1).approve(swosh.address, amountERC20);
+      await nft721_0.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft721_1.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft721_2.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft1155_0.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft1155_1.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft1155_2.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft1155_3.connect(user1).setApprovalForAll(swosh.address, true);
+
+      await swosh
+        .connect(user1)
+        .megaTransfer(erc20Params, erc721Params, erc1155Params);
+
+      expect(await token0.balanceOf(recipient)).to.eq(amountsERC20[0]);
+      expect(await token1.balanceOf(recipient)).to.eq(amountsERC20[1]);
+      expect(await token2.balanceOf(recipient)).to.eq(amountsERC20[2]);
+      expect(await token3.balanceOf(recipient)).to.eq(amountsERC20[3]);
+      expect(await nft721_0.balanceOf(recipient)).to.eq(0);
+      expect(await nft721_1.balanceOf(recipient)).to.eq(0);
+      expect(await nft721_2.balanceOf(recipient)).to.eq(0);
+      expect(await nft1155_0.balanceOf(recipient, tokenIdsERC1155[0])).to.eq(
+        amountsERC1155[0]
+      );
+      expect(await nft1155_1.balanceOf(recipient, tokenIdsERC1155[1])).to.eq(
+        amountsERC1155[1]
+      );
+      expect(await nft1155_2.balanceOf(recipient, tokenIdsERC1155[2])).to.eq(
+        amountsERC1155[2]
+      );
+      expect(await nft1155_3.balanceOf(recipient, tokenIdsERC1155[3])).to.eq(
+        amountsERC1155[3]
+      );
+    });
+    it('should transfer ERC-721 & ERC-1155 tokens in batch to one receiver', async () => {
+      const recipient = user2.address;
+
+      const tokensERC20: any[] = [];
+      const amountsERC20: any[] = [];
+
+      const tokensERC721 = [
+        nft721_0.address,
+        nft721_1.address,
+        nft721_2.address,
+      ];
+      const tokenIdsERC721 = [0, 0, 0];
+
+      const tokensERC1155 = [
+        nft1155_0.address,
+        nft1155_1.address,
+        nft1155_2.address,
+        nft1155_3.address,
+      ];
+      const tokenIdsERC1155 = [0, 1, 0, 1];
+      const amountsERC1155 = [2, 1, 2, 1];
+
+      const erc20Params = {
+        tokens: tokensERC20,
+        recipient: recipient,
+        amounts: amountsERC20,
+      };
+      const erc721Params = {
+        tokens: tokensERC721,
+        recipient: recipient,
+        tokenIds: tokenIdsERC721,
+      };
+      const erc1155Params = {
+        tokens: tokensERC1155,
+        recipient: recipient,
+        tokenIds: tokenIdsERC1155,
+        amounts: amountsERC1155,
+      };
+
+      expect(await token0.balanceOf(recipient)).to.eq(0);
+      expect(await token1.balanceOf(recipient)).to.eq(0);
+      expect(await token2.balanceOf(recipient)).to.eq(0);
+      expect(await token3.balanceOf(recipient)).to.eq(0);
+      expect(await nft721_0.balanceOf(recipient)).to.eq(0);
+      expect(await nft721_1.balanceOf(recipient)).to.eq(0);
+      expect(await nft721_2.balanceOf(recipient)).to.eq(0);
+      expect(await nft1155_0.balanceOf(recipient, tokenIdsERC1155[0])).to.eq(0);
+      expect(await nft1155_1.balanceOf(recipient, tokenIdsERC1155[1])).to.eq(0);
+      expect(await nft1155_2.balanceOf(recipient, tokenIdsERC1155[2])).to.eq(0);
+      expect(await nft1155_3.balanceOf(recipient, tokenIdsERC1155[3])).to.eq(0);
+
+      await token0
+        .connect(user1)
+        .approve(swosh.address, ethers.utils.parseEther('10'));
+      await token1
+        .connect(user1)
+        .approve(swosh.address, ethers.utils.parseEther('10'));
+      await token2
+        .connect(user1)
+        .approve(swosh.address, ethers.utils.parseEther('10'));
+      await token3
+        .connect(user1)
+        .approve(swosh.address, ethers.utils.parseEther('10'));
+      await nft721_0.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft721_1.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft721_2.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft1155_0.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft1155_1.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft1155_2.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft1155_3.connect(user1).setApprovalForAll(swosh.address, true);
+
+      await swosh
+        .connect(user1)
+        .megaTransfer(erc20Params, erc721Params, erc1155Params);
+
+      expect(await token0.balanceOf(recipient)).to.eq(0);
+      expect(await token1.balanceOf(recipient)).to.eq(0);
+      expect(await token2.balanceOf(recipient)).to.eq(0);
+      expect(await token3.balanceOf(recipient)).to.eq(0);
+      expect(await nft721_0.balanceOf(recipient)).to.eq(1);
+      expect(await nft721_1.balanceOf(recipient)).to.eq(1);
+      expect(await nft721_2.balanceOf(recipient)).to.eq(1);
+      expect(await nft1155_0.balanceOf(recipient, tokenIdsERC1155[0])).to.eq(
+        amountsERC1155[0]
+      );
+      expect(await nft1155_1.balanceOf(recipient, tokenIdsERC1155[1])).to.eq(
+        amountsERC1155[1]
+      );
+      expect(await nft1155_2.balanceOf(recipient, tokenIdsERC1155[2])).to.eq(
+        amountsERC1155[2]
+      );
+      expect(await nft1155_3.balanceOf(recipient, tokenIdsERC1155[3])).to.eq(
+        amountsERC1155[3]
+      );
+    });
+  });
+  describe('METHOD : multiMegaTransfer', async () => {
+    it('should transfer all types of tokens in batch to multiple receivers', async () => {
+      const recipientsERC20 = [
+        user2.address,
+        user3.address,
+        user4.address,
+        user4.address,
+      ];
+
+      const tokensERC20 = [
+        token0.address,
+        token1.address,
+        token2.address,
+        token3.address,
+      ];
+
+      const amountERC20 = ethers.utils.parseEther('10');
+      const amountsERC20 = [amountERC20, amountERC20, amountERC20, amountERC20];
+
+      const recipientsERC721 = [user2.address, user3.address, user4.address];
+
+      const tokensERC721 = [
+        nft721_0.address,
+        nft721_1.address,
+        nft721_2.address,
+      ];
+      const tokenIdsERC721 = [0, 0, 0];
+
+      const recipientsERC1155 = [
+        user2.address,
+        user3.address,
+        user4.address,
+        user4.address,
+      ];
+
+      const tokensERC1155 = [
+        nft1155_0.address,
+        nft1155_1.address,
+        nft1155_2.address,
+        nft1155_3.address,
+      ];
+      const tokenIdsERC1155 = [0, 1, 0, 1];
+      const amountsERC1155 = [2, 1, 2, 1];
+
+      const erc20Params = {
+        tokens: tokensERC20,
+        recipients: recipientsERC20,
+        amounts: amountsERC20,
+      };
+      const erc721Params = {
+        tokens: tokensERC721,
+        recipients: recipientsERC721,
+        tokenIds: tokenIdsERC721,
+      };
+      const erc1155Params = {
+        tokens: tokensERC1155,
+        recipients: recipientsERC1155,
+        tokenIds: tokenIdsERC1155,
+        amounts: amountsERC1155,
+      };
+
+      expect(await token0.balanceOf(recipientsERC20[0])).to.eq(0);
+      expect(await token1.balanceOf(recipientsERC20[1])).to.eq(0);
+      expect(await token2.balanceOf(recipientsERC20[2])).to.eq(0);
+      expect(await token3.balanceOf(recipientsERC20[3])).to.eq(0);
+      expect(await nft721_0.balanceOf(recipientsERC721[0])).to.eq(0);
+      expect(await nft721_1.balanceOf(recipientsERC721[1])).to.eq(0);
+      expect(await nft721_2.balanceOf(recipientsERC721[2])).to.eq(0);
+      expect(
+        await nft1155_0.balanceOf(recipientsERC1155[0], tokenIdsERC1155[0])
+      ).to.eq(0);
+      expect(
+        await nft1155_1.balanceOf(recipientsERC1155[1], tokenIdsERC1155[1])
+      ).to.eq(0);
+      expect(
+        await nft1155_2.balanceOf(recipientsERC1155[2], tokenIdsERC1155[2])
+      ).to.eq(0);
+      expect(
+        await nft1155_3.balanceOf(recipientsERC1155[3], tokenIdsERC1155[3])
+      ).to.eq(0);
+
+      await token0.connect(user1).approve(swosh.address, amountERC20);
+      await token1.connect(user1).approve(swosh.address, amountERC20);
+      await token2.connect(user1).approve(swosh.address, amountERC20);
+      await token3.connect(user1).approve(swosh.address, amountERC20);
+      await nft721_0.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft721_1.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft721_2.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft1155_0.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft1155_1.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft1155_2.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft1155_3.connect(user1).setApprovalForAll(swosh.address, true);
+
+      await swosh
+        .connect(user1)
+        .multiMegaTransfer(erc20Params, erc721Params, erc1155Params);
+
+      expect(await token0.balanceOf(recipientsERC20[0])).to.eq(amountsERC20[0]);
+      expect(await token1.balanceOf(recipientsERC20[1])).to.eq(amountsERC20[1]);
+      expect(await token2.balanceOf(recipientsERC20[2])).to.eq(amountsERC20[2]);
+      expect(await token3.balanceOf(recipientsERC20[3])).to.eq(amountsERC20[3]);
+      expect(await nft721_0.balanceOf(recipientsERC721[0])).to.eq(1);
+      expect(await nft721_1.balanceOf(recipientsERC721[1])).to.eq(1);
+      expect(await nft721_2.balanceOf(recipientsERC721[2])).to.eq(1);
+      expect(
+        await nft1155_0.balanceOf(recipientsERC1155[0], tokenIdsERC1155[0])
+      ).to.eq(amountsERC1155[0]);
+      expect(
+        await nft1155_1.balanceOf(recipientsERC1155[1], tokenIdsERC1155[1])
+      ).to.eq(amountsERC1155[1]);
+      expect(
+        await nft1155_2.balanceOf(recipientsERC1155[2], tokenIdsERC1155[2])
+      ).to.eq(amountsERC1155[2]);
+      expect(
+        await nft1155_3.balanceOf(recipientsERC1155[3], tokenIdsERC1155[3])
+      ).to.eq(amountsERC1155[3]);
+    });
+    it('should transfer ERC-20 & ERC-721 tokens in batch to multiple receivers', async () => {
+      const recipientsERC20 = [
+        user2.address,
+        user3.address,
+        user4.address,
+        user4.address,
+      ];
+
+      const tokensERC20 = [
+        token0.address,
+        token1.address,
+        token2.address,
+        token3.address,
+      ];
+
+      const amountERC20 = ethers.utils.parseEther('10');
+      const amountsERC20 = [amountERC20, amountERC20, amountERC20, amountERC20];
+
+      const recipientsERC721 = [user2.address, user3.address, user4.address];
+
+      const tokensERC721 = [
+        nft721_0.address,
+        nft721_1.address,
+        nft721_2.address,
+      ];
+      const tokenIdsERC721 = [0, 0, 0];
+
+      const recipientsERC1155: any[] = [];
+
+      const tokensERC1155: any[] = [];
+      const tokenIdsERC1155: any[] = [];
+      const amountsERC1155: any[] = [];
+
+      const erc20Params = {
+        tokens: tokensERC20,
+        recipients: recipientsERC20,
+        amounts: amountsERC20,
+      };
+      const erc721Params = {
+        tokens: tokensERC721,
+        recipients: recipientsERC721,
+        tokenIds: tokenIdsERC721,
+      };
+      const erc1155Params = {
+        tokens: tokensERC1155,
+        recipients: recipientsERC1155,
+        tokenIds: tokenIdsERC1155,
+        amounts: amountsERC1155,
+      };
+
+      expect(await token0.balanceOf(recipientsERC20[0])).to.eq(0);
+      expect(await token1.balanceOf(recipientsERC20[1])).to.eq(0);
+      expect(await token2.balanceOf(recipientsERC20[2])).to.eq(0);
+      expect(await token3.balanceOf(recipientsERC20[3])).to.eq(0);
+      expect(await nft721_0.balanceOf(recipientsERC721[0])).to.eq(0);
+      expect(await nft721_1.balanceOf(recipientsERC721[1])).to.eq(0);
+      expect(await nft721_2.balanceOf(recipientsERC721[2])).to.eq(0);
+
+      await token0.connect(user1).approve(swosh.address, amountERC20);
+      await token1.connect(user1).approve(swosh.address, amountERC20);
+      await token2.connect(user1).approve(swosh.address, amountERC20);
+      await token3.connect(user1).approve(swosh.address, amountERC20);
+      await nft721_0.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft721_1.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft721_2.connect(user1).setApprovalForAll(swosh.address, true);
+
+      await swosh
+        .connect(user1)
+        .multiMegaTransfer(erc20Params, erc721Params, erc1155Params);
+
+      expect(await token0.balanceOf(recipientsERC20[0])).to.eq(amountsERC20[0]);
+      expect(await token1.balanceOf(recipientsERC20[1])).to.eq(amountsERC20[1]);
+      expect(await token2.balanceOf(recipientsERC20[2])).to.eq(amountsERC20[2]);
+      expect(await token3.balanceOf(recipientsERC20[3])).to.eq(amountsERC20[3]);
+      expect(await nft721_0.balanceOf(recipientsERC721[0])).to.eq(1);
+      expect(await nft721_1.balanceOf(recipientsERC721[1])).to.eq(1);
+      expect(await nft721_2.balanceOf(recipientsERC721[2])).to.eq(1);
+    });
+    it('should transfer ERC-20 & ERC-1155 tokens in batch to multiple receivers', async () => {
+      const recipientsERC20 = [
+        user2.address,
+        user3.address,
+        user4.address,
+        user4.address,
+      ];
+
+      const tokensERC20 = [
+        token0.address,
+        token1.address,
+        token2.address,
+        token3.address,
+      ];
+
+      const amountERC20 = ethers.utils.parseEther('10');
+      const amountsERC20 = [amountERC20, amountERC20, amountERC20, amountERC20];
+
+      const recipientsERC721: any[] = [];
+
+      const tokensERC721: any[] = [];
+      const tokenIdsERC721: any[] = [];
+
+      const recipientsERC1155 = [
+        user2.address,
+        user3.address,
+        user4.address,
+        user4.address,
+      ];
+
+      const tokensERC1155 = [
+        nft1155_0.address,
+        nft1155_1.address,
+        nft1155_2.address,
+        nft1155_3.address,
+      ];
+      const tokenIdsERC1155 = [0, 1, 0, 1];
+      const amountsERC1155 = [2, 1, 2, 1];
+
+      const erc20Params = {
+        tokens: tokensERC20,
+        recipients: recipientsERC20,
+        amounts: amountsERC20,
+      };
+      const erc721Params = {
+        tokens: tokensERC721,
+        recipients: recipientsERC721,
+        tokenIds: tokenIdsERC721,
+      };
+      const erc1155Params = {
+        tokens: tokensERC1155,
+        recipients: recipientsERC1155,
+        tokenIds: tokenIdsERC1155,
+        amounts: amountsERC1155,
+      };
+
+      expect(await token0.balanceOf(recipientsERC20[0])).to.eq(0);
+      expect(await token1.balanceOf(recipientsERC20[1])).to.eq(0);
+      expect(await token2.balanceOf(recipientsERC20[2])).to.eq(0);
+      expect(await token3.balanceOf(recipientsERC20[3])).to.eq(0);
+
+      expect(
+        await nft1155_0.balanceOf(recipientsERC1155[0], tokenIdsERC1155[0])
+      ).to.eq(0);
+      expect(
+        await nft1155_1.balanceOf(recipientsERC1155[1], tokenIdsERC1155[1])
+      ).to.eq(0);
+      expect(
+        await nft1155_2.balanceOf(recipientsERC1155[2], tokenIdsERC1155[2])
+      ).to.eq(0);
+      expect(
+        await nft1155_3.balanceOf(recipientsERC1155[3], tokenIdsERC1155[3])
+      ).to.eq(0);
+
+      await token0.connect(user1).approve(swosh.address, amountERC20);
+      await token1.connect(user1).approve(swosh.address, amountERC20);
+      await token2.connect(user1).approve(swosh.address, amountERC20);
+      await token3.connect(user1).approve(swosh.address, amountERC20);
+      await nft1155_0.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft1155_1.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft1155_2.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft1155_3.connect(user1).setApprovalForAll(swosh.address, true);
+
+      await swosh
+        .connect(user1)
+        .multiMegaTransfer(erc20Params, erc721Params, erc1155Params);
+
+      expect(await token0.balanceOf(recipientsERC20[0])).to.eq(amountsERC20[0]);
+      expect(await token1.balanceOf(recipientsERC20[1])).to.eq(amountsERC20[1]);
+      expect(await token2.balanceOf(recipientsERC20[2])).to.eq(amountsERC20[2]);
+      expect(await token3.balanceOf(recipientsERC20[3])).to.eq(amountsERC20[3]);
+      expect(
+        await nft1155_0.balanceOf(recipientsERC1155[0], tokenIdsERC1155[0])
+      ).to.eq(amountsERC1155[0]);
+      expect(
+        await nft1155_1.balanceOf(recipientsERC1155[1], tokenIdsERC1155[1])
+      ).to.eq(amountsERC1155[1]);
+      expect(
+        await nft1155_2.balanceOf(recipientsERC1155[2], tokenIdsERC1155[2])
+      ).to.eq(amountsERC1155[2]);
+      expect(
+        await nft1155_3.balanceOf(recipientsERC1155[3], tokenIdsERC1155[3])
+      ).to.eq(amountsERC1155[3]);
+    });
+    it('should transfer ERC-721 & ERC-1155 tokens in batch to multiple receivers', async () => {
+      const recipientsERC20: any[] = [];
+
+      const tokensERC20: any[] = [];
+
+      const amountsERC20: any[] = [];
+
+      const recipientsERC721 = [user2.address, user3.address, user4.address];
+
+      const tokensERC721 = [
+        nft721_0.address,
+        nft721_1.address,
+        nft721_2.address,
+      ];
+      const tokenIdsERC721 = [0, 0, 0];
+
+      const recipientsERC1155 = [
+        user2.address,
+        user3.address,
+        user4.address,
+        user4.address,
+      ];
+
+      const tokensERC1155 = [
+        nft1155_0.address,
+        nft1155_1.address,
+        nft1155_2.address,
+        nft1155_3.address,
+      ];
+      const tokenIdsERC1155 = [0, 1, 0, 1];
+      const amountsERC1155 = [2, 1, 2, 1];
+
+      const erc20Params = {
+        tokens: tokensERC20,
+        recipients: recipientsERC20,
+        amounts: amountsERC20,
+      };
+      const erc721Params = {
+        tokens: tokensERC721,
+        recipients: recipientsERC721,
+        tokenIds: tokenIdsERC721,
+      };
+      const erc1155Params = {
+        tokens: tokensERC1155,
+        recipients: recipientsERC1155,
+        tokenIds: tokenIdsERC1155,
+        amounts: amountsERC1155,
+      };
+
+      expect(await nft721_0.balanceOf(recipientsERC721[0])).to.eq(0);
+      expect(await nft721_1.balanceOf(recipientsERC721[1])).to.eq(0);
+      expect(await nft721_2.balanceOf(recipientsERC721[2])).to.eq(0);
+      expect(
+        await nft1155_0.balanceOf(recipientsERC1155[0], tokenIdsERC1155[0])
+      ).to.eq(0);
+      expect(
+        await nft1155_1.balanceOf(recipientsERC1155[1], tokenIdsERC1155[1])
+      ).to.eq(0);
+      expect(
+        await nft1155_2.balanceOf(recipientsERC1155[2], tokenIdsERC1155[2])
+      ).to.eq(0);
+      expect(
+        await nft1155_3.balanceOf(recipientsERC1155[3], tokenIdsERC1155[3])
+      ).to.eq(0);
+
+      await nft721_0.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft721_1.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft721_2.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft1155_0.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft1155_1.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft1155_2.connect(user1).setApprovalForAll(swosh.address, true);
+      await nft1155_3.connect(user1).setApprovalForAll(swosh.address, true);
+
+      await swosh
+        .connect(user1)
+        .multiMegaTransfer(erc20Params, erc721Params, erc1155Params);
+
+      expect(await nft721_0.balanceOf(recipientsERC721[0])).to.eq(1);
+      expect(await nft721_1.balanceOf(recipientsERC721[1])).to.eq(1);
+      expect(await nft721_2.balanceOf(recipientsERC721[2])).to.eq(1);
+      expect(
+        await nft1155_0.balanceOf(recipientsERC1155[0], tokenIdsERC1155[0])
+      ).to.eq(amountsERC1155[0]);
+      expect(
+        await nft1155_1.balanceOf(recipientsERC1155[1], tokenIdsERC1155[1])
+      ).to.eq(amountsERC1155[1]);
+      expect(
+        await nft1155_2.balanceOf(recipientsERC1155[2], tokenIdsERC1155[2])
+      ).to.eq(amountsERC1155[2]);
+      expect(
+        await nft1155_3.balanceOf(recipientsERC1155[3], tokenIdsERC1155[3])
+      ).to.eq(amountsERC1155[3]);
+    });
+  });
 });
