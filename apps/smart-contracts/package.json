@@ -4,7 +4,10 @@
   "private": true,
   "scripts": {
     "test": "hardhat test",
-    "deploy": "hardhat --network goerli deploy"
+    "recompile": "hardhat clean && hardhat compile",
+    "test::gas": "hardhat run --network localhost scripts/swosh-gas-tests.ts",
+    "deploy::localhost": "hardhat --network localhost deploy",
+    "deploy::goerli": "hardhat --network goerli deploy"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "2.2.2",
