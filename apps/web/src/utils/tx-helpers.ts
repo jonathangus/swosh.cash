@@ -148,7 +148,7 @@ export const getMegaTransfer = (
   const erc20Param: ERC20ParamStruct = {
     tokens: [],
     amounts: [],
-    recipient: txs[0].to,
+    recipient: erc20Txs[0] && erc20Txs[0].to,
   };
 
   const erc721ParamMultiple: MultiERC721ParamStruct = {
@@ -160,7 +160,7 @@ export const getMegaTransfer = (
   const erc721Param: ERC721ParamStruct = {
     tokens: [],
     tokenIds: [],
-    recipient: txs[0].to,
+    recipient: erc721Txs[0] && erc721Txs[0].to,
   };
 
   const erc1155ParamMultiple: MultiERC1155ParamStruct = {
@@ -174,7 +174,7 @@ export const getMegaTransfer = (
     tokens: [],
     amounts: [],
     tokenIds: [],
-    recipient: txs[0].to,
+    recipient: erc1155Txs[0] && erc1155Txs[0].to,
   };
 
   for (let tx of erc20Txs) {

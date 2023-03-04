@@ -16,7 +16,7 @@ const ProgressPage = ({}: Props) => {
     return <div>...loading</div>;
   }
   const { parts, chainId } = check;
-
+  
   if (Object.values(parts).length > 0) {
     return (
       <TransferContextProvider chainId={chainId} parts={Object.values(parts)}>
