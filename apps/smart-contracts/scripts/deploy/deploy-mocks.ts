@@ -40,7 +40,7 @@ async function main() {
     network.name,
     'MockERC20_1',
     m20_1.address,
-    [],
+    ['fake USDC', 'fUSDC'],
     MERC20_ABI,
     +txReceipt.blockNumber
   );
@@ -58,7 +58,7 @@ async function main() {
     network.name,
     'MockERC20_2',
     m20_2.address,
-    [],
+    ['fake DAI', 'fDAI'],
     MERC20_ABI,
     +txReceipt.blockNumber
   );
@@ -76,7 +76,7 @@ async function main() {
     network.name,
     'MockERC20_3',
     m20_3.address,
-    [],
+    ['fake BTC', 'fBTC'],
     MERC20_ABI,
     +txReceipt.blockNumber
   );
@@ -94,7 +94,7 @@ async function main() {
     network.name,
     'MockERC20_4',
     m20_4.address,
-    [],
+    ['fake ETH', 'fETH'],
     MERC20_ABI,
     +txReceipt.blockNumber
   );
@@ -102,7 +102,7 @@ async function main() {
   // Log deployment details to console
   printDetails(network.name, 'MockERC20_4', m20_4.address);
 
-  const m20_5 = await mockERC20Factory.deploy('fake CRV', 'fCRV');
+  const m20_5 = await mockERC20Factory.deploy('fake MATIC', 'fMATIC');
   await m20_5.deployed();
 
   txReceipt = await ethers.provider.send('eth_getTransactionReceipt', [
@@ -112,7 +112,7 @@ async function main() {
     network.name,
     'MockERC20_5',
     m20_5.address,
-    [],
+    ['fake MATIC', 'fMATIC'],
     MERC20_ABI,
     +txReceipt.blockNumber
   );
@@ -130,7 +130,7 @@ async function main() {
     network.name,
     'MockERC20_6',
     m20_6.address,
-    [],
+    ['fake OP', 'fOP'],
     MERC20_ABI,
     +txReceipt.blockNumber
   );
@@ -160,7 +160,11 @@ async function main() {
     network.name,
     'MockERC721_1',
     m721_1.address,
-    [],
+    [
+      'Fake BAYC',
+      'fBAYC',
+      'ipfs://QmeSjSinHpPnmXmspMjwiXyN6zS4E9zccariGR3jxcaWtq/',
+    ],
     MERC721_ABI,
     +txReceipt.blockNumber
   );
@@ -182,7 +186,11 @@ async function main() {
     network.name,
     'MockERC721_2',
     m721_2.address,
-    [],
+    [
+      'Fake AZUKI',
+      'fAZUKI',
+      'ipfs://QmZcH4YvBVVRJtdn4RdbaqgspFU8gH6P9vomDpBVpAL3u4/',
+    ],
     MERC721_ABI,
     +txReceipt.blockNumber
   );
@@ -204,7 +212,11 @@ async function main() {
     network.name,
     'MockERC721_3',
     m721_3.address,
-    [],
+    [
+      'Fake WIZARD',
+      'fWIZARD',
+      'ipfs://QmU7pgaLsVkrP1ao7pn51wDE37PYNime6pV6mx8sUx1Nr4/',
+    ],
     MERC721_ABI,
     +txReceipt.blockNumber
   );
@@ -226,7 +238,11 @@ async function main() {
     network.name,
     'MockERC721_4',
     m721_4.address,
-    [],
+    [
+      'Fake PUDGY',
+      'fPUDGY',
+      'https://ipfs.io/ipfs/QmWXJXRdExse2YHRY21Wvh4pjRxNRQcWVhcKw4DLVnqGqs/',
+    ],
     MERC721_ABI,
     +txReceipt.blockNumber
   );
@@ -235,9 +251,9 @@ async function main() {
   printDetails(network.name, 'MockERC721_4', m721_4.address);
 
   const m721_5 = await mockERC721Factory.deploy(
-    'Fake MOON',
-    'MOON',
-    'https://live---metadata-5covpqijaa-uc.a.run.app/metadata/ '
+    'Fake Anotherblock PFP',
+    'fABPFP',
+    'https://pfp-metadata.anotherblock.io/'
   );
   await m721_5.deployed();
 
@@ -248,7 +264,11 @@ async function main() {
     network.name,
     'MockERC721_5',
     m721_5.address,
-    [],
+    [
+      'Fake Anotherblock PFP',
+      'fABPFP',
+      'https://pfp-metadata.anotherblock.io/',
+    ],
     MERC721_ABI,
     +txReceipt.blockNumber
   );
@@ -276,7 +296,7 @@ async function main() {
     network.name,
     'MockERC1155_1',
     m1155_1.address,
-    [],
+    ['https://arweave.net/OYeIdxgQ7LQJqBL_VznWj0trqi9jqKHO3xHZcnt_Wn8'],
     MERC1155_ABI,
     +txReceipt.blockNumber
   );
@@ -296,7 +316,7 @@ async function main() {
     network.name,
     'MockERC1155_2',
     m1155_2.address,
-    [],
+    ['ipfs://QmSqtwcqbRWUT3XCPfffcM6qrCPun8mDeBnGE4K7KiK5NF/'],
     MERC1155_ABI,
     +txReceipt.blockNumber
   );
@@ -316,7 +336,7 @@ async function main() {
     network.name,
     'MockERC1155_3',
     m1155_3.address,
-    [],
+    ['https://nftdata.parallelnft.com/api/parallel-alpha'],
     MERC1155_ABI,
     +txReceipt.blockNumber
   );
@@ -336,7 +356,7 @@ async function main() {
     network.name,
     'MockERC1155_4',
     m1155_4.address,
-    [],
+    ['ipfs://QmUfGyJx8phhTGbXSbTtjjX4x5UEytu5tVkSmf4DPF8WFe/'],
     MERC1155_ABI,
     +txReceipt.blockNumber
   );
@@ -356,7 +376,9 @@ async function main() {
     network.name,
     'MockERC1155_5',
     m1155_5.address,
-    [],
+    [
+      'https://gateway.pinata.cloud/ipfs/QmQxo8Jogon3DaC59y1CjVWHns9QiQDbxr9fQPdo5VpbPY',
+    ],
     MERC1155_ABI,
     +txReceipt.blockNumber
   );
