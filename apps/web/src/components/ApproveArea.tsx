@@ -1,7 +1,12 @@
-import { BigNumber } from 'ethers';
-import { Sequance } from 'shared-config';
+import { BigNumber, ethers } from 'ethers';
+import { OnChainTransferItem, Sequance } from 'shared-config';
 import { useContractWrite } from 'wagmi-lfg';
-import { ERC20__factory, Swosh__factory } from 'web3-config';
+import {
+  ERC1155__factory,
+  ERC20__factory,
+  ERC721__factory,
+  Swosh__factory,
+} from 'web3-config';
 import { useTransferContext } from '../context/TransferContext';
 import { Button } from './ui/Button';
 import {
@@ -10,6 +15,9 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from './ui/Accordian';
+import { boolean } from 'zod';
+import { toast } from 'sonner';
+import { formatAddressToShort } from '../utils/formatter';
 
 type Props = {
   items: Sequance[];
@@ -17,17 +25,37 @@ type Props = {
 
 type PropsItem = {
   item: Sequance & {
-    match: any;
+    match: OnChainTransferItem;
+    allowanceOk: boolean;
   };
 };
 
+let factoryMapping = {
+  erc20: ERC20__factory,
+  erc721: ERC721__factory,
+  erc1155: ERC1155__factory,
+};
+
+let methodMapping = {
+  erc20: ERC20__factory,
+  erc721: ERC721__factory,
+  erc1155: ERC1155__factory,
+};
+
 const ApproveItem = ({ item }: PropsItem) => {
+  const factory = factoryMapping[item.type];
   const { write, isLoading, waitForTxResult } = useContractWrite(
-    ERC20__factory,
+    factory as any,
     item.method,
     {
       address: item.contractAddress,
       reckless: true,
+      onSuccess: () => {
+        toast.success(`${item.match?.name} is approved`);
+      },
+      onError: (e) => {
+        toast.error(`Error: ${e.message}`);
+      },
     }
   );
 
@@ -39,13 +67,17 @@ const ApproveItem = ({ item }: PropsItem) => {
     } catch (e) {}
   };
 
+  const name =
+    item.match?.name ||
+    `${formatAddressToShort(item.contractAddress)}${item.type}`;
+
   return (
     <div>
       {item.allowanceOk ? (
-        <div>{item.match?.name} approved ✅</div>
+        <div>{name} approved ✅</div>
       ) : (
         <Button disabled={isLoading} onClick={handleApprove}>
-          Approve {item.match?.name}
+          Approve {name}
         </Button>
       )}
     </div>
@@ -54,6 +86,7 @@ const ApproveItem = ({ item }: PropsItem) => {
 
 const ApproveArea = ({ items }: Props) => {
   const transfers = useTransferContext();
+
   const finalItems = items.map((seq) => {
     const match = transfers.items.find(
       (item) =>
@@ -64,7 +97,11 @@ const ApproveArea = ({ items }: Props) => {
     let allowanceOk = false;
 
     if (match) {
-      allowanceOk = BigNumber.from(match.balance).lt(match.allowance);
+      if (typeof match.allowance === 'boolean') {
+        allowanceOk = match.allowance;
+      } else {
+        allowanceOk = BigNumber.from(match.balance).lt(match.allowance);
+      }
     }
 
     return {

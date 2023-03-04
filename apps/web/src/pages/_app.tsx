@@ -9,9 +9,9 @@ import PageLayout from '../components/PageLayout';
 import Floater from '../components/Floater';
 import { useAccount, useNetwork } from 'wagmi';
 import { useTxStore } from '../stores/useTxStore';
-import { OnChainProvider } from '../context/OnChainStateContext';
 import { useHoldingsStore } from '../stores/useHoldingsStore';
 import { useDidMountEffect } from '../hooks/useDidMountEffect';
+import { Toaster } from 'sonner';
 
 const queryClient = new QueryClient();
 
@@ -29,14 +29,13 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <NotificationsProvider>
+        <Toaster />
         <Web3Provider>
-          <OnChainProvider>
-            <PageLayout>
-              <Component {...pageProps} />
-              <Floater />
-            </PageLayout>
-            <NotificationHandler />
-          </OnChainProvider>
+          <PageLayout>
+            <Component {...pageProps} />
+            <Floater />
+          </PageLayout>
+          <NotificationHandler />
         </Web3Provider>
       </NotificationsProvider>
     </QueryClientProvider>

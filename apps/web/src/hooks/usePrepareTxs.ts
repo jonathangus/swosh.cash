@@ -11,7 +11,6 @@ export const usePrepareTxs = (
 ) => {
   let [completeTxs, setCompleteTx] = useState<PopulatedTransferPart[]>([]);
   const [preparedTxs, setPreparedTxs] = useState([]);
-  const provider = useProvider();
   const { chain } = useNetwork();
   const isCorrectChain = chain?.id == chainId;
 
@@ -64,11 +63,6 @@ export const usePrepareTxs = (
             signer
           );
           data = await contract.populateTransaction.transfer(tx.to, tx.amount);
-
-          console.log({
-            data,
-            tx,
-          });
         } else if (tx.type === 'erc721') {
           const contract = new Contract(
             tx.contractAddress,
@@ -102,7 +96,6 @@ export const usePrepareTxs = (
         }
 
         // gas = await provider.estimateGas(data);
-        console.log('GAS:', gas);
       } catch (e) {
         console.log('COULD NOT GET GAS');
         console.error(e);

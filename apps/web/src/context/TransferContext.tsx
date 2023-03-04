@@ -42,6 +42,7 @@ export const TransferContextProvider = ({
     tokenURI: undefined,
   })) as any as Token[];
   const swoshAddress = useAddress(Swosh__factory, chainId) as string;
+  const { data: blockNumber } = useBlockNumber({ watch: true });
 
   const calls = getCalls(holdings, { user: address, swoshAddress });
   const provider = useProvider();
@@ -87,12 +88,14 @@ export const TransferContextProvider = ({
           if (match.type === 'erc1155') {
             balance = BigNumber.from(val.balanceOf).toNumber();
             tokenURI = val.tokenURI;
+            allowance = val.allowance;
           } else if (match.type === 'erc721') {
             tokenURI = val.tokenURI;
             name = val.name;
             symbol = val.symbol;
             balance =
               val.ownerOf?.toLowerCase() === address?.toLowerCase() ? 1 : 0;
+            allowance = val.allowance;
           } else if (match.type === 'erc20') {
             balance = BigNumber.from(val.balanceOf).toString();
             symbol = val.symbol;
@@ -117,8 +120,10 @@ export const TransferContextProvider = ({
   };
 
   useEffect(() => {
-    fetchMulticall();
-  }, [chainId]);
+    if (multicall && address && calls.length > 0) {
+      fetchMulticall();
+    }
+  }, [blockNumber, multicall, calls.length, address]);
 
   return (
     <transferContext.Provider value={{ items }}>

@@ -5,6 +5,7 @@ import { QueryObserverResult } from '@tanstack/react-query';
 
 export type ERCType = 'erc721' | 'erc1155' | 'erc20';
 
+export type AllowanceMap = Record<string, boolean>;
 export type TransferPart = {
   id: string;
   contractAddress: string;
@@ -17,7 +18,11 @@ export type Sequance = {
   method: string;
   args: any[];
   contractAddress: string;
-  type: ERCType;
+  type: ERCType | 'megaTransfer' | 'megaTransferMultiple';
+  isApprove?: boolean;
+  isAllowanceOk?: boolean;
+  isBulkCall?: boolean;
+  id?: string;
 };
 
 export type TransferGroups = {
@@ -31,7 +36,7 @@ export type OnChainTransferItem = {
   symbol?: string;
   decimals?: number;
   type: ERCType;
-
+  allowance?: BigNumber;
   contract_address: string;
   token_id: string;
   uniqBy: string;
@@ -44,6 +49,7 @@ export type PopulatedTransferPart = TransferPart & {
   amount: BigNumber;
   to: string;
   id: string;
+  from: string;
 };
 
 export type TransferData = {

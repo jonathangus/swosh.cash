@@ -1,5 +1,6 @@
 import Decimal from 'decimal.js';
 import { BigNumber, ethers } from 'ethers';
+import { ERCType } from 'shared-config';
 
 Decimal.set({
   toExpNeg: -30,
@@ -45,3 +46,15 @@ export const formatAddressToShort = (
     '...',
     address.slice(-(options?.end || 4)),
   ].join('');
+
+export const formatUnitPerType = (
+  value: BigNumber,
+  type: ERCType,
+  extra: any
+) => {
+  if (type === 'erc20') {
+    return formatBigNumber(value, extra);
+  }
+
+  return value.toNumber();
+};

@@ -12,11 +12,14 @@ type Props = {
 const TransferGroup = ({ group, index }: Props) => {
   const groupsWithoutApprove = group.sequance.filter((seq) => !seq.isApprove);
   const groupsWithApprove = group.sequance.filter((seq) => seq.isApprove);
+  const allowanceIsOk = groupsWithApprove.every((seq) => seq.isAllowanceOk);
 
   return (
     <div>
       {groupsWithApprove.length > 0 && (
-        <ApproveArea items={groupsWithApprove} />
+        <div className="mb-4">
+          <ApproveArea items={groupsWithApprove} />
+        </div>
       )}
       <div>
         <div className="bg-gray-700 p-4 rounded-2xl ">
@@ -24,7 +27,7 @@ const TransferGroup = ({ group, index }: Props) => {
             Transaction {index}
             {groupsWithoutApprove.map((sec) => (
               <div className="ml-auto">
-                <SendTx data={sec} />
+                <SendTx data={sec} allowanceIsOk={allowanceIsOk} />
               </div>
             ))}
           </h3>

@@ -1,7 +1,7 @@
 import { ethers } from 'ethers';
 import { PopulatedTransferPart } from 'shared-config';
 import { useTransferContext } from '../context/TransferContext';
-import { formatAddressToShort } from '../utils/formatter';
+import { formatAddressToShort, formatUnitPerType } from '../utils/formatter';
 import Artwork from './Artwork';
 import TokenImage from './TokenImage';
 import TokenRow from './TokenRow';
@@ -25,12 +25,17 @@ const TransferItem = ({ tx }: Props) => {
       <div className="ml-4 font-medium">
         <div className="text-base">
           <span>
-            {ethers.utils.formatUnits(tx.amount)} {match?.name}{' '}
-          </span>{' '}
+            {formatUnitPerType(tx.amount, tx.type, {
+              decimals: match?.decimals,
+            })}{' '}
+            {match?.name}{' '}
+          </span>
           <span className="text-gray-400">to </span>
           {formatAddressToShort(tx.to)}
         </div>
-        <div className="text-gray-400">{match?.name || match?.symbol}</div>
+        <div className="text-gray-400">
+          {match?.name || match?.symbol} (<span>{match?.type}</span>)
+        </div>
       </div>
     </div>
   );
