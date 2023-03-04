@@ -481,7 +481,6 @@ export const getTxGroups = (
     groups = [...groups, ...getAllGroups(txs, swoshAddress, allowances)];
   }
 
-  console.log('SENDER:', sender);
   const finalGroups = groups
     .filter((group) => group.txs.length > 0)
     .map((group) => {

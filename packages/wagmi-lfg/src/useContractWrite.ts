@@ -75,13 +75,17 @@ export function useContractWrite<
     }
   };
 
-  const { config, ...rest } = usePrepareContractWrite({
+  const { config } = usePrepareContractWrite({
     ...usePrepareContractWriteOptions,
     address: address as Address,
     abi: typechainFactory.abi as any,
     functionName: method,
     args: args || [],
     enabled,
+    onError: (e) => {
+      console.error('ERRR IN PREPARE', e);
+      console.log(args, address, method);
+    },
   });
 
   const useContractWriteOptions = options?.useContractWriteOptions || {};

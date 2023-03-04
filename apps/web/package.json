@@ -36,7 +36,7 @@
     "styled-components": "^5.3.6",
     "ui": "*",
     "uuid": "^9.0.0",
-    "wagmi": "0.11.5",
+    "wagmi": "0.11.7",
     "wagmi-lfg": "*",
     "web3-config": "*",
     "zod": "^3.20.6",
