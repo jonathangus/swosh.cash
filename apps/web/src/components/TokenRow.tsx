@@ -41,7 +41,7 @@ const TokenRow = ({
             checked={isSelected}
           />
         </div>
-        <div className="w-12 h-12 overflow-hidden rounded-full mr-4">
+        <div className="w-12 h-12 shrink-0 overflow-hidden rounded-full mr-4">
           {image}
         </div>
         <div>

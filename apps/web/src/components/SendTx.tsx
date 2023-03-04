@@ -3,6 +3,7 @@ import { Sequance } from 'shared-config';
 import { useSendTransaction, useSigner } from 'wagmi';
 import { useContractWrite } from 'wagmi-lfg';
 import { ERC20__factory, Swosh__factory } from 'web3-config';
+import { Button } from './ui/Button';
 
 let factoryMap = {
   erc20: ERC20__factory,
@@ -30,7 +31,7 @@ const SendTx = ({ data }: Props) => {
     <div>
       {isLoading && <div>loading ....</div>}
       {waitForTxResult?.data?.transactionHash}{' '}
-      <button onClick={doTx}>Send TX!</button>;
+      <Button onClick={doTx}>Send tx</Button>
     </div>
   );
 };

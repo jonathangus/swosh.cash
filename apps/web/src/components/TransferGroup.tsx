@@ -1,5 +1,6 @@
 import { TransferGroups } from 'shared-config';
 import { useTransferContext } from '../context/TransferContext';
+import ApproveArea from './ApproveArea';
 import SendTx from './SendTx';
 import TransferItem from './TransferItem';
 
@@ -9,25 +10,32 @@ type Props = {
 };
 
 const TransferGroup = ({ group, index }: Props) => {
+  const groupsWithoutApprove = group.sequance.filter((seq) => !seq.isApprove);
+  const groupsWithApprove = group.sequance.filter((seq) => seq.isApprove);
+
   return (
     <div>
-      <h3 className="text-gray-400">transaction {index}</h3>
-
+      {groupsWithApprove.length > 0 && (
+        <ApproveArea items={groupsWithApprove} />
+      )}
       <div>
-        {group.sequance.map((sec) => (
-          <div>
-            <SendTx data={sec} />
-            <div>method: {sec.method} </div>
-            <div>args: {sec.args.join(',')} </div>
-            <div>address: {sec.contractAddress} </div>
-            <div>----</div>
+        <div className="bg-gray-700 p-4 rounded-2xl ">
+          <h3 className="text-gray-400 mb-2 font-semibold flex">
+            Transaction {index}
+            {groupsWithoutApprove.map((sec) => (
+              <div className="ml-auto">
+                <SendTx data={sec} />
+              </div>
+            ))}
+          </h3>
+          <div className="grid grid-rows-1 gap-8">
+            {group.txs.map((tx) => (
+              <div key={tx.id}>
+                <TransferItem tx={tx} />
+              </div>
+            ))}
           </div>
-        ))}
-        {group.txs.map((tx) => (
-          <div key={tx.id}>
-            <TransferItem tx={tx} />
-          </div>
-        ))}
+        </div>
       </div>
     </div>
   );
