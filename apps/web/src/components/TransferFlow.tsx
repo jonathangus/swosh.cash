@@ -14,6 +14,7 @@ const TransferFlow = ({ parts, chainId, sender }: Props) => {
   const { address } = useAccount();
   const txs = usePrepareTxs(parts, address, chainId);
   const swoshAddress = useAddress(Swosh__factory, chainId);
+
   const { items } = useTransferContext();
   const groups = getTxGroups(txs, swoshAddress as string, items, sender);
   const { chain } = useNetwork();

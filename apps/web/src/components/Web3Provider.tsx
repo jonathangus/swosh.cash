@@ -51,11 +51,12 @@ const wantedChains = [
 ];
 
 const { chains, provider } = configureChains(wantedChains, [
-  alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_KEY }),
+  alchemyProvider({
+    apiKey:
+      'e11k0iBycnP6UFuJxduyinQjhVywKCbC' || process.env.NEXT_PUBLIC_ALCHEMY_KEY,
+  }),
   publicProvider(),
 ]);
-
-console.log({ chains });
 
 const { connectors } = getDefaultWallets({
   chains,
