@@ -1,3 +1,22 @@
+# SWOSH.XYZ - making token transfers go swosh
+
+Making token transfers efficient, easy while not relying on centralized players. So right now you’d go into your marketplace, or via Etherscan or perhaps your mobile wallet to send one NFT at the time.  We’ve created an optimised way to transfer any tokens (ERC 20/721/1155) and added smartness to either batch transactions of multiple tokens or individual sends. A decentralized, smart and optimised way to move assets smoothly. 
+
+
+# Sponsor & Bounties
+Covalent
+
+Lens
+
+Open zeppelin defender 
+
+Polygon
+
+Base
+
+Scroll 
+
+
 # Web3 fullstack starter
 
 My ideal monorepo setup for working with fullstack web3 development. Can be used for quick prototyping or built on top on for production ready projects.
