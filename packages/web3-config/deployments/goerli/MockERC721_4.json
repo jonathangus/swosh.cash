@@ -1,5 +1,5 @@
 {
-  "address": "0x659a5B4e18438D889869579e3998648BCD757D7C",
+  "address": "0xC7a3C822004B157db6140861bA0417DEb5c1b12A",
   "constructorArguments": [],
   "abi": [
     {
@@ -439,11 +439,29 @@
       "inputs": [
         {
           "internalType": "address",
-          "name": "to",
+          "name": "_to",
           "type": "address"
         }
       ],
       "name": "mint",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_quantity",
+          "type": "uint256"
+        }
+      ],
+      "name": "mintMultiple",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -701,6 +719,19 @@
     },
     {
       "inputs": [],
+      "name": "totalMinted",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
       "name": "totalSupply",
       "outputs": [
         {
@@ -743,5 +774,5 @@
       "type": "function"
     }
   ],
-  "blockNumber": 8587773
+  "blockNumber": 8596849
 }
