@@ -48,7 +48,7 @@ const TokenRow = ({
           <h3 className="flex gap-1 font-medium break-all">
             {prefix} {subText}
           </h3>
-          <div className="text-gray-400">{title}</div>
+          <div className="text-gray-400 break-all">{title}</div>
         </div>
         <div className="ml-auto text-m text-gray-400">{footer}</div>
       </div>
