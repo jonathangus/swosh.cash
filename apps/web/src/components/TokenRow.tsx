@@ -28,7 +28,7 @@ const TokenRow = ({
     <div
       onClick={() => !isSelected && onSelect && onSelect()}
       className={clsx(
-        'p-4 rounded-2xl transition-colors   cursor-pointer hover:bg-gray-800',
+        'p-4 rounded-2xl transition-colors   cursor-pointer hover:bg-gray-800  ',
         isSelected ? 'bg-gray-700' : ''
       )}
     >
@@ -45,10 +45,10 @@ const TokenRow = ({
           {image}
         </div>
         <div>
-          <h3 className="flex gap-1 font-medium break-all">
+          <h3 className="flex gap-1 font-medium max-w-[300px] truncate">
             {prefix} {subText}
           </h3>
-          <div className="text-gray-400 break-all">{title}</div>
+          <div className="text-gray-400 max-w-[300px] truncate">{title}</div>
         </div>
         <div className="ml-auto text-m text-gray-400">{footer}</div>
       </div>
