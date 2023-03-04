@@ -100,7 +100,9 @@ const ApproveArea = ({ items }: Props) => {
       if (typeof match.allowance === 'boolean') {
         allowanceOk = match.allowance;
       } else {
-        allowanceOk = BigNumber.from(match.balance).lt(match.allowance);
+        if (match.balance && match.allowance) {
+          allowanceOk = BigNumber.from(match.balance).lt(match.allowance);
+        }
       }
     }
 
@@ -115,7 +117,7 @@ const ApproveArea = ({ items }: Props) => {
     <div>
       <Accordion type="single" collapsible defaultValue="item-1">
         <AccordionItem value="item-1">
-          <AccordionTrigger>Approve</AccordionTrigger>
+          <AccordionTrigger>Token approvals</AccordionTrigger>
           <AccordionContent>
             <div className="grid grid-rows-1 gap-4">
               {finalItems.map((seq) => (
