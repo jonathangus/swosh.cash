@@ -79,10 +79,10 @@ const AddressSelector = ({ onChange, value }: Props) => {
       />
       {focus && (
         <div className="absolute w-[300px] z-40 bg-gray-700">
-          <ScrollArea className="h-[300px]  ">
+          <ScrollArea className="m-h-[300px]  ">
             {ensMatch && (
               <div
-                className="mb-2 font-mediu p-4 hover:bg-gray-600 flex justify-between w-full"
+                className=" font-mediu p-4 hover:bg-gray-600 flex justify-between w-full"
                 onClick={() => {
                   onChange({ address: ensMatch });
                   setFocus(false);

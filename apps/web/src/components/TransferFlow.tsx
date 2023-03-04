@@ -8,14 +8,14 @@ import { usePrepareTxs } from '../hooks/usePrepareTxs';
 import { getTxGroups } from '../utils/tx-helpers';
 import TransferGroup from './TransferGroup';
 
-type Props = { chainId: number; parts: TransferPart[] };
+type Props = { chainId: number; parts: TransferPart[]; sender: string };
 
-const TransferFlow = ({ parts, chainId }: Props) => {
+const TransferFlow = ({ parts, chainId, sender }: Props) => {
   const { address } = useAccount();
   const txs = usePrepareTxs(parts, address, chainId);
   const swoshAddress = useAddress(Swosh__factory, chainId);
   const { items } = useTransferContext();
-  const groups = getTxGroups(txs, swoshAddress as string, items);
+  const groups = getTxGroups(txs, swoshAddress as string, items, sender);
   const { chain } = useNetwork();
   const isCorrectChain = chain?.id == chainId;
   const network = useSwitchNetwork({ chainId });
@@ -32,7 +32,7 @@ const TransferFlow = ({ parts, chainId }: Props) => {
   }
 
   return (
-    <div className="pb-48">
+    <div className="py-10 pb-10">
       <div className="grid grid-rows-1 gap-4">
         {groups.map((group, i) => (
           <TransferGroup index={i + 1} key={i} group={group} />

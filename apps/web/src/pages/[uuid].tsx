@@ -15,12 +15,17 @@ const ProgressPage = ({}: Props) => {
   if (!check) {
     return <div>...loading</div>;
   }
-  const { parts, chainId } = check;
-  
+
+  const { parts, chainId, sender } = check;
+
   if (Object.values(parts).length > 0) {
     return (
       <TransferContextProvider chainId={chainId} parts={Object.values(parts)}>
-        <TransferFlow chainId={chainId} parts={Object.values(parts)} />
+        <TransferFlow
+          chainId={chainId}
+          parts={Object.values(parts)}
+          sender={sender}
+        />
       </TransferContextProvider>
     );
   }

@@ -338,16 +338,14 @@ export const getBatchCalls = (
       calls = [getErc1155BatchCalls(txs, swoshAddress)];
     }
   } else {
-    calls = [getMegaTransfer(txs, swoshAddress)];
+    if (txs.length > 0) {
+      calls = [getMegaTransfer(txs, swoshAddress)];
+    }
   }
 
-  const sequance = [...approvals, ...calls].map((call) => ({
-    ...call,
-    id: call.method + call.contractAddress,
-  }));
   return [
     {
-      sequance,
+      sequance: [...approvals, ...calls],
       txs,
     },
   ];
@@ -465,7 +463,8 @@ const getAllowanceMap = (
 export const getTxGroups = (
   txs: PopulatedTransferPart[],
   swoshAddress: string,
-  items: OnChainTransferItem[]
+  items: OnChainTransferItem[],
+  sender: string
 ): TransferGroups[] => {
   const allIsSameType = uniqBy(txs, 'type').length === 1;
   let groups: TransferGroups[] = [];
@@ -482,5 +481,20 @@ export const getTxGroups = (
     groups = [...groups, ...getAllGroups(txs, swoshAddress, allowances)];
   }
 
-  return groups;
+  console.log('SENDER:', sender);
+  const finalGroups = groups
+    .filter((group) => group.txs.length > 0)
+    .map((group) => {
+      const sequance = group.sequance.map((call) => ({
+        ...call,
+        id: sender + call.method + call.contractAddress,
+      }));
+
+      return {
+        ...group,
+        sequance,
+      };
+    });
+
+  return finalGroups;
 };
