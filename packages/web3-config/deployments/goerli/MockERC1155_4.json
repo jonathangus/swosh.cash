@@ -1,6 +1,8 @@
 {
-  "address": "0xA9FF9FfbF6896b03dbFbF11e274b55f972723295",
-  "constructorArguments": [],
+  "address": "0x8EbC453356304f5C85c35cDa825f32178e11cFB8",
+  "constructorArguments": [
+    "ipfs://QmUfGyJx8phhTGbXSbTtjjX4x5UEytu5tVkSmf4DPF8WFe/"
+  ],
   "abi": [
     {
       "inputs": [
@@ -735,5 +737,5 @@
       "type": "function"
     }
   ],
-  "blockNumber": 8596854
+  "blockNumber": 8597749
 }

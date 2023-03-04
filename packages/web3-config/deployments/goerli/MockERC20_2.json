@@ -1,6 +1,9 @@
 {
-  "address": "0x4FFFF08f241030c955e1C143b675672fCAFbA128",
-  "constructorArguments": [],
+  "address": "0x305e644d1C8b6f64eeEA5121206DDBCE83816b13",
+  "constructorArguments": [
+    "fake DAI",
+    "fDAI"
+  ],
   "abi": [
     {
       "inputs": [
@@ -664,5 +667,5 @@
       "type": "function"
     }
   ],
-  "blockNumber": 8596840
+  "blockNumber": 8597646
 }

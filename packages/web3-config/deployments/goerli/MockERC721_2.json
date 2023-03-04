@@ -1,6 +1,10 @@
 {
-  "address": "0x32A3b0597CE8f50007B65a10EcB8F0e3f9B02844",
-  "constructorArguments": [],
+  "address": "0x135121b96D5913e516B90c4D3cA7ede01ea5F6e1",
+  "constructorArguments": [
+    "Fake AZUKI",
+    "fAZUKI",
+    "ipfs://QmZcH4YvBVVRJtdn4RdbaqgspFU8gH6P9vomDpBVpAL3u4/"
+  ],
   "abi": [
     {
       "inputs": [
@@ -774,5 +778,5 @@
       "type": "function"
     }
   ],
-  "blockNumber": 8596847
+  "blockNumber": 8597730
 }
