@@ -10,7 +10,13 @@
     "deploy::mocks::localhost": "hardhat run --network localhost scripts/deploy/deploy-mocks.ts",
     "deploy::swosh::goerli": "hardhat run --network goerli scripts/deploy/deploy-swosh.ts",
     "deploy::mocks::goerli": "hardhat run --network goerli scripts/deploy/deploy-mocks.ts",
-    "mint::mocks::goerli": "hardhat run --network goerli scripts/goerli/mint-mocks.ts"
+    "deploy::swosh::scroll": "hardhat run --network scrollTestnet scripts/deploy/deploy-swosh.ts",
+    "deploy::mocks::scroll": "hardhat run --network scrollTestnet scripts/deploy/deploy-mocks.ts",
+    "deploy::swosh::base": "hardhat run --network baseGoerli scripts/deploy/deploy-swosh.ts",
+    "deploy::mocks::base": "hardhat run --network baseGoerli scripts/deploy/deploy-mocks.ts",
+    "mint::mocks::goerli": "hardhat run --network goerli scripts/goerli/mint-mocks.ts",
+    "mint::mocks::scroll": "hardhat run --network scrollTestnet scripts/scroll/mint-mocks.ts",
+    "mint::mocks::base": "hardhat run --network baseGoerli scripts/base/mint-mocks.ts"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "2.2.2",
