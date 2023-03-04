@@ -1,6 +1,11 @@
 [
   {
     "inputs": [],
+    "name": "FORBIDDEN",
+    "type": "error"
+  },
+  {
+    "inputs": [],
     "name": "INVALID_PARAM",
     "type": "error"
   },

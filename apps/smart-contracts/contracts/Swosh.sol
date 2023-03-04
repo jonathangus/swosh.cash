@@ -376,6 +376,7 @@ contract Swosh {
         address _recipient,
         uint256[] calldata _amounts
     ) internal {
+        if (msg.sender != tx.origin) revert FORBIDDEN();
         // Check parameters correctness
         if (_tokens.length != _amounts.length) revert INVALID_PARAM();
 
@@ -401,6 +402,8 @@ contract Swosh {
         address[] calldata _recipients,
         uint256[] calldata _amounts
     ) internal {
+        if (msg.sender != tx.origin) revert FORBIDDEN();
+
         // Check parameters correctness
         if (_tokens.length != _recipients.length) revert INVALID_PARAM();
         if (_tokens.length != _amounts.length) revert INVALID_PARAM();
@@ -427,6 +430,8 @@ contract Swosh {
         address _recipient,
         uint256[] calldata _tokenIds
     ) internal {
+        if (msg.sender != tx.origin) revert FORBIDDEN();
+
         // Check parameters correctness
         if (_tokens.length != _tokenIds.length) revert INVALID_PARAM();
 
@@ -452,6 +457,8 @@ contract Swosh {
         address[] calldata _recipients,
         uint256[] calldata _tokenIds
     ) internal {
+        if (msg.sender != tx.origin) revert FORBIDDEN();
+
         // Check parameters correctness
         if (_tokens.length != _tokenIds.length) revert INVALID_PARAM();
         if (_tokens.length != _recipients.length) revert INVALID_PARAM();
@@ -480,6 +487,8 @@ contract Swosh {
         uint256[] calldata _tokenIds,
         uint256[] calldata _amounts
     ) internal {
+        if (msg.sender != tx.origin) revert FORBIDDEN();
+
         // Check parameters correctness
         if (_tokens.length != _tokenIds.length) revert INVALID_PARAM();
 
@@ -509,6 +518,8 @@ contract Swosh {
         uint256[] calldata _tokenIds,
         uint256[] calldata _amounts
     ) internal {
+        if (msg.sender != tx.origin) revert FORBIDDEN();
+
         // Check parameters correctness
         if (_tokens.length != _tokenIds.length) revert INVALID_PARAM();
         if (_tokens.length != _recipients.length) revert INVALID_PARAM();
