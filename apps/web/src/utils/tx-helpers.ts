@@ -332,21 +332,21 @@ export const getBatchCalls = (
     }
     if (uniqueType[0].type === 'erc721') {
       calls = [getErc721BatchCalls(txs, swoshAddress)];
-
-      // geterc721
     }
     if (uniqueType[0].type === 'erc1155') {
-      // geterc1155
+      calls = [getErc1155BatchCalls(txs, swoshAddress)];
     }
-    // same
-    // getErc()
   } else {
     calls = [getMegaTransfer(txs, swoshAddress)];
   }
 
+  const sequance = [...approvals, ...calls].map((call) => ({
+    ...call,
+    id: call.method + call.contractAddress,
+  }));
   return [
     {
-      sequance: [...approvals, ...calls],
+      sequance,
       txs,
     },
   ];

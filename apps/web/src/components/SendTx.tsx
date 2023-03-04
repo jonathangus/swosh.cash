@@ -9,6 +9,8 @@ import {
   ERC721__factory,
   Swosh__factory,
 } from 'web3-config';
+import { useCheckoutStore } from '../stores/useCheckoutStore';
+import SuccessTx from './SuccessTx';
 import { Button } from './ui/Button';
 
 let factoryMap = {
@@ -23,7 +25,9 @@ const SendTx = ({ data, allowanceIsOk }: Props) => {
   const isBulk =
     data.type === 'megaTransferMultiple' || data.type === 'megaTransfer';
   const factory = isBulk ? Swosh__factory : factoryMap[data.type];
-
+  const addTx = useCheckoutStore((state) => state.addTx);
+  const completedTx = useCheckoutStore((state) => state.completedTxs[data.id]);
+  console.log(completedTx);
   const { write, isLoading, waitForTxResult } = useContractWrite(
     factory,
     data.method,
@@ -33,20 +37,25 @@ const SendTx = ({ data, allowanceIsOk }: Props) => {
       onError: (e) => {
         toast.error(`Error: ${e.message}`);
       },
-      onSuccess: () => {
+      onSuccess: (txData) => {
+        console.log('sUCCC:ESS!');
         toast.success('Transfer succesfull');
+        addTx(data.id, txData);
       },
     }
   );
 
+  console.log(completedTx);
   const doTx = async () => {
-    console.log(data);
     const tx = await write({ args: data.args || [] });
   };
+
+  if (completedTx) {
+    return <SuccessTx data={completedTx} />;
+  }
   return (
     <div>
       {isLoading && <div>loading ....</div>}
-      {waitForTxResult?.data?.transactionHash}{' '}
       <Button disabled={!allowanceIsOk} onClick={doTx}>
         Send tx
       </Button>

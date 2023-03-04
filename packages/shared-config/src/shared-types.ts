@@ -22,6 +22,7 @@ export type Sequance = {
   isApprove?: boolean;
   isAllowanceOk?: boolean;
   isBulkCall?: boolean;
+  id?: string;
 };
 
 export type TransferGroups = {

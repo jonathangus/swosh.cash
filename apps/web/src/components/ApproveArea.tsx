@@ -1,4 +1,4 @@
-import { BigNumber } from 'ethers';
+import { BigNumber, ethers } from 'ethers';
 import { OnChainTransferItem, Sequance } from 'shared-config';
 import { useContractWrite } from 'wagmi-lfg';
 import {
@@ -17,6 +17,7 @@ import {
 } from './ui/Accordian';
 import { boolean } from 'zod';
 import { toast } from 'sonner';
+import { formatAddressToShort } from '../utils/formatter';
 
 type Props = {
   items: Sequance[];
@@ -66,13 +67,17 @@ const ApproveItem = ({ item }: PropsItem) => {
     } catch (e) {}
   };
 
+  const name =
+    item.match?.name ||
+    `${formatAddressToShort(item.contractAddress)}${item.type}`;
+
   return (
     <div>
       {item.allowanceOk ? (
-        <div>{item.match?.name} approved ✅</div>
+        <div>{name} approved ✅</div>
       ) : (
         <Button disabled={isLoading} onClick={handleApprove}>
-          Approve {item.match?.name}
+          Approve {name}
         </Button>
       )}
     </div>
