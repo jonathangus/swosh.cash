@@ -17,7 +17,9 @@ export type Sequance = {
   method: string;
   args: any[];
   contractAddress: string;
-  type: ERCType;
+  type: ERCType | 'megaTransfer' | 'megaTransferMultiple';
+  isApprove?: boolean;
+  isAllowanceOk?: boolean;
 };
 
 export type TransferGroups = {
@@ -31,7 +33,7 @@ export type OnChainTransferItem = {
   symbol?: string;
   decimals?: number;
   type: ERCType;
-
+  allowance?: BigNumber;
   contract_address: string;
   token_id: string;
   uniqBy: string;
@@ -44,6 +46,7 @@ export type PopulatedTransferPart = TransferPart & {
   amount: BigNumber;
   to: string;
   id: string;
+  from: string;
 };
 
 export type TransferData = {

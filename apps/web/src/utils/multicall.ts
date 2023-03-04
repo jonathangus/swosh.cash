@@ -73,6 +73,12 @@ export const getCalls = (
           methodParameters: [token.token_id],
         },
 
+        {
+          reference: 'allowance',
+          methodName: 'isApprovedForAll',
+          methodParameters: [user, swoshAddress],
+        },
+
         // { reference: 'allowance', methodName: 'allowance', methodParameters: [owner, spender] },
       ],
     };
@@ -100,7 +106,11 @@ export const getCalls = (
           methodName: 'uri',
           methodParameters: [token.token_id],
         },
-
+        {
+          reference: 'allowance',
+          methodName: 'isApprovedForAll',
+          methodParameters: [user, swoshAddress],
+        },
         // { reference: 'allowance', methodName: 'allowance', methodParameters: [owner, spender] },
       ],
     };

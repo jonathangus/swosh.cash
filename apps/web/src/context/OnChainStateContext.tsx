@@ -28,7 +28,6 @@ export const OnChainProvider = ({ children }: PropsWithChildren<Props>) => {
   const swoshAddress =
     (useAddress(Swosh__factory, chainId) as string) ||
     '0x0000000000000000000000000000000000000000';
-  console.log({ swoshAddress, chainId, address });
   const calls = getCalls(holdings, { user: address, swoshAddress });
   const provider = useProvider();
   const { data: blockNumber } = useBlockNumber({ watch: true });

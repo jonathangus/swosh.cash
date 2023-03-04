@@ -1694,6 +1694,22 @@
   dependencies:
     "@babel/runtime" "^7.13.10"
 
+"@radix-ui/react-accordion@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@radix-ui/react-accordion/-/react-accordion-1.1.0.tgz#8db063b9eaeb32ca90ffec74e190dab104b56522"
+  integrity sha512-CNN9ZBgCK4i4SX7gFk5s8095j55DUWi85vwRNfkfBLs0QdAG5Tb4ku6sBeugCAiLvsmxw481GyNl+C3stoJVBQ==
+  dependencies:
+    "@babel/runtime" "^7.13.10"
+    "@radix-ui/primitive" "1.0.0"
+    "@radix-ui/react-collapsible" "1.0.1"
+    "@radix-ui/react-collection" "1.0.1"
+    "@radix-ui/react-compose-refs" "1.0.0"
+    "@radix-ui/react-context" "1.0.0"
+    "@radix-ui/react-direction" "1.0.0"
+    "@radix-ui/react-id" "1.0.0"
+    "@radix-ui/react-primitive" "1.0.1"
+    "@radix-ui/react-use-controllable-state" "1.0.0"
+
 "@radix-ui/react-checkbox@^1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@radix-ui/react-checkbox/-/react-checkbox-1.0.2.tgz#d51c6b3623aaf04c894bbd9bbea3fc3747b992c8"
@@ -1708,6 +1724,21 @@
     "@radix-ui/react-use-controllable-state" "1.0.0"
     "@radix-ui/react-use-previous" "1.0.0"
     "@radix-ui/react-use-size" "1.0.0"
+
+"@radix-ui/react-collapsible@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@radix-ui/react-collapsible/-/react-collapsible-1.0.1.tgz#7184312ce18e703628b9ef75cdc44b896d6f06b1"
+  integrity sha512-0maX4q91iYa4gjt3PsNf7dq/yqSR+HGAE8I5p54dQ6gnveS+ETWlMoijxrhmgV1k8svxpm34mQAtqIrJt4XZmA==
+  dependencies:
+    "@babel/runtime" "^7.13.10"
+    "@radix-ui/primitive" "1.0.0"
+    "@radix-ui/react-compose-refs" "1.0.0"
+    "@radix-ui/react-context" "1.0.0"
+    "@radix-ui/react-id" "1.0.0"
+    "@radix-ui/react-presence" "1.0.0"
+    "@radix-ui/react-primitive" "1.0.1"
+    "@radix-ui/react-use-controllable-state" "1.0.0"
+    "@radix-ui/react-use-layout-effect" "1.0.0"
 
 "@radix-ui/react-collection@1.0.1":
   version "1.0.1"
@@ -8932,6 +8963,11 @@ sonic-boom@^2.2.1:
   integrity sha512-kuonw1YOYYNOve5iHdSahXPOK49GqwA+LZhI6Wz/l0rP57iKyXXIHaRagOBHAPmGwJC6od2Z9zgvZ5loSgMlVg==
   dependencies:
     atomic-sleep "^1.0.0"
+
+sonner@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/sonner/-/sonner-0.1.6.tgz#da0193c8675a0ed497883bf4eac637de459deb80"
+  integrity sha512-nLoVOKCcSusA7VY/nlrttZmOdNbPrE3v8C+t3Ac6z/bW6G0ReabXqhPLqjIc1mFcI7twwzpKb5thzF+qak29Kw==
 
 source-map-js@^1.0.2:
   version "1.0.2"
