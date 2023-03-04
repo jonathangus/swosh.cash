@@ -76,8 +76,9 @@ const groupTxsStructure = (
     grouped = [];
   }
 
-  const batchCalls = getBatchCalls(grouped, swoshAddress, allowance);
-  const plainCalls = getSingleCalls(plain);
+  const batchCalls =
+    grouped.length > 0 ? getBatchCalls(grouped, swoshAddress, allowance) : [];
+  const plainCalls = plain.length > 0 ? getSingleCalls(plain) : [];
 
   return [...batchCalls, ...plainCalls];
 };
@@ -444,6 +445,9 @@ const getAllowanceMap = (
           return item.allowance;
         }
 
+        if (!item.allowance) {
+          return false;
+        }
         return item.allowance.gt(0);
       }
     });

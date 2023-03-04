@@ -1,4 +1,5 @@
 import { ethers } from 'ethers';
+import { HashLoader } from 'react-spinners';
 import { Sequance } from 'shared-config';
 import { toast } from 'sonner';
 import { useSendTransaction, useSigner } from 'wagmi';
@@ -12,6 +13,7 @@ import {
 import { useCheckoutStore } from '../stores/useCheckoutStore';
 import SuccessTx from './SuccessTx';
 import { Button } from './ui/Button';
+import Spinner from './ui/Spinner';
 
 let factoryMap = {
   erc20: ERC20__factory,
@@ -27,7 +29,6 @@ const SendTx = ({ data, allowanceIsOk }: Props) => {
   const factory = isBulk ? Swosh__factory : factoryMap[data.type];
   const addTx = useCheckoutStore((state) => state.addTx);
   const completedTx = useCheckoutStore((state) => state.completedTxs[data.id]);
-  console.log(completedTx);
   const { write, isLoading, waitForTxResult } = useContractWrite(
     factory,
     data.method,
@@ -45,17 +46,28 @@ const SendTx = ({ data, allowanceIsOk }: Props) => {
     }
   );
 
-  console.log(completedTx);
   const doTx = async () => {
     const tx = await write({ args: data.args || [] });
   };
 
   if (completedTx) {
-    return <SuccessTx data={completedTx} />;
+    return (
+      <div className="h-8">
+        <SuccessTx data={completedTx} />
+      </div>
+    );
   }
+
+  if (isLoading) {
+    return (
+      <div className="h-8">
+        <HashLoader color="white" size={20} />
+      </div>
+    );
+  }
+
   return (
-    <div>
-      {isLoading && <div>loading ....</div>}
+    <div className="h-8">
       <Button disabled={!allowanceIsOk} onClick={doTx}>
         Send tx
       </Button>
