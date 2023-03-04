@@ -97,6 +97,32 @@ const config: HardhatUserConfig = {
   },
   etherscan: {
     apiKey: process.env.ETHERSCAN_API_KEY,
+    customChains: [
+      {
+        network: 'optimismGoerli',
+        chainId: 420,
+        urls: {
+          apiURL: 'https://api-goerli-optimism.etherscan.io/api',
+          browserURL: 'https://goerli-optimism.etherscan.io/',
+        },
+      },
+      {
+        network: 'optimism',
+        chainId: 10,
+        urls: {
+          apiURL: 'https://api-optimistic.etherscan.io/api',
+          browserURL: 'https://optimistic.etherscan.io/',
+        },
+      },
+      {
+        network: 'baseGoerli',
+        chainId: 84531,
+        urls: {
+          apiURL: 'https://api-goerli.basescan.org/api',
+          browserURL: 'https://goerli.basescan.org/',
+        },
+      },
+    ],
   },
   typechain: {
     outDir: '../../packages/web3-config/typechain',
