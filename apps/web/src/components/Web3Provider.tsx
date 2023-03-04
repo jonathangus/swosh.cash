@@ -22,6 +22,23 @@ import {
   baseGoerli,
 } from '@wagmi/chains';
 
+const scrollTesnet = {
+  chainId: 534353,
+  name: 'scroll',
+  network: 'scroll testnet',
+  nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
+  testnet: true,
+  rpcUrls: {
+    default: {
+      http: [`https://alpha-rpc.scroll.io/l2`],
+    },
+    alchemy: {
+      http: [`https://alpha-rpc.scroll.io/l2`],
+    },
+  },
+};
+
+console.log(goerli);
 const wantedChains = [
   goerli,
   mainnet,
@@ -29,16 +46,19 @@ const wantedChains = [
   arbitrumGoerli,
   optimismGoerli,
   baseGoerli,
+  // scrollTesnet,
 ];
 
 const { chains, provider } = configureChains(wantedChains, [
-  alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_KEY }),
+  alchemyProvider({ apiKey: 'oHGb97WA6u2gyrnHFFUW8kE3spAgZUKt' }),
   publicProvider(),
 ]);
 
+console.log({ chains });
+
 const { connectors } = getDefaultWallets({
   chains,
-  appName: 'WIP',
+  appName: 'swosh.cash',
 });
 
 const wagmiClient = createClient({

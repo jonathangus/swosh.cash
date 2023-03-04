@@ -49,12 +49,6 @@ export const getCalls = (
     return contractCallContext;
   });
   const erc721Calls = wantedErc721.map((token) => {
-    // ownerOf tokenId
-    // isApprovedForAll owner,spender
-    // name
-    // symbol
-    // tokenURI
-
     const contractCallContext: ContractCallContext = {
       reference: token.uniqBy,
       abi: erc721ABI as any,
@@ -78,8 +72,6 @@ export const getCalls = (
           methodName: 'isApprovedForAll',
           methodParameters: [user, swoshAddress],
         },
-
-        // { reference: 'allowance', methodName: 'allowance', methodParameters: [owner, spender] },
       ],
     };
 
@@ -87,10 +79,6 @@ export const getCalls = (
   });
 
   const erc1155Calls = wantedErc1155.map((token) => {
-    // isApprovedForAll owner,spender
-    // uri
-    // balanceOf address token
-
     const contractCallContext: ContractCallContext = {
       reference: token.uniqBy,
       abi: erc1155ABI as any,
@@ -111,7 +99,6 @@ export const getCalls = (
           methodName: 'isApprovedForAll',
           methodParameters: [user, swoshAddress],
         },
-        // { reference: 'allowance', methodName: 'allowance', methodParameters: [owner, spender] },
       ],
     };
 

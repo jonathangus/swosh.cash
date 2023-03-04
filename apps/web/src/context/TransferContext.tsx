@@ -18,6 +18,7 @@ import { BigNumber } from 'ethers';
 import { OnChainTransferItem, Token, TransferPart } from 'shared-config';
 import { Swosh__factory } from 'web3-config';
 import { useAddress } from 'wagmi-lfg';
+import { baseGoerli } from '@wagmi/core/chains';
 
 export const transferContext = createContext<TransferContext>(null);
 
@@ -46,14 +47,20 @@ export const TransferContextProvider = ({
 
   const calls = getCalls(holdings, { user: address, swoshAddress });
   const provider = useProvider();
-  const multicall = useMemo(
-    () =>
-      new Multicall({
-        ethersProvider: provider,
-        tryAggregate: true,
-      }),
-    [provider, chainId]
-  );
+  const multicall = useMemo(() => {
+    let address;
+    if (chainId === baseGoerli.id) {
+      // address = '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e';
+      address = '0xca11bde05977b3631167028862be2a173976ca11';
+    }
+
+    return new Multicall({
+      ethersProvider: provider,
+      tryAggregate: true,
+      multicallCustomContractAddress: address,
+    });
+  }, [provider, chainId]);
+
   const [items, setItems] = useState<OnChainTransferItem[]>([]);
 
   const fetchMulticall = async () => {
