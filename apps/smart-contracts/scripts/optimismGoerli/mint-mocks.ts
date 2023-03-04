@@ -5,24 +5,24 @@ import {
   MockERC721__factory,
   MockERC20__factory,
 } from 'web3-config/typechain';
-import MERC20_1 from 'web3-config/deployments/scrollTestnet/MockERC20_1.json';
-import MERC20_2 from 'web3-config/deployments/scrollTestnet/MockERC20_2.json';
-import MERC20_3 from 'web3-config/deployments/scrollTestnet/MockERC20_3.json';
-import MERC20_4 from 'web3-config/deployments/scrollTestnet/MockERC20_4.json';
-import MERC20_5 from 'web3-config/deployments/scrollTestnet/MockERC20_5.json';
-import MERC20_6 from 'web3-config/deployments/scrollTestnet/MockERC20_6.json';
+import MERC20_1 from 'web3-config/deployments/optimismGoerli/MockERC20_1.json';
+import MERC20_2 from 'web3-config/deployments/optimismGoerli/MockERC20_2.json';
+import MERC20_3 from 'web3-config/deployments/optimismGoerli/MockERC20_3.json';
+import MERC20_4 from 'web3-config/deployments/optimismGoerli/MockERC20_4.json';
+import MERC20_5 from 'web3-config/deployments/optimismGoerli/MockERC20_5.json';
+import MERC20_6 from 'web3-config/deployments/optimismGoerli/MockERC20_6.json';
 
-import MERC721_1 from 'web3-config/deployments/scrollTestnet/MockERC721_1.json';
-import MERC721_2 from 'web3-config/deployments/scrollTestnet/MockERC721_2.json';
-import MERC721_3 from 'web3-config/deployments/scrollTestnet/MockERC721_3.json';
-import MERC721_4 from 'web3-config/deployments/scrollTestnet/MockERC721_4.json';
-import MERC721_5 from 'web3-config/deployments/scrollTestnet/MockERC721_5.json';
+import MERC721_1 from 'web3-config/deployments/optimismGoerli/MockERC721_1.json';
+import MERC721_2 from 'web3-config/deployments/optimismGoerli/MockERC721_2.json';
+import MERC721_3 from 'web3-config/deployments/optimismGoerli/MockERC721_3.json';
+import MERC721_4 from 'web3-config/deployments/optimismGoerli/MockERC721_4.json';
+import MERC721_5 from 'web3-config/deployments/optimismGoerli/MockERC721_5.json';
 
-import MERC1155_1 from 'web3-config/deployments/scrollTestnet/MockERC1155_1.json';
-import MERC1155_2 from 'web3-config/deployments/scrollTestnet/MockERC1155_2.json';
-import MERC1155_3 from 'web3-config/deployments/scrollTestnet/MockERC1155_3.json';
-import MERC1155_4 from 'web3-config/deployments/scrollTestnet/MockERC1155_4.json';
-import MERC1155_5 from 'web3-config/deployments/scrollTestnet/MockERC1155_5.json';
+import MERC1155_1 from 'web3-config/deployments/optimismGoerli/MockERC1155_1.json';
+import MERC1155_2 from 'web3-config/deployments/optimismGoerli/MockERC1155_2.json';
+import MERC1155_3 from 'web3-config/deployments/optimismGoerli/MockERC1155_3.json';
+import MERC1155_4 from 'web3-config/deployments/optimismGoerli/MockERC1155_4.json';
+import MERC1155_5 from 'web3-config/deployments/optimismGoerli/MockERC1155_5.json';
 
 async function main() {
   const JONT = '0x5abbdbfe7257e30ffd40903bdc7d2e27557db60d';
