@@ -21,6 +21,8 @@ const TokenDisplay = ({ token }: Props) => {
         <TokenImage
           logoUrl={token.logo_url}
           contractAddress={token.contract_address}
+          name={token.name}
+          type="erc20"
         />
       }
       title={token.symbol || token.contract_name || 'unknown name'}

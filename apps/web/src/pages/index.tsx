@@ -1,6 +1,5 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Holdings from '../components/Holdings';
-import Recap from '../components/Recap';
 import { OnChainProvider } from '../context/OnChainStateContext';
 
 const Page = () => {
@@ -11,7 +10,7 @@ const Page = () => {
           <div className="self-end mt-4">
             <ConnectButton />
           </div>
-          <div className="self-center md:w-[500px]">
+          <div className="self-center w-full md:w-[500px]">
             <Holdings />
           </div>
         </div>

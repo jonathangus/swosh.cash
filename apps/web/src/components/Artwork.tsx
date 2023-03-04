@@ -1,17 +1,22 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useRef } from 'react';
+import { ERCType } from 'shared-config';
 import { useIntersectionObserver } from '../hooks/useInteractionObserver';
 import TokenImage from './TokenImage';
 
 type Props = {
   image?: string;
-  fallback: boolean;
+  type: ERCType;
+  contractAddress?: string;
+  name?: string;
 };
 
-const Artwork = ({ image }: Props) => {
+const Artwork = ({ image, type, contractAddress, name }: Props) => {
   const elRef = useRef();
   const entry = useIntersectionObserver(elRef, {});
+  const isVisible = !!entry?.isIntersecting;
+
   const {
     isLoading,
     error,
@@ -37,12 +42,20 @@ const Artwork = ({ image }: Props) => {
       return image;
     },
     {
-      refetchOnMount: true, //process.env.NODE_ENV === 'development',
-      // enabled: Boolean(nft.external_data || nft.tokenURI),
+      enabled: isVisible,
     }
   );
 
-  return <div ref={elRef}>{imgSrc && <TokenImage logoUrl={imgSrc} />}</div>;
+  return (
+    <div ref={elRef} className="h-full">
+      <TokenImage
+        logoUrl={imgSrc}
+        type={type}
+        contractAddress={contractAddress}
+        name={name}
+      />
+    </div>
+  );
 };
 
 export default Artwork;

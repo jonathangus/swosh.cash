@@ -31,6 +31,8 @@ const NFTDisplay = ({ nft }: Props) => {
     }
   );
 
+  // console.log(metadata, nft);
+
   const isSelected = useSelectionStore((state) =>
     state.selected.some((selectedItem) => selectedItem.id === nft.id)
   );
@@ -44,7 +46,12 @@ const NFTDisplay = ({ nft }: Props) => {
       }
       subText={nft.contract_name || `#${nft.token_id}`}
       image={
-        <Artwork image={metadata?.image} fallback={!Boolean(metadata?.image)} />
+        <Artwork
+          image={metadata?.image}
+          type={nft.type}
+          contractAddress={nft.contract_address}
+          name={metadata?.name || nft.contract_ticker_symbol}
+        />
       }
       onSelect={() => {
         isSelected ? removeSelected(nft) : setSelected(nft);
