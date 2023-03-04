@@ -1,6 +1,10 @@
 {
-  "address": "0xE312fC119bD4e27E22AEac1c2746344865614237",
-  "constructorArguments": [],
+  "address": "0x2D4e3384f23C51A98eD549789317Fe522FAbD3f2",
+  "constructorArguments": [
+    "Fake Anotherblock PFP",
+    "fABPFP",
+    "https://pfp-metadata.anotherblock.io/"
+  ],
   "abi": [
     {
       "inputs": [
@@ -439,11 +443,29 @@
       "inputs": [
         {
           "internalType": "address",
-          "name": "to",
+          "name": "_to",
           "type": "address"
         }
       ],
       "name": "mint",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_quantity",
+          "type": "uint256"
+        }
+      ],
+      "name": "mintMultiple",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -701,6 +723,19 @@
     },
     {
       "inputs": [],
+      "name": "totalMinted",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
       "name": "totalSupply",
       "outputs": [
         {
@@ -743,5 +778,5 @@
       "type": "function"
     }
   ],
-  "blockNumber": 1347442
+  "blockNumber": 1386314
 }
