@@ -40,6 +40,7 @@ const SendTx = ({ data, allowanceIsOk }: Props) => {
   );
 
   const doTx = async () => {
+    console.log(data);
     const tx = await write({ args: data.args || [] });
   };
   return (

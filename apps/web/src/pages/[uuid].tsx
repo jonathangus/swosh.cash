@@ -8,9 +8,9 @@ type Props = {};
 
 const ProgressPage = ({}: Props) => {
   const { query } = useRouter();
-  const check = useCheckoutStore(
-    (state) => state.checkout[query.uuid as string]
-  );
+  const check = useCheckoutStore((state) => {
+    return state.checkout[query.uuid as string];
+  });
 
   if (!check) {
     return <div>...loading</div>;

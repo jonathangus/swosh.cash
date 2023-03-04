@@ -1,4 +1,5 @@
 import {
+  AllowanceMap,
   OnChainTransferItem,
   PopulatedTransferPart,
   Sequance,
@@ -43,106 +44,40 @@ export const callsMapping = {
 const infiniteAmount =
   '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff';
 
-const isWorthBulksend = (type: string, txs: PopulatedTransferPart[]) => {
-  if (type === 'erc20') {
-    if (txs.length < 2) {
-      return false;
-    }
-  }
-
-  return true;
-};
-
 const SEND_ERC20_TX = 60_000;
 
-const getERC20Groups = (txs: PopulatedTransferPart[], swoshAddress: string) => {
-  const allIsSameReceiver = uniqBy(txs, 'to').length === 1;
-  const spender = '0x0000000';
-
-  const contractsUnique = uniqBy(txs, 'uniqueAddresses');
-
+const getERC20Groups = (
+  txs: PopulatedTransferPart[],
+  swoshAddress: string,
+  allowance: AllowanceMap
+) => {
+  const contractsUnique = groupBy(txs, 'contractAddress');
   let grouped = [];
   let plain = [];
 
-  console.log(txs);
-  for (let unique of contractsUnique) {
-    // if approved && length 2
-    // push gropu
+  for (let address in contractsUnique) {
+    const unique = contractsUnique[address];
+    const allowanceOk = allowance[address];
 
-    if (unique.length < 3) {
-      // return plain
+    if (allowanceOk) {
+      grouped = [...grouped, ...unique];
+    } else if (unique.length < 3) {
       plain = [...plain, ...unique];
-    }
-
-    // unique.length < 4 && allowance
-  }
-
-  const uniqueAddresses = uniqBy(txs, 'uniqueAddresses').length === 1;
-
-  // TODO CHECK WITH GAS OR APPROVED ALREADY
-  let groups: TransferGroups[] = [];
-
-  if (isWorthBulksend('erc20', txs)) {
-    const uniqueApproval = uniqBy(txs, 'contractAddress');
-
-    const sequance = [];
-    for (let approval of uniqueApproval) {
-      let approve = {
-        method: callsMapping.ERC20_APPROVE,
-        args: [swoshAddress, infiniteAmount],
-        contractAddress: approval.contractAddress,
-        type: 'erc20',
-        isApprove: true,
-      };
-      sequance.push(approve);
-    }
-
-    let send;
-    const tokens = txs.map((tx) => tx.contractAddress);
-    const amounts = txs.map((tx) => tx.amount);
-
-    if (allIsSameReceiver) {
-      send = {
-        contractAddress: swoshAddress,
-        method: callsMapping.ERC20_SAME_RECEIVER,
-        args: [tokens, txs[0].to, amounts],
-        type: 'erc20',
-        batch: true,
-      };
     } else {
-      const receivers = txs.map((tx) => tx.to);
-      send = {
-        contractAddress: swoshAddress,
-        method: callsMapping.ERC20_UNIQUE_RECEIVER,
-        args: [tokens, receivers, amounts],
-        type: 'erc20',
-        batch: true,
-      };
+      grouped = [...grouped, ...unique];
     }
-    sequance.push(send);
-    groups.push({
-      sequance: sequance,
-      txs,
-    });
-  } else {
-    txs
-      .map((tx) => {
-        return {
-          tx,
-          sequance: {
-            contractAddress: tx.contractAddress,
-            method: callsMapping.ERC20_TRANSFER,
-            args: [tx.to, tx.amount],
-            type: 'erc20',
-          },
-        };
-      })
-      .forEach(({ sequance, tx }) => {
-        groups.push({ sequance: [sequance], txs: [tx] });
-      });
   }
 
-  return groups;
+  // stupid doing batch if only one
+  if (grouped.length === 1) {
+    plain = [...plain, ...grouped];
+    grouped = [];
+  }
+
+  const batchCalls = getBatchCalls(grouped, swoshAddress, allowance);
+  const plainCalls = getSingleCalls(plain);
+
+  return [...batchCalls, ...plainCalls];
 };
 
 const getApprovalTxs = (
@@ -195,8 +130,7 @@ const getApprovalTxs = (
 
 export const getMegaTransfer = (
   txs: PopulatedTransferPart[],
-  swoshAddress: string,
-  allowance: Record<string, boolean>
+  swoshAddress: string
 ): Sequance => {
   const allIsSameReceiver = uniqBy(txs, 'to').length === 1;
   const erc20Txs = txs.filter((tx) => tx.type === 'erc20');
@@ -264,7 +198,6 @@ export const getMegaTransfer = (
   }
 
   for (let tx of erc1155Txs) {
-    console.log(tx);
     if (allIsSameReceiver) {
       erc1155Param.tokens.push(tx.contractAddress);
       erc1155Param.tokenIds.push(tx.tokenId);
@@ -283,6 +216,7 @@ export const getMegaTransfer = (
       args: [erc20Param, erc721Param, erc1155Param],
       contractAddress: swoshAddress,
       type: 'megaTransfer',
+      isBulkCall: true,
     };
   } else {
     return {
@@ -290,6 +224,36 @@ export const getMegaTransfer = (
       args: [erc20ParamMultiple, erc721ParamMultiple, erc1155ParamMultiple],
       contractAddress: swoshAddress,
       type: 'megaTransferMultiple',
+      isBulkCall: true,
+    };
+  }
+};
+
+const getErc20BatchCalls = (
+  txs: PopulatedTransferPart[],
+  swoshAddress: string
+): Sequance => {
+  const allIsSameReceiver = uniqBy(txs, 'to').length === 1;
+
+  const tokens = txs.map((tx) => tx.contractAddress);
+  const amounts = txs.map((tx) => tx.amount);
+
+  if (allIsSameReceiver) {
+    return {
+      contractAddress: swoshAddress,
+      method: callsMapping.ERC20_SAME_RECEIVER,
+      args: [tokens, txs[0].to, amounts],
+      type: 'erc20',
+      isBulkCall: true,
+    };
+  } else {
+    const receivers = txs.map((tx) => tx.to);
+    return {
+      contractAddress: swoshAddress,
+      method: callsMapping.ERC20_UNIQUE_RECEIVER,
+      args: [tokens, receivers, amounts],
+      type: 'erc20',
+      isBulkCall: true,
     };
   }
 };
@@ -297,7 +261,7 @@ export const getMegaTransfer = (
 export const getBatchCalls = (
   txs: PopulatedTransferPart[],
   swoshAddress: string,
-  allowance: Record<string, boolean>
+  allowance: AllowanceMap
 ): TransferGroups[] => {
   const uniqueType = uniqBy(txs, 'type');
   // allow our contract spending
@@ -306,6 +270,7 @@ export const getBatchCalls = (
 
   if (uniqueType.length === 1) {
     if (uniqueType[0].type === 'erc20') {
+      calls = [getErc20BatchCalls(txs, swoshAddress)];
       // geterc20
     }
     if (uniqueType[0].type === 'erc721') {
@@ -326,8 +291,6 @@ export const getBatchCalls = (
       txs,
     },
   ];
-
-  return [...approvals, ...calls];
 };
 
 const getSingleCall = (tx: PopulatedTransferPart): Sequance => {
@@ -368,67 +331,21 @@ export const getSingleCalls = (
       txs: [tx],
     };
   });
-  const uniqueType = uniqBy(txs, 'type');
-
-  let calls = [];
-
-  if (uniqueType.length === 1) {
-    if (uniqueType[0].type === 'erc20') {
-      // geterc20
-    }
-    if (uniqueType[0].type === 'erc721') {
-      // geterc721
-    }
-    if (uniqueType[0].type === 'erc1155') {
-      // geterc1155
-    }
-    // same
-    // getErc()
-  } else {
-    calls = [getMegaTransfer(txs, swoshAddress, allowance)];
-  }
-
-  return [
-    {
-      sequance: [...approvals, ...calls],
-      txs,
-    },
-  ];
-
-  return [...approvals, ...calls];
 };
 
 export const getAllGroups = (
   txs: PopulatedTransferPart[],
   swoshAddress: string,
-  items: OnChainTransferItem[]
+  allowances: AllowanceMap
 ): TransferGroups[] => {
   const contractsUnique = groupBy(txs, 'contractAddress');
 
   let grouped = [];
   let plain = [];
 
-  const allowanceIsApproved = (address: string) => {
-    return items.some((item) => {
-      const match =
-        item.contract_address.toLowerCase() === address.toLowerCase();
-
-      if (match) {
-        if (typeof item.allowance === 'boolean') {
-          return item.allowance;
-        }
-
-        return item.allowance.gt(0);
-      }
-    });
-  };
-
-  const allowances = {};
-
   for (let address in contractsUnique) {
     const unique = contractsUnique[address];
-    const allowanceOk = allowanceIsApproved(address);
-    allowances[address] = allowanceOk;
+    const allowanceOk = allowances[address];
 
     if (allowanceOk) {
       grouped = [...grouped, ...unique];
@@ -451,26 +368,58 @@ export const getAllGroups = (
   return [...batchCalls, ...plainCalls];
 };
 
+const getAllowanceMap = (
+  txs: PopulatedTransferPart[],
+  items: OnChainTransferItem[]
+): AllowanceMap => {
+  const contractsUnique = groupBy(txs, 'contractAddress');
+  const allowances = {};
+
+  const allowanceIsApproved = (address: string) => {
+    return items.some((item) => {
+      const match =
+        item.contract_address.toLowerCase() === address.toLowerCase();
+
+      if (match) {
+        if (typeof item.allowance === 'boolean') {
+          return item.allowance;
+        }
+
+        return item.allowance.gt(0);
+      }
+    });
+  };
+
+  for (let address in contractsUnique) {
+    const allowanceOk = allowanceIsApproved(address);
+
+    allowances[address] = allowanceOk;
+  }
+
+  return allowances;
+};
+
 export const getTxGroups = (
   txs: PopulatedTransferPart[],
   swoshAddress: string,
   items: OnChainTransferItem[]
 ): TransferGroups[] => {
   const allIsSameType = uniqBy(txs, 'type').length === 1;
-  const allIsSameReceiver = uniqBy(txs, 'to').length === 1;
   let groups: TransferGroups[] = [];
 
   if (txs.length === 0) {
     return [];
   }
 
+  const allowances = getAllowanceMap(txs, items);
+
   if (allIsSameType) {
     const type = txs[0].type;
     if (type === 'erc20') {
-      groups = [...groups, ...getERC20Groups(txs, swoshAddress)];
+      groups = [...groups, ...getERC20Groups(txs, swoshAddress, allowances)];
     }
   } else {
-    groups = [...groups, ...getAllGroups(txs, swoshAddress, items)];
+    groups = [...groups, ...getAllGroups(txs, swoshAddress, allowances)];
   }
 
   return groups;

@@ -28,12 +28,13 @@ const TransferItem = ({ tx }: Props) => {
             {formatUnitPerType(tx.amount, tx.type, {
               decimals: match?.decimals,
             })}{' '}
-            {match?.name}{' '}
           </span>
           <span className="text-gray-400">to </span>
           {formatAddressToShort(tx.to)}
         </div>
-        <div className="text-gray-400">{match?.name || match?.symbol}</div>
+        <div className="text-gray-400">
+          {match?.name || match?.symbol} (<span>{match?.type}</span>)
+        </div>
       </div>
     </div>
   );
