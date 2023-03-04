@@ -30,6 +30,7 @@ const GOERLI_ALCHEMY_KEY = process.env.GOERLI_ALCHEMY_KEY;
 const POLYGON_ALCHEMY_KEY = process.env.POLYGON_ALCHEMY_KEY;
 const ARBITRUM_ALCHEMY_KEY = process.env.ARBITRUM_ALCHEMY_KEY;
 const OPTIMISM_GOERLI_ALCHEMY_KEY = process.env.OPTIMISM_GOERLI_ALCHEMY_KEY;
+const ARBITRUM_GOERLI_ALCHEMY_KEY = process.env.ARBITRUM_GOERLI_ALCHEMY_KEY;
 
 const config: HardhatUserConfig = {
   solidity: '0.8.18',
@@ -73,6 +74,11 @@ const config: HardhatUserConfig = {
       url: `https://opt-goerli.g.alchemy.com/v2/${OPTIMISM_GOERLI_ALCHEMY_KEY}`,
       accounts: [`${PRIVATE_KEY}`],
     },
+    arbitrumGoerli: {
+      chainId: 421613,
+      url: `https://arb-goerli.g.alchemy.com/v2/${ARBITRUM_GOERLI_ALCHEMY_KEY}`,
+      accounts: [`${PRIVATE_KEY}`],
+    },
     mumbai: {
       chainId: 80001,
       url: `https://polygon-mumbai.g.alchemy.com/v2/${MUMBAI_ALCHEMY_KEY}`,
@@ -106,6 +112,7 @@ const config: HardhatUserConfig = {
       mainnet: `${process.env.ETHERSCAN_API_KEY}`,
       optimism: `${process.env.OPTIMISM_ETHERSCAN_API_KEY}`,
       goerli: `${process.env.ETHERSCAN_API_KEY}`,
+      baseGoerli: `${process.env.ETHERSCAN_API_KEY}`,
       optimismGoerli: `${process.env.OPTIMISM_ETHERSCAN_API_KEY}`,
       polygonMumbai: `${process.env.MUMBAI_ETHERSCAN_API_KEY}`,
     },
@@ -140,6 +147,14 @@ const config: HardhatUserConfig = {
         urls: {
           apiURL: 'https://blockscout.scroll.io/api',
           browserURL: 'https://blockscout.scroll.io/',
+        },
+      },
+      {
+        network: 'arbitrumGoerli',
+        chainId: 421613,
+        urls: {
+          apiURL: 'https://api-goerli.arbiscan.io/api',
+          browserURL: 'https://goerli.arbiscan.io/',
         },
       },
     ],
