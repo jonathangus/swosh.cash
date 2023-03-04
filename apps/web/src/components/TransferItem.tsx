@@ -28,6 +28,7 @@ const TransferItem = ({ tx }: Props) => {
             {formatUnitPerType(tx.amount, tx.type, {
               decimals: match?.decimals,
             })}{' '}
+            {match?.name}{' '}
           </span>
           <span className="text-gray-400">to </span>
           {formatAddressToShort(tx.to)}

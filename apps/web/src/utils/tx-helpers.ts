@@ -39,14 +39,16 @@ export const callsMapping = {
   ERC20_SAME_RECEIVER: 'batchTransferERC20',
   MEGA_TRANSFER_SAME_RECEIVER: 'megaTransfer',
   MEGA_TRANSFER_UNIQUE_RECEIVER: 'multiMegaTransfer',
+  ERC721_UNIQUE_RECEIVER: 'multiBatchTransferERC721',
+  ERC721_SAME_RECEIVER: 'batchTransferERC721',
+  ERC1155_UNIQUE_RECEIVER: 'multiBatchTransferERC1155',
+  ERC1155_SAME_RECEIVER: 'batchTransferERC1155',
 };
 
 const infiniteAmount =
   '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff';
 
-const SEND_ERC20_TX = 60_000;
-
-const getERC20Groups = (
+const groupTxsStructure = (
   txs: PopulatedTransferPart[],
   swoshAddress: string,
   allowance: AllowanceMap
@@ -229,12 +231,68 @@ export const getMegaTransfer = (
   }
 };
 
+export const getErc1155BatchCalls = (
+  txs: PopulatedTransferPart[],
+  swoshAddress: string
+): Sequance => {
+  const allIsSameReceiver = uniqBy(txs, 'to').length === 1;
+  const tokens = txs.map((tx) => tx.contractAddress);
+  const tokenIds = txs.map((tx) => tx.tokenId);
+  const amounts = txs.map((tx) => tx.amount);
+
+  if (allIsSameReceiver) {
+    return {
+      contractAddress: swoshAddress,
+      method: callsMapping.ERC1155_SAME_RECEIVER,
+      args: [tokens, txs[0].to, tokenIds, amounts],
+      type: 'erc1155',
+      isBulkCall: true,
+    };
+  } else {
+    const receivers = txs.map((tx) => tx.to);
+    return {
+      contractAddress: swoshAddress,
+      method: callsMapping.ERC1155_UNIQUE_RECEIVER,
+      args: [tokens, receivers, tokenIds, amounts],
+      type: 'erc1155',
+      isBulkCall: true,
+    };
+  }
+};
+
+export const getErc721BatchCalls = (
+  txs: PopulatedTransferPart[],
+  swoshAddress: string
+): Sequance => {
+  const allIsSameReceiver = uniqBy(txs, 'to').length === 1;
+  const tokens = txs.map((tx) => tx.contractAddress);
+  const tokenIds = txs.map((tx) => tx.tokenId);
+
+  if (allIsSameReceiver) {
+    return {
+      contractAddress: swoshAddress,
+      method: callsMapping.ERC721_SAME_RECEIVER,
+      args: [tokens, txs[0].to, tokenIds],
+      type: 'erc721',
+      isBulkCall: true,
+    };
+  } else {
+    const receivers = txs.map((tx) => tx.to);
+    return {
+      contractAddress: swoshAddress,
+      method: callsMapping.ERC721_UNIQUE_RECEIVER,
+      args: [tokens, receivers, tokenIds],
+      type: 'erc721',
+      isBulkCall: true,
+    };
+  }
+};
+
 const getErc20BatchCalls = (
   txs: PopulatedTransferPart[],
   swoshAddress: string
 ): Sequance => {
   const allIsSameReceiver = uniqBy(txs, 'to').length === 1;
-
   const tokens = txs.map((tx) => tx.contractAddress);
   const amounts = txs.map((tx) => tx.amount);
 
@@ -271,9 +329,10 @@ export const getBatchCalls = (
   if (uniqueType.length === 1) {
     if (uniqueType[0].type === 'erc20') {
       calls = [getErc20BatchCalls(txs, swoshAddress)];
-      // geterc20
     }
     if (uniqueType[0].type === 'erc721') {
+      calls = [getErc721BatchCalls(txs, swoshAddress)];
+
       // geterc721
     }
     if (uniqueType[0].type === 'erc1155') {
@@ -282,7 +341,7 @@ export const getBatchCalls = (
     // same
     // getErc()
   } else {
-    calls = [getMegaTransfer(txs, swoshAddress, allowance)];
+    calls = [getMegaTransfer(txs, swoshAddress)];
   }
 
   return [
@@ -414,15 +473,10 @@ export const getTxGroups = (
   const allowances = getAllowanceMap(txs, items);
 
   if (allIsSameType) {
-    const type = txs[0].type;
-    if (type === 'erc20') {
-      groups = [...groups, ...getERC20Groups(txs, swoshAddress, allowances)];
-    }
+    groups = [...groups, ...groupTxsStructure(txs, swoshAddress, allowances)];
   } else {
     groups = [...groups, ...getAllGroups(txs, swoshAddress, allowances)];
   }
 
   return groups;
-
-  //
 };
