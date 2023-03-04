@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { BigNumber } from 'ethers';
+import { BigNumber, ethers } from 'ethers';
 import { useEffect, useState } from 'react';
 import { ERCType } from 'shared-config';
 import { useTxStore } from '../stores/useTxStore';
@@ -67,7 +67,6 @@ const Selection = ({
       amount: data.amount,
       rowId,
     };
-
     addEntry(id, result);
   };
 
@@ -88,26 +87,41 @@ const Selection = ({
     addEntry(id, result);
   };
 
+  const getAmount = (amount) => {
+    if (!amount) {
+      return;
+    }
+
+    if (type === 'erc20') {
+      return ethers.utils.formatUnits(amount, decimals);
+    }
+
+    return amount.toString();
+  };
   return (
     <div>
       <div className="grid grid-rows-1 gap-3	">
         {txs
           .sort((a, b) => a.rowId.localeCompare(b.rowId))
-          .map((item) => {
+          .map((item, i) => {
             return (
               <SelectionRow
                 key={item.rowId}
                 type={type}
                 initialState={{
                   receiver: item.to,
-                  amount: item.amount.toString(),
+                  amount: getAmount(item.amount),
                 }}
                 maxBalance={BigNumber.from(balance)}
-                onRemove={() => {
-                  if (multiple && txs.length > 1) {
-                    removeEntry(id, item.rowId);
-                  }
-                }}
+                onRemove={
+                  multiple && i > 0
+                    ? () => {
+                        if (multiple && txs.length > 1) {
+                          removeEntry(id, item.rowId);
+                        }
+                      }
+                    : undefined
+                }
                 decimals={decimals}
                 onChange={(data) => handleChange(data, item.rowId)}
               />

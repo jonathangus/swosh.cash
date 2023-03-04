@@ -9,7 +9,6 @@ export const usePrepareTxs = (
   from: string,
   chainId: number
 ) => {
-  let [completeTxs, setCompleteTx] = useState<PopulatedTransferPart[]>([]);
   const [preparedTxs, setPreparedTxs] = useState([]);
   const { chain } = useNetwork();
   const isCorrectChain = chain?.id == chainId;
@@ -49,76 +48,5 @@ export const usePrepareTxs = (
     setPreparedTxs(arr);
   }, parts);
 
-  const { data: signer } = useSigner();
-  const populate = async () => {
-    const promises = preparedTxs.map(async (tx) => {
-      let data, gas;
-      try {
-        if (tx.type === 'erc20') {
-          const contract = new Contract(
-            tx.contractAddress,
-            [
-              'function transfer(address _to, uint256 _value) public returns (bool success)',
-            ],
-            signer
-          );
-          data = await contract.populateTransaction.transfer(tx.to, tx.amount);
-        } else if (tx.type === 'erc721') {
-          const contract = new Contract(
-            tx.contractAddress,
-            [
-              'function transferFrom(address _from, address _to, uint256 _tokenId) external payable',
-            ],
-            signer
-          );
-
-          data = await contract.populateTransaction.transferFrom(
-            tx.from,
-            tx.to,
-            tx.amount
-          );
-        } else if (tx.type === 'erc1155') {
-          const contract = new Contract(
-            tx.contractAddress,
-            [
-              'function safeTransferFrom(address _from, address _to, uint256 _tokenId, uint256 _amount, bytes data) external payable',
-            ],
-            signer
-          );
-
-          data = await contract.populateTransaction.safeTransferFrom(
-            tx.from,
-            tx.to,
-            tx.tokenId,
-            tx.amount,
-            'x0'
-          );
-        }
-
-        // gas = await provider.estimateGas(data);
-      } catch (e) {
-        console.log('COULD NOT GET GAS');
-        console.error(e);
-      }
-
-      return {
-        ...tx,
-        txData: data,
-        gas,
-      };
-    });
-
-    const data = await Promise.all(promises);
-    setCompleteTx(data);
-  };
-
-  useEffect(() => {
-    if (isCorrectChain) {
-      populate();
-    } else {
-      console.log('WRONG CHAIN');
-    }
-  }, [JSON.stringify(preparedTxs), isCorrectChain]);
-
-  return completeTxs;
+  return preparedTxs;
 };
