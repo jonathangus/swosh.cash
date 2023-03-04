@@ -88,10 +88,12 @@ const SelectionRow = ({
 
   return (
     <div className="flex">
-      <AddressSelector
-        value={value}
-        onChange={(val) => setValue(val.address)}
-      />
+      <div className="mr-2 w-full">
+        <AddressSelector
+          value={value}
+          onChange={(val) => setValue(val.address)}
+        />
+      </div>
 
       {type === 'erc1155' && (
         <div className="bg-black px-2 rounded flex min-w-fit text-gray-400 items-center">
@@ -127,13 +129,15 @@ const SelectionRow = ({
         </div>
       )}
 
-      {onRemove && (
+      {onRemove ? (
         <div
           onClick={() => onRemove()}
-          className="flex items-center ml-4 saturate-0"
+          className="flex items-center pl-4 saturate-0 w-12"
         >
           ❌
         </div>
+      ) : (
+        <div className="w-16" />
       )}
 
       <div>

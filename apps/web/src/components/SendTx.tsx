@@ -29,17 +29,19 @@ const SendTx = ({ data, allowanceIsOk }: Props) => {
   const factory = isBulk ? Swosh__factory : factoryMap[data.type];
   const addTx = useCheckoutStore((state) => state.addTx);
   const completedTx = useCheckoutStore((state) => state.completedTxs[data.id]);
+
   const { write, isLoading, waitForTxResult } = useContractWrite(
     factory,
     data.method,
     {
       address: data.contractAddress,
       reckless: true,
+      args: data.args,
       onError: (e) => {
         toast.error(`Error: ${e.message}`);
       },
       onSuccess: (txData) => {
-        console.log('sUCCC:ESS!');
+        console.log('sUCCC:ESS!', data.id, txData, data);
         toast.success('Transfer succesfull');
         addTx(data.id, txData);
       },
