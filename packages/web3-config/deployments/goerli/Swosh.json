@@ -1,7 +1,12 @@
 {
-  "address": "0xEDCb37Ab81EBaB4f72B2D3d85255d72624a46C46",
+  "address": "0x3A193aC8FcaCCDa817c174D04081C105154a8441",
   "constructorArguments": [],
   "abi": [
+    {
+      "inputs": [],
+      "name": "FORBIDDEN",
+      "type": "error"
+    },
     {
       "inputs": [],
       "name": "INVALID_PARAM",
@@ -314,5 +319,5 @@
       "type": "function"
     }
   ],
-  "blockNumber": 8587721
+  "blockNumber": 8597096
 }
