@@ -31,7 +31,7 @@ async function main() {
   const ERIKO = '0xfA045B2F2A25ad0B7365010eaf9AC2Dd9905895c';
 
   const TESTERS = [JONT, MORKE, ERIKO, PILOU];
-  
+
   const [deployer] = await ethers.getSigners();
 
   const m20_1 = MockERC20__factory.connect(MERC20_1.address, deployer);
@@ -59,7 +59,7 @@ async function main() {
   );
   console.log('');
 
-  for (let i = 0; i < 2; i++) {
+  for (let i = 0; i < TESTERS.length; i++) {
     await m20_1
       .connect(deployer)
       .mint(TESTERS[i], ethers.utils.parseEther('1000'));
@@ -87,7 +87,6 @@ async function main() {
     await m721_4.connect(deployer).mintMultiple(TESTERS[i], 5);
     await m721_5.connect(deployer).mintMultiple(TESTERS[i], 4);
 
-    
     console.log('MINTED ERC-721s for : ', TESTERS[i]);
 
     await m1155_1
