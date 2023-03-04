@@ -1,6 +1,10 @@
 {
-  "address": "0xCC613ef89a8A1F311957c19D4cDF5842173357CB",
-  "constructorArguments": [],
+  "address": "0x40B1459394eb15F5720bFe0e2697262EA827a484",
+  "constructorArguments": [
+    "Fake PUDGY",
+    "fPUDGY",
+    "https://ipfs.io/ipfs/QmWXJXRdExse2YHRY21Wvh4pjRxNRQcWVhcKw4DLVnqGqs/"
+  ],
   "abi": [
     {
       "inputs": [
@@ -439,11 +443,29 @@
       "inputs": [
         {
           "internalType": "address",
-          "name": "to",
+          "name": "_to",
           "type": "address"
         }
       ],
       "name": "mint",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_quantity",
+          "type": "uint256"
+        }
+      ],
+      "name": "mintMultiple",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -701,6 +723,19 @@
     },
     {
       "inputs": [],
+      "name": "totalMinted",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
       "name": "totalSupply",
       "outputs": [
         {
@@ -743,5 +778,5 @@
       "type": "function"
     }
   ],
-  "blockNumber": 32687508
+  "blockNumber": 32710705
 }

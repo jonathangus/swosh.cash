@@ -1,6 +1,8 @@
 {
-  "address": "0xB472912d070A8148C11709C0A7254CfE1f437032",
-  "constructorArguments": [],
+  "address": "0x1c87b78b7D4A3410bE9e2EFf9B4041DEE515E4E4",
+  "constructorArguments": [
+    "https://arweave.net/OYeIdxgQ7LQJqBL_VznWj0trqi9jqKHO3xHZcnt_Wn8"
+  ],
   "abi": [
     {
       "inputs": [
@@ -735,5 +737,5 @@
       "type": "function"
     }
   ],
-  "blockNumber": 8596851
+  "blockNumber": 8597743
 }

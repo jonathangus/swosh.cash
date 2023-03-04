@@ -1,6 +1,8 @@
 {
-  "address": "0xd5040D9d858BA931C9fD24C125E92FeE9c318203",
-  "constructorArguments": [],
+  "address": "0x5f00e297fE9de76a1E8b62aFEf2012194FEFF700",
+  "constructorArguments": [
+    "https://nftdata.parallelnft.com/api/parallel-alpha"
+  ],
   "abi": [
     {
       "inputs": [
@@ -735,5 +737,5 @@
       "type": "function"
     }
   ],
-  "blockNumber": 8596853
+  "blockNumber": 8597747
 }

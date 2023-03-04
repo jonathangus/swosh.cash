@@ -1,6 +1,10 @@
 {
-  "address": "0xC7a3C822004B157db6140861bA0417DEb5c1b12A",
-  "constructorArguments": [],
+  "address": "0xDC83F7c643f0A4feB68c91184529EA6f76bed732",
+  "constructorArguments": [
+    "Fake PUDGY",
+    "fPUDGY",
+    "https://ipfs.io/ipfs/QmWXJXRdExse2YHRY21Wvh4pjRxNRQcWVhcKw4DLVnqGqs/"
+  ],
   "abi": [
     {
       "inputs": [
@@ -774,5 +778,5 @@
       "type": "function"
     }
   ],
-  "blockNumber": 8596849
+  "blockNumber": 8597732
 }

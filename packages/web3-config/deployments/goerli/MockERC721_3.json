@@ -1,6 +1,10 @@
 {
-  "address": "0x204F762b9c74c22b6A4e5305b2473D4C9cEbD635",
-  "constructorArguments": [],
+  "address": "0x7F3B62042A2574FB1Cc35A39aB2C89f810Ebc459",
+  "constructorArguments": [
+    "Fake WIZARD",
+    "fWIZARD",
+    "ipfs://QmU7pgaLsVkrP1ao7pn51wDE37PYNime6pV6mx8sUx1Nr4/"
+  ],
   "abi": [
     {
       "inputs": [
@@ -774,5 +778,5 @@
       "type": "function"
     }
   ],
-  "blockNumber": 8596848
+  "blockNumber": 8597731
 }

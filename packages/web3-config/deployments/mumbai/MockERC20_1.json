@@ -1,6 +1,9 @@
 {
-  "address": "0x852dE6afA321bE51bC6e48D853E36471a360ACee",
-  "constructorArguments": [],
+  "address": "0x8E382770c0CCfcBbbECBA3dd1DFb7a0965A590Ba",
+  "constructorArguments": [
+    "fake USDC",
+    "fUSDC"
+  ],
   "abi": [
     {
       "inputs": [
@@ -475,12 +478,12 @@
       "inputs": [
         {
           "internalType": "address",
-          "name": "to",
+          "name": "_to",
           "type": "address"
         },
         {
           "internalType": "uint256",
-          "name": "amount",
+          "name": "_amount",
           "type": "uint256"
         }
       ],
@@ -664,5 +667,5 @@
       "type": "function"
     }
   ],
-  "blockNumber": 32687485
+  "blockNumber": 32710372
 }
