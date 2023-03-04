@@ -10,6 +10,8 @@ import { getCalls } from '../utils/multicall';
 import { BigNumber } from 'ethers';
 import { useHoldingsQuery } from '../hooks/useHoldingsQuery';
 import { useHoldingsStore } from '../stores/useHoldingsStore';
+import { Swosh__factory } from 'web3-config';
+import { useAddress } from 'wagmi-lfg';
 
 export const onChainContext = createContext<OnChainStateContext>(null);
 
@@ -21,11 +23,16 @@ export const OnChainProvider = ({ children }: PropsWithChildren<Props>) => {
   const result = {};
   const { data: holdings = [], isLoading } = useHoldingsQuery();
   const { address } = useAccount();
-  const calls = getCalls(holdings, { user: address });
-  const provider = useProvider();
-  const { data: blockNumber } = useBlockNumber({ watch: true });
   const { chain } = useNetwork();
   const chainId = chain?.id || 1;
+  const swoshAddress =
+    (useAddress(Swosh__factory, chainId) as string) ||
+    '0x0000000000000000000000000000000000000000';
+  console.log({ swoshAddress, chainId, address });
+  const calls = getCalls(holdings, { user: address, swoshAddress });
+  const provider = useProvider();
+  const { data: blockNumber } = useBlockNumber({ watch: true });
+
   const multicall = useMemo(
     () =>
       new Multicall({
@@ -61,6 +68,7 @@ export const OnChainProvider = ({ children }: PropsWithChildren<Props>) => {
       }
     } catch (e) {
       console.error('fetchMulticall error: ', e);
+
       if (holdingsLength === 0) {
         setHoldings(holdings);
       }

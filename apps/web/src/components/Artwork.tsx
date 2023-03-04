@@ -1,5 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import { useRef } from 'react';
+import { useIntersectionObserver } from '../hooks/useInteractionObserver';
+import TokenImage from './TokenImage';
 
 type Props = {
   image?: string;
@@ -7,6 +10,8 @@ type Props = {
 };
 
 const Artwork = ({ image }: Props) => {
+  const elRef = useRef();
+  const entry = useIntersectionObserver(elRef, {});
   const {
     isLoading,
     error,
@@ -37,7 +42,7 @@ const Artwork = ({ image }: Props) => {
     }
   );
 
-  return <img src={imgSrc} />;
+  return <div ref={elRef}>{imgSrc && <TokenImage logoUrl={imgSrc} />}</div>;
 };
 
 export default Artwork;

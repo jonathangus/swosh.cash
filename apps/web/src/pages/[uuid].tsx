@@ -2,26 +2,20 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import TransferFlow from '../components/TransferFlow';
 import { TransferContextProvider } from '../context/TransferContext';
+import { useCheckoutStore } from '../stores/useCheckoutStore';
 
 type Props = {};
 
 const ProgressPage = ({}: Props) => {
   const { query } = useRouter();
-  const [parts, setParts] = useState([]);
-  const [chainId, setWantedChainId] = useState();
+  const check = useCheckoutStore(
+    (state) => state.checkout[query.uuid as string]
+  );
 
-  useEffect(() => {
-    try {
-      const item = window.localStorage.getItem(query.uuid as string);
-      if (item) {
-        const res = JSON.parse(item);
-        setParts(res.parts);
-        setWantedChainId(res.chainId);
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  }, [query.uuid]);
+  if (!check) {
+    return <div>...loading</div>;
+  }
+  const { parts, chainId } = check;
 
   if (Object.values(parts).length > 0) {
     return (

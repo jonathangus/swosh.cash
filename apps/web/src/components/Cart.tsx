@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useTxStore } from '../stores/useTxStore';
 import { v4 as uuidv4 } from 'uuid';
 import { useNetwork } from 'wagmi';
+import { useCheckoutStore } from '../stores/useCheckoutStore';
 
 type Props = {};
 
@@ -12,18 +13,20 @@ const Cart = ({}: Props) => {
       .map((part) => part.txs)
       .flatMap((val) => val);
   });
+  const addCheckout = useCheckoutStore((state) => state.addCheckout);
   const { chain } = useNetwork();
 
   const parts = useTxStore((state) => state.parts);
-
   const [uuid] = useState(uuidv4());
 
   useEffect(() => {
-    window.localStorage.setItem(
-      uuid,
-      JSON.stringify({ parts, chainId: chain.id })
-    );
-  }, [uuid, parts]);
+    if (chain) {
+      addCheckout(uuid, {
+        parts,
+        chainId: chain.id,
+      });
+    }
+  }, [uuid, parts, chain?.id]);
 
   return (
     <div>

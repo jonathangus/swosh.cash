@@ -45,7 +45,6 @@ export const TransferContextProvider = ({
 
   const calls = getCalls(holdings, { user: address, swoshAddress });
   const provider = useProvider();
-  const { chain } = useNetwork();
   const multicall = useMemo(
     () =>
       new Multicall({
@@ -55,7 +54,7 @@ export const TransferContextProvider = ({
     [provider, chainId]
   );
   const [items, setItems] = useState<OnChainTransferItem[]>([]);
-  console.log(items);
+
   const fetchMulticall = async () => {
     const finalState = {};
 
@@ -119,7 +118,7 @@ export const TransferContextProvider = ({
 
   useEffect(() => {
     fetchMulticall();
-  }, []);
+  }, [chainId]);
 
   return (
     <transferContext.Provider value={{ items }}>
