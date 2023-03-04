@@ -50,7 +50,6 @@ export const OnChainProvider = ({ children }: PropsWithChildren<Props>) => {
   const setHoldings = useHoldingsStore((state) => state.setHoldings);
   const setLoading = useHoldingsStore((state) => state.setLoading);
 
-  console.log(holdings);
   useEffect(() => {
     if (isLoading) {
       setLoading(true);

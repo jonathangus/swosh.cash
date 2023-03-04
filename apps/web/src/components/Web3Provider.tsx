@@ -10,6 +10,7 @@ import {
   createClient,
   goerli,
   mainnet,
+  useNetwork,
   WagmiConfig,
 } from 'wagmi';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
@@ -38,7 +39,7 @@ const scrollTesnet = {
   },
 };
 
-console.log(goerli);
+console.log({ goerli, optimismGoerli });
 const wantedChains = [
   goerli,
   mainnet,
@@ -50,7 +51,7 @@ const wantedChains = [
 ];
 
 const { chains, provider } = configureChains(wantedChains, [
-  alchemyProvider({ apiKey: 'oHGb97WA6u2gyrnHFFUW8kE3spAgZUKt' }),
+  alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_KEY }),
   publicProvider(),
 ]);
 
@@ -62,12 +63,14 @@ const { connectors } = getDefaultWallets({
 });
 
 const wagmiClient = createClient({
-  autoConnect: true,
+  autoConnect: false,
   connectors,
   provider,
 });
 
 const Web3Provider = ({ children }) => {
+  const network = useNetwork();
+  console.log(network);
   return (
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains} theme={darkTheme({})}>
