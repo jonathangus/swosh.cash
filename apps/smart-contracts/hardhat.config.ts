@@ -25,6 +25,7 @@ task('accounts', 'Prints the list of accounts', async (taskArgs, hre) => {
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const MAINNET_ALCHEMY_KEY = process.env.MAINNET_ALCHEMY_KEY;
 const OPTIMISM_ALCHEMY_KEY = process.env.OPTIMISM_ALCHEMY_KEY;
+const MUMBAI_ALCHEMY_KEY = process.env.MUMBAI_ALCHEMY_KEY;
 const GOERLI_ALCHEMY_KEY = process.env.GOERLI_ALCHEMY_KEY;
 const POLYGON_ALCHEMY_KEY = process.env.POLYGON_ALCHEMY_KEY;
 const ARBITRUM_ALCHEMY_KEY = process.env.ARBITRUM_ALCHEMY_KEY;
@@ -52,24 +53,14 @@ const config: HardhatUserConfig = {
       url: `https://opt-mainnet.g.alchemy.com/v2/${OPTIMISM_ALCHEMY_KEY}`,
       accounts: [`${PRIVATE_KEY}`],
     },
-    arbitrum: {
-      chainId: 10,
+    arbitrumOne: {
+      chainId: 42161,
       url: `https://arb-mainnet.g.alchemy.com/v2/${ARBITRUM_ALCHEMY_KEY}`,
       accounts: [`${PRIVATE_KEY}`],
     },
     polygon: {
       chainId: 137,
       url: `https://polygon-mainnet.g.alchemy.com/v2/${POLYGON_ALCHEMY_KEY}`,
-      accounts: [`${PRIVATE_KEY}`],
-    },
-    baseGoerli: {
-      chainId: 84531,
-      url: 'https://goerli.base.org',
-      accounts: [`${PRIVATE_KEY}`],
-    },
-    scrollTestnet: {
-      chainId: 534353,
-      url: `https://alpha-rpc.scroll.io/l2`,
       accounts: [`${PRIVATE_KEY}`],
     },
     goerli: {
@@ -80,6 +71,21 @@ const config: HardhatUserConfig = {
     optimismGoerli: {
       chainId: 420,
       url: `https://opt-goerli.g.alchemy.com/v2/${OPTIMISM_GOERLI_ALCHEMY_KEY}`,
+      accounts: [`${PRIVATE_KEY}`],
+    },
+    mumbai: {
+      chainId: 80001,
+      url: `https://polygon-mumbai.g.alchemy.com/v2/${MUMBAI_ALCHEMY_KEY}`,
+      accounts: [`${PRIVATE_KEY}`],
+    },
+    baseGoerli: {
+      chainId: 84531,
+      url: 'https://goerli.base.org',
+      accounts: [`${PRIVATE_KEY}`],
+    },
+    scrollTestnet: {
+      chainId: 534353,
+      url: `https://alpha-rpc.scroll.io/l2`,
       accounts: [`${PRIVATE_KEY}`],
     },
   },
@@ -96,7 +102,13 @@ const config: HardhatUserConfig = {
     currency: 'USD',
   },
   etherscan: {
-    apiKey: process.env.ETHERSCAN_API_KEY,
+    apiKey: {
+      mainnet: `${process.env.ETHERSCAN_API_KEY}`,
+      optimism: `${process.env.OPTIMISM_ETHERSCAN_API_KEY}`,
+      goerli: `${process.env.ETHERSCAN_API_KEY}`,
+      optimismGoerli: `${process.env.OPTIMISM_ETHERSCAN_API_KEY}`,
+      polygonMumbai: `${process.env.MUMBAI_ETHERSCAN_API_KEY}`,
+    },
     customChains: [
       {
         network: 'optimismGoerli',
@@ -120,6 +132,14 @@ const config: HardhatUserConfig = {
         urls: {
           apiURL: 'https://api-goerli.basescan.org/api',
           browserURL: 'https://goerli.basescan.org/',
+        },
+      },
+      {
+        network: 'scrollTestnet',
+        chainId: 534353,
+        urls: {
+          apiURL: 'https://blockscout.scroll.io/api',
+          browserURL: 'https://blockscout.scroll.io/',
         },
       },
     ],
