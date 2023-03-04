@@ -436,11 +436,29 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "to",
+        "name": "_to",
         "type": "address"
       }
     ],
     "name": "mint",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_to",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_quantity",
+        "type": "uint256"
+      }
+    ],
+    "name": "mintMultiple",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -691,6 +709,19 @@
         "internalType": "string",
         "name": "",
         "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalMinted",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",

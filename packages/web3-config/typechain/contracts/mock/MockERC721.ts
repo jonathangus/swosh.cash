@@ -43,6 +43,7 @@ export interface MockERC721Interface extends utils.Interface {
     "hasRole(bytes32,address)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
     "mint(address)": FunctionFragment;
+    "mintMultiple(address,uint256)": FunctionFragment;
     "name()": FunctionFragment;
     "ownerOf(uint256)": FunctionFragment;
     "pause()": FunctionFragment;
@@ -57,6 +58,7 @@ export interface MockERC721Interface extends utils.Interface {
     "tokenByIndex(uint256)": FunctionFragment;
     "tokenOfOwnerByIndex(address,uint256)": FunctionFragment;
     "tokenURI(uint256)": FunctionFragment;
+    "totalMinted()": FunctionFragment;
     "totalSupply()": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
     "unpause()": FunctionFragment;
@@ -92,6 +94,8 @@ export interface MockERC721Interface extends utils.Interface {
       | "isApprovedForAll(address,address)"
       | "mint"
       | "mint(address)"
+      | "mintMultiple"
+      | "mintMultiple(address,uint256)"
       | "name"
       | "name()"
       | "ownerOf"
@@ -118,6 +122,8 @@ export interface MockERC721Interface extends utils.Interface {
       | "tokenOfOwnerByIndex(address,uint256)"
       | "tokenURI"
       | "tokenURI(uint256)"
+      | "totalMinted"
+      | "totalMinted()"
       | "totalSupply"
       | "totalSupply()"
       | "transferFrom"
@@ -238,6 +244,14 @@ export interface MockERC721Interface extends utils.Interface {
     functionFragment: "mint(address)",
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(
+    functionFragment: "mintMultiple",
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "mintMultiple(address,uint256)",
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(functionFragment: "name()", values?: undefined): string;
   encodeFunctionData(
@@ -326,6 +340,14 @@ export interface MockERC721Interface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "tokenURI(uint256)",
     values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "totalMinted",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "totalMinted()",
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "totalSupply",
@@ -448,6 +470,14 @@ export interface MockERC721Interface extends utils.Interface {
     functionFragment: "mint(address)",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "mintMultiple",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "mintMultiple(address,uint256)",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "name()", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
@@ -517,6 +547,14 @@ export interface MockERC721Interface extends utils.Interface {
   decodeFunctionResult(functionFragment: "tokenURI", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "tokenURI(uint256)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "totalMinted",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "totalMinted()",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -816,12 +854,24 @@ export interface MockERC721 extends BaseContract {
     ): Promise<[boolean]>;
 
     mint(
-      to: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     "mint(address)"(
-      to: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    mintMultiple(
+      _to: PromiseOrValue<string>,
+      _quantity: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "mintMultiple(address,uint256)"(
+      _to: PromiseOrValue<string>,
+      _quantity: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -947,6 +997,10 @@ export interface MockERC721 extends BaseContract {
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[string]>;
+
+    totalMinted(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    "totalMinted()"(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -1098,12 +1152,24 @@ export interface MockERC721 extends BaseContract {
   ): Promise<boolean>;
 
   mint(
-    to: PromiseOrValue<string>,
+    _to: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   "mint(address)"(
-    to: PromiseOrValue<string>,
+    _to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  mintMultiple(
+    _to: PromiseOrValue<string>,
+    _quantity: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "mintMultiple(address,uint256)"(
+    _to: PromiseOrValue<string>,
+    _quantity: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -1229,6 +1295,10 @@ export interface MockERC721 extends BaseContract {
     tokenId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<string>;
+
+  totalMinted(overrides?: CallOverrides): Promise<BigNumber>;
+
+  "totalMinted()"(overrides?: CallOverrides): Promise<BigNumber>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1379,10 +1449,22 @@ export interface MockERC721 extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    mint(to: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+    mint(_to: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     "mint(address)"(
-      to: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    mintMultiple(
+      _to: PromiseOrValue<string>,
+      _quantity: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "mintMultiple(address,uint256)"(
+      _to: PromiseOrValue<string>,
+      _quantity: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1504,6 +1586,10 @@ export interface MockERC721 extends BaseContract {
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<string>;
+
+    totalMinted(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "totalMinted()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1726,12 +1812,24 @@ export interface MockERC721 extends BaseContract {
     ): Promise<BigNumber>;
 
     mint(
-      to: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     "mint(address)"(
-      to: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    mintMultiple(
+      _to: PromiseOrValue<string>,
+      _quantity: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "mintMultiple(address,uint256)"(
+      _to: PromiseOrValue<string>,
+      _quantity: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1857,6 +1955,10 @@ export interface MockERC721 extends BaseContract {
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    totalMinted(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "totalMinted()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -2013,12 +2115,24 @@ export interface MockERC721 extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     mint(
-      to: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     "mint(address)"(
-      to: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    mintMultiple(
+      _to: PromiseOrValue<string>,
+      _quantity: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "mintMultiple(address,uint256)"(
+      _to: PromiseOrValue<string>,
+      _quantity: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -2144,6 +2258,10 @@ export interface MockERC721 extends BaseContract {
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
+
+    totalMinted(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "totalMinted()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

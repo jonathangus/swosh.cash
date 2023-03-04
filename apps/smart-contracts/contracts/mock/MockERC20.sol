@@ -8,4 +8,8 @@ contract MockERC20 is ERC20PresetMinterPauser {
         string memory name,
         string memory symbol
     ) ERC20PresetMinterPauser(name, symbol) {}
+
+    function mint(address _to, uint256 _amount) public override {
+        _mint(_to, _amount);
+    }
 }

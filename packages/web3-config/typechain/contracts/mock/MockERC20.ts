@@ -769,14 +769,14 @@ export interface MockERC20 extends BaseContract {
     ): Promise<ContractTransaction>;
 
     mint(
-      to: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     "mint(address,uint256)"(
-      to: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -1026,14 +1026,14 @@ export interface MockERC20 extends BaseContract {
   ): Promise<ContractTransaction>;
 
   mint(
-    to: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
+    _to: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   "mint(address,uint256)"(
-    to: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
+    _to: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -1283,14 +1283,14 @@ export interface MockERC20 extends BaseContract {
     ): Promise<boolean>;
 
     mint(
-      to: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     "mint(address,uint256)"(
-      to: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1596,14 +1596,14 @@ export interface MockERC20 extends BaseContract {
     ): Promise<BigNumber>;
 
     mint(
-      to: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     "mint(address,uint256)"(
-      to: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1858,14 +1858,14 @@ export interface MockERC20 extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     mint(
-      to: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     "mint(address,uint256)"(
-      to: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
