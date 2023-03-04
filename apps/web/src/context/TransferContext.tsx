@@ -1,4 +1,11 @@
-import { createContext, PropsWithChildren, useEffect, useMemo } from 'react';
+import {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 
 import {
   Multicall,
@@ -8,24 +15,37 @@ import {
 import { useAccount, useBlockNumber, useNetwork, useProvider } from 'wagmi';
 import { getCalls } from '../utils/multicall';
 import { BigNumber } from 'ethers';
-import { useHoldingsQuery } from '../hooks/useHoldingsQuery';
-import { useHoldingsStore } from '../stores/useHoldingsStore';
+import { OnChainTransferItem, Token, TransferPart } from 'shared-config';
+import { Swosh__factory } from 'web3-config';
+import { useAddress } from 'wagmi-lfg';
 
-export const onChainContext = createContext<OnChainStateContext>(null);
+export const transferContext = createContext<TransferContext>(null);
 
-type OnChainStateContext = {};
+type TransferContext = {
+  items: OnChainTransferItem[];
+};
 
-type Props = {};
+type Props = { parts: TransferPart[]; chainId: number };
 
-export const OnChainProvider = ({ children }: PropsWithChildren<Props>) => {
-  const result = {};
-  const { data: holdings = [], isLoading } = useHoldingsQuery();
+export const TransferContextProvider = ({
+  children,
+  parts,
+  chainId,
+}: PropsWithChildren<Props>) => {
   const { address } = useAccount();
-  const calls = getCalls(holdings, { user: address });
+  const holdings = parts.map((holding) => ({
+    type: holding.type,
+    contract_address: holding.contractAddress,
+    token_id: holding.tokenId,
+    balance: BigNumber.from('0'),
+    uniqBy: holding.contractAddress + holding.tokenId,
+    tokenURI: undefined,
+  })) as any as Token[];
+  const swoshAddress = useAddress(Swosh__factory, chainId) as string;
+
+  const calls = getCalls(holdings, { user: address, swoshAddress });
   const provider = useProvider();
-  const { data: blockNumber } = useBlockNumber({ watch: true });
   const { chain } = useNetwork();
-  const chainId = chain?.id || 1;
   const multicall = useMemo(
     () =>
       new Multicall({
@@ -34,16 +54,8 @@ export const OnChainProvider = ({ children }: PropsWithChildren<Props>) => {
       }),
     [provider, chainId]
   );
-  const holdingsLength = useHoldingsStore((state) => state.holdings.length);
-  const setHoldings = useHoldingsStore((state) => state.setHoldings);
-  const setLoading = useHoldingsStore((state) => state.setLoading);
-
-  useEffect(() => {
-    if (isLoading) {
-      setLoading(true);
-    }
-  }, [isLoading]);
-
+  const [items, setItems] = useState<OnChainTransferItem[]>([]);
+  console.log(items);
   const fetchMulticall = async () => {
     const finalState = {};
 
@@ -61,20 +73,17 @@ export const OnChainProvider = ({ children }: PropsWithChildren<Props>) => {
       }
     } catch (e) {
       console.error('fetchMulticall error: ', e);
-      if (holdingsLength === 0) {
-        setHoldings(holdings);
-      }
-      setLoading(false);
     }
 
     const items = [];
     for (let key in finalState) {
       const match = holdings.find((holding) => holding.uniqBy === key);
       const val = finalState[key];
-      let balance = match.balance;
-      let symbol, name, decimals, tokenURI;
+      let symbol, name, decimals, tokenURI, allowance;
 
       if (match) {
+        let balance = match.balance;
+
         try {
           if (match.type === 'erc1155') {
             balance = BigNumber.from(val.balanceOf).toNumber();
@@ -90,6 +99,7 @@ export const OnChainProvider = ({ children }: PropsWithChildren<Props>) => {
             symbol = val.symbol;
             name = val.name;
             decimals = val.decimals;
+            allowance = BigNumber.from(val.allowance);
           }
         } catch (e) {
           console.error(e);
@@ -100,21 +110,22 @@ export const OnChainProvider = ({ children }: PropsWithChildren<Props>) => {
           symbol,
           name,
           decimals,
+          allowance,
         });
       }
     }
-
-    setHoldings(items);
-    setLoading(false);
+    setItems(items);
   };
 
   useEffect(() => {
-    if (multicall && address && calls.length > 0) {
-      fetchMulticall();
-    }
-  }, [blockNumber, multicall, calls.length, address]);
+    fetchMulticall();
+  }, []);
 
   return (
-    <onChainContext.Provider value={result}>{children}</onChainContext.Provider>
+    <transferContext.Provider value={{ items }}>
+      {children}
+    </transferContext.Provider>
   );
 };
+
+export const useTransferContext = () => useContext(transferContext);

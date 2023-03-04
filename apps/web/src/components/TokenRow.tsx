@@ -10,8 +10,8 @@ type Props = {
   footer?: ReactNode;
   prefix?: ReactNode;
   selection?: ReactNode;
-  isSelected: boolean;
-  onSelect: () => void;
+  isSelected?: boolean;
+  onSelect?: () => void;
 };
 
 const TokenRow = ({
@@ -26,7 +26,7 @@ const TokenRow = ({
 }: Props) => {
   return (
     <div
-      onClick={() => !isSelected && onSelect()}
+      onClick={() => !isSelected && onSelect && onSelect()}
       className={clsx(
         'p-4 rounded-2xl transition-colors   cursor-pointer hover:bg-gray-800',
         isSelected ? 'bg-gray-700' : ''

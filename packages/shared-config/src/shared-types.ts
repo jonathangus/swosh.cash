@@ -13,6 +13,39 @@ export type TransferPart = {
   tokenId?: string;
 };
 
+export type Sequance = {
+  method: string;
+  args: any[];
+  contractAddress: string;
+  type: ERCType;
+};
+
+export type TransferGroups = {
+  sequance: Sequance[];
+  txs: PopulatedTransferPart[];
+};
+
+export type OnChainTransferItem = {
+  balance?: BigNumber;
+  name?: string;
+  symbol?: string;
+  decimals?: number;
+  type: ERCType;
+
+  contract_address: string;
+  token_id: string;
+  uniqBy: string;
+  tokenURI?: string;
+};
+
+export type PopulatedTransferPart = TransferPart & {
+  data: ethers.PopulatedTransaction;
+  gas: BigNumber;
+  amount: BigNumber;
+  to: string;
+  id: string;
+};
+
 export type TransferData = {
   to: string;
   amount: BigNumber;
@@ -22,7 +55,6 @@ export type TransferData = {
 export type Transfer = {
   contractAddress: string;
   id: string;
-
   type: ERCType;
 };
 

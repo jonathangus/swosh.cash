@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useTxStore } from '../stores/useTxStore';
 import { v4 as uuidv4 } from 'uuid';
+import { useNetwork } from 'wagmi';
 
 type Props = {};
 
@@ -11,22 +12,28 @@ const Cart = ({}: Props) => {
       .map((part) => part.txs)
       .flatMap((val) => val);
   });
+  const { chain } = useNetwork();
 
   const parts = useTxStore((state) => state.parts);
 
   const [uuid] = useState(uuidv4());
 
   useEffect(() => {
-    window.localStorage.setItem(uuid, JSON.stringify({ parts }));
+    window.localStorage.setItem(
+      uuid,
+      JSON.stringify({ parts, chainId: chain.id })
+    );
   }, [uuid, parts]);
 
   return (
     <div>
-      {allTxs.map((tx) => (
-        <div key={tx.rowId}>
-          {tx.amount?.toString()} to {tx.to}
-        </div>
-      ))}
+      {allTxs
+        .filter((tx) => tx.to && tx.amount)
+        .map((tx) => (
+          <div key={tx.rowId}>
+            {tx.amount?.toString()} to {tx.to}
+          </div>
+        ))}
       <Link href={`/${uuid}`}>Go checkout</Link>
     </div>
   );
