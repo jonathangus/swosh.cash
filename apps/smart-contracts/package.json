@@ -6,15 +6,10 @@
     "test": "hardhat test",
     "recompile": "hardhat clean && hardhat compile",
     "test::gas": "hardhat run --network localhost scripts/swosh-gas-tests.ts",
-    "deploy::swosh::localhost": "hardhat run --network localhost scripts/deploy/deploy-swosh.ts",
-    "deploy::mocks::localhost": "hardhat run --network localhost scripts/deploy/deploy-mocks.ts",
-    "deploy::swosh::goerli": "hardhat run --network goerli scripts/deploy/deploy-swosh.ts",
-    "deploy::mocks::goerli": "hardhat run --network goerli scripts/deploy/deploy-mocks.ts",
-    "deploy::swosh::scroll": "hardhat run --network scrollTestnet scripts/deploy/deploy-swosh.ts",
-    "deploy::mocks::scroll": "hardhat run --network scrollTestnet scripts/deploy/deploy-mocks.ts",
-    "deploy::swosh::base": "hardhat run --network baseGoerli scripts/deploy/deploy-swosh.ts",
-    "deploy::mocks::base": "hardhat run --network baseGoerli scripts/deploy/deploy-mocks.ts",
+    "deploy::swosh": "hardhat run scripts/deploy/deploy-swosh.ts",
+    "deploy::mocks": "hardhat run scripts/deploy/deploy-mocks.ts",
     "mint::mocks::goerli": "hardhat run --network goerli scripts/goerli/mint-mocks.ts",
+    "mint::mocks::mumbai": "hardhat run --network mumbai scripts/mumbai/mint-mocks.ts",
     "mint::mocks::scroll": "hardhat run --network scrollTestnet scripts/scroll/mint-mocks.ts",
     "mint::mocks::base": "hardhat run --network baseGoerli scripts/base/mint-mocks.ts"
   },
@@ -48,6 +43,7 @@
     "@openzeppelin/contracts": "4.8.1",
     "@typechain/ethers-v5": "10.2.0",
     "@typechain/hardhat": "6.1.5",
+    "defender-relay-client": "^1.39.0",
     "hardhat-deploy": "0.10.0",
     "hardhat-deploy-ethers": "0.3.0-beta.13"
   }
