@@ -7,9 +7,6 @@ const Page = () => {
     <OnChainProvider>
       <div style={{ display: 'grid', gap: 20 }}>
         <div className="flex-col flex">
-          <div className="self-end mt-4">
-            <ConnectButton />
-          </div>
           <div className="self-center w-full md:w-[500px]">
             <Holdings />
           </div>
