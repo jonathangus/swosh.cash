@@ -68,14 +68,17 @@ Openzeppelin Defender Deployment scripts
 | arbitrum goerli | 0x3A193aC8FcaCCDa817c174D04081C105154a8441 | https://goerli.arbiscan.io/address/0x3A193aC8FcaCCDa817c174D04081C105154a8441           |
 
 
+### Swosh logic
+
+Sending 1 erc20 token and 1 erc721 will only trigger regular transfer methods.
+<img width="639" alt="Skärmavbild 2023-03-04 kl  20 47 51" src="https://user-images.githubusercontent.com/7723195/222940647-f19ef31f-a545-4b83-914f-d2f7865c1ee9.png">
+
+When sending multiple tokens of the same erc standard we calculate if it is more worth doing approval + batch vs doing multiple single transfers 
+<img width="639" alt="Skärmavbild 2023-03-04 kl  20 48 16" src="https://user-images.githubusercontent.com/7723195/222940645-aaf842d0-4a96-450d-af41-b47520df16cb.png">
+<img width="639" alt="Skärmavbild 2023-03-04 kl  20 48 00" src="https://user-images.githubusercontent.com/7723195/222940646-78a7af31-a17b-4d37-a7f3-885646900530.png">
 
 
 
-
-
-# Web3 fullstack starter
-
-My ideal monorepo setup for working with fullstack web3 development. Can be used for quick prototyping or built on top on for production ready projects.
 
 ### Core packages
 - `ethers`
