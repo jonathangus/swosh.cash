@@ -12,6 +12,7 @@ import swoshBaseGoerli from './deployments/baseGoerli/Swosh.json';
 import swoshOptimismGoerli from './deployments/optimismGoerli/Swosh.json';
 import swoshArbitrumGoerli from './deployments/arbitrumGoerli/Swosh.json';
 import swoshPolygonMumbai from './deployments/mumbai/Swosh.json';
+import swoshScrollTestnet from './deployments/scrollTestnet/Swosh.json';
 
 import mockERC20_2_Goerli from './deployments/goerli/MockERC20_2.json';
 import mockERC20_4_Goerli from './deployments/goerli/MockERC20_4.json';
@@ -43,6 +44,12 @@ import mockERC721_2_Mumbai from './deployments/mumbai/MockERC721_2.json';
 import mockERC721_3_Mumbai from './deployments/mumbai/MockERC721_3.json';
 import mockERC1155_1_Mumbai from './deployments/mumbai/MockERC1155_1.json';
 import mockERC1155_3_Mumbai from './deployments/mumbai/MockERC1155_3.json';
+import mockERC20_2_ScrollTestnet from './deployments/scrollTestnet/MockERC20_2.json';
+import mockERC20_4_ScrollTestnet from './deployments/scrollTestnet/MockERC20_4.json';
+import mockERC721_2_ScrollTestnet from './deployments/scrollTestnet/MockERC721_2.json';
+import mockERC721_3_ScrollTestnet from './deployments/scrollTestnet/MockERC721_3.json';
+import mockERC1155_1_ScrollTestnet from './deployments/scrollTestnet/MockERC1155_1.json';
+import mockERC1155_3_ScrollTestnet from './deployments/scrollTestnet/MockERC1155_3.json';
 
 export const contracts = {
   MockERC20_1: _typechain.MockERC20__factory.name,
@@ -126,8 +133,14 @@ export const addresses: Record<number, AddressRecord> = {
     [contracts.MockERC1155_1]: mockERC1155_1_Mumbai.address,
     [contracts.MockERC1155_3]: mockERC1155_3_Mumbai.address,
   },
-  [arbitrumGoerli.id]: {
-    [contracts.Swosh]: arbitrumGoerliDeployment.address,
+  [534_353]: {
+    [contracts.Swosh]: swoshScrollTestnet.address,
+    [contracts.MockERC20_2]: mockERC20_2_ScrollTestnet.address,
+    [contracts.MockERC20_4]: mockERC20_4_ScrollTestnet.address,
+    [contracts.MockERC721_2]: mockERC721_2_ScrollTestnet.address,
+    [contracts.MockERC721_3]: mockERC721_3_ScrollTestnet.address,
+    [contracts.MockERC1155_1]: mockERC1155_1_ScrollTestnet.address,
+    [contracts.MockERC1155_3]: mockERC1155_3_ScrollTestnet.address,
   },
 };
 
