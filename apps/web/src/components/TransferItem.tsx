@@ -16,15 +16,12 @@ const TransferItem = ({ tx }: Props) => {
     (item) =>
       item.contract_address.toLowerCase() === tx.contractAddress.toLowerCase()
   );
-
-  console.log(match);
-
   return (
     <div className="flex">
       <div className="w-12 h-12 shrink-0 overflow-hidden rounded-full ">
         <Artwork
           name={match?.symbol}
-          contractAddress={match.contract_address}
+          contractAddress={match?.contract_address}
         />
       </div>
       <div className="ml-4 font-medium w-full text-ellipsis overflow-hidden">
