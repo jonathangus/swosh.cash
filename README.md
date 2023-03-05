@@ -29,10 +29,12 @@ Great experience of Scroll alphanet: open the docs, check the rpc and we we're d
 
 
 ### Open zeppelin defender 
-goerli	Goerli                  Faucet Deployer	0x4809c3d61fa5cdfcb91a065368d67a3dfc03423a
-optimism goerli	Optimism Goerli Faucet Deployer	0x826dc5cabf29eb88fe821d4315210104d46e46d1
-arbitrum goerli	Arbitrum Goerli Faucet Deployer	0x393bf480cf88688df32eb17b0d3d55be9f8bc43c
-mumbai	Mumbai                  Faucet Deployer	0xdc2c63f60c1b3ca6765e4f50c827f925d05b84c3
+| Chain           | Name                            | Address                                    |
+| --------------- | ------------------------------- | ------------------------------------------ |
+| optimism goerli | Optimism Goerli Faucet Deployer | 0x4809c3d61fa5cdfcb91a065368d67a3dfc03423a |
+| optimism goerli | Optimism Goerli Faucet Deployer | 0x826dc5cabf29eb88fe821d4315210104d46e46d1 |
+| arbitrum goerli | Arbitrum Goerli Faucet Deployer | 0x393bf480cf88688df32eb17b0d3d55be9f8bc43c |
+| mumbai          | Mumbai Faucet Deployer          | 0xdc2c63f60c1b3ca6765e4f50c827f925d05b84c3 |
 
 
 Openzeppelin Defender Deployment scripts
@@ -47,28 +49,14 @@ Openzeppelin Defender Deployment scripts
 
 
 ### Swosh Contracts Address Registry
-** base goerli
-0x3A193aC8FcaCCDa817c174D04081C105154a8441
-https://goerli.basescan.org/address/0x3A193aC8FcaCCDa817c174D04081C105154a8441
-
-** scroll alphanet
-0x3A193aC8FcaCCDa817c174D04081C105154a8441
-https://blockscout.scroll.io/address/0x3A193aC8FcaCCDa817c174D04081C105154a8441
-
-** mumbai
-0x3A193aC8FcaCCDa817c174D04081C105154a8441
-https://mumbai.polygonscan.com/address/0x3A193aC8FcaCCDa817c174D04081C105154a8441
-**goerli
-0x3A193aC8FcaCCDa817c174D04081C105154a8441
-https://goerli.etherscan.io/address/0x3A193aC8FcaCCDa817c174D04081C105154a8441
-** optimism goerli
-0x3A193aC8FcaCCDa817c174D04081C105154a8441
-https://goerli-optimism.etherscan.io/address/0x3A193aC8FcaCCDa817c174D04081C105154a8441
-** arbitrum goerli
-0x3A193aC8FcaCCDa817c174D04081C105154a8441
-https://goerli.arbiscan.io/address/0x3A193aC8FcaCCDa817c174D04081C105154a8441
-
-
+| Chain           | Address                                    | Explorer                                                                                |
+| --------------- | ------------------------------------------ | --------------------------------------------------------------------------------------- |
+| base goerli     | 0x3A193aC8FcaCCDa817c174D04081C105154a8441 | https://goerli.basescan.org/address/0x3A193aC8FcaCCDa817c174D04081C105154a8441          |
+| scroll alphanet | 0x3A193aC8FcaCCDa817c174D04081C105154a8441 | https://blockscout.scroll.io/address/0x3A193aC8FcaCCDa817c174D04081C105154a8441         |
+| mumbai          | 0x3A193aC8FcaCCDa817c174D04081C105154a8441 | https://mumbai.polygonscan.com/address/0x3A193aC8FcaCCDa817c174D04081C105154a8441       |
+| goerli          | 0x3A193aC8FcaCCDa817c174D04081C105154a8441 | https://goerli.etherscan.io/address/0x3A193aC8FcaCCDa817c174D04081C105154a8441          |
+| optimism goerli | 0x3A193aC8FcaCCDa817c174D04081C105154a8441 | https://goerli-optimism.etherscan.io/address/0x3A193aC8FcaCCDa817c174D04081C105154a8441 |
+| arbitrum goerli | 0x3A193aC8FcaCCDa817c174D04081C105154a8441 | https://goerli.arbiscan.io/address/0x3A193aC8FcaCCDa817c174D04081C105154a8441           |
 
 
 
