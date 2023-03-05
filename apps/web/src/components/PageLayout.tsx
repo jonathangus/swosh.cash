@@ -1,5 +1,6 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Image from 'next/image';
+import Link from 'next/link';
 import { ReactNode } from 'react';
 import { useAccount } from 'wagmi';
 
@@ -31,7 +32,9 @@ const PageLayout = ({ children }: Props) => {
     <>
       <div className=" mt-4 flex justify-between items-center px-8">
         <div className="max-w-[70] sm:max-w-[200px] pr-4">
-          <Image {...logo} alt="logo" />
+          <Link href={'/'}>
+            <Image {...logo} alt="logo" />
+          </Link>
         </div>
 
         <ConnectButton />
