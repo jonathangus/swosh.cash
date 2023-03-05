@@ -1,8 +1,8 @@
 # SWOSH.CASH - making token transfers smooth
 
-Making token transfers efficient, easy while and not reliant on centralized players. Based on more than 100 conducted interviews we've realized there is an issue with transfering tokens, especially NFTs. Respondents usually use one of the marketplaces, their mobile wallet or real die hard people go via etherscan. This come's with a couple of important challenges, it takes a lot of time, a lot of calls and users don't get a good overview of what is happening. 
+Making token transfers efficient, easy while and not reliant on centralized players. Based on more than 100 conducted interviews we've realized there is an issue with transferring tokens, especially NFTs. Respondents usually use one of the marketplaces, their mobile wallet or real die-hard people go via Etherscan. This come's with a couple of important challenges, it takes a lot of time, and a lot of calls, and users don't get a good overview of what is happening.
 
--We’ve created an optimised way to transfer any tokens (ERC 20/721/1155) and added smartness to either batch transactions of multiple tokens or individual sends. A decentralized, smart and optimised way to move assets smoothly. 
+-We’ve created an optimized way to transfer any tokens (ERC 20/721/1155) and added smartness to either batch transactions of multiple tokens or individual sends. A decentralized, smart, and optimized way to move assets smoothly.  
 
 
 # Sponsor & Bounties
@@ -13,19 +13,28 @@ Fetching the asset data of ERC 20/721/1155 across all swosh.cash supported chain
 integrated Lens following used as an address book to easily find recipients for your token transfers. Almost like a Lens-transfer ;) 
 
 
-## Future is multichain!
+### Future is multichain!
+
 ### Polygon
 The future of the Ethereum ecosystem is multichain, and polygon has a proven track record of bringing in fast and cheap transaction and a thriving community. Being the home to Lens and newly moved Yoots it’s a chain that would benefit greately from a new and easy way to transfer tokens around community members and for offloading from hot to cold storage.
 
-We want to push this tool on Polygon because the massive community and we believe that we can satisfy its needs!
+We want to push this tool on Polygon because the massive community and we believe that we can satisfy its needs! By delivering a better UX and empowering NFT communitys with easier transfers. 
+
+
 
 ### Base
 Simple and smooth deployment, we also created a faucet for people to easily get their hands on their first BASE NFT via https://swosh.cash/faucet
 to also help the future base devs to be up and running to try with free mint ERC 20/721/1155.
 
 ### Scroll 
-Great experience of Scroll alphanet: open the docs, check the rpc and we we're done! Only challenge we had was that scroll is not supported by wagmi so we had some small issues with the config. We're strong believers in the growth of scroll zkEVM with lower cost+shorter block times and higher throughput! Looking forward for a etherscan block explorer
+Great experience of Scroll alphanet: open the docs, check the rpc and we we're done! Only challenge we had was that scroll is not supported by wagmi so we had some small issues with the config. We're strong believers in the growth of scroll zkEVM with lower cost+shorter block times and higher throughput! Looking forward for a etherscan block explorer. Deployed on Scroll as well as integrated with lens! Scroll ♥ Lens | Cross-chain Decentralized Social Media
 
+
+
+
+
+### Infura
+Even though we tried getting access to the Infura NFT API throughout the hackathon we didn't get access. However, we believe it could be a great complement in getting access to NFT data and not having a single point of failure would be beneficial. 
 
 
 ### Open zeppelin defender 
