@@ -37,7 +37,10 @@ Great experience of Scroll alphanet: open the docs, check the rpc and we we're d
 Even though we tried getting access to the Infura NFT API throughout the hackathon we didn't get access. However, we believe it could be a great complement in getting access to NFT data and not having a single point of failure would be beneficial. 
 
 
-### Open zeppelin defender 
+### Openzeppelin Defender
+
+We used Openzeppelin Relayers to deploy the Testnet tokens faucets on different chains
+
 | Chain           | Name                            | Address                                    |
 | --------------- | ------------------------------- | ------------------------------------------ |
 | optimism goerli | Optimism Goerli Faucet Deployer | 0x4809c3d61fa5cdfcb91a065368d67a3dfc03423a |
