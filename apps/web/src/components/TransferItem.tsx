@@ -17,10 +17,15 @@ const TransferItem = ({ tx }: Props) => {
       item.contract_address.toLowerCase() === tx.contractAddress.toLowerCase()
   );
 
+  console.log(match);
+
   return (
-    <div className="flex w-[300px]">
-      <div className="w-12 h-12 w-full overflow-hidden rounded-full mr-4">
-        <Artwork image="https://logos.covalenthq.com/tokens/1/0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2.png" />
+    <div className="flex">
+      <div className="w-12 h-12 shrink-0 overflow-hidden rounded-full ">
+        <Artwork
+          name={match?.symbol}
+          contractAddress={match.contract_address}
+        />
       </div>
       <div className="ml-4 font-medium w-full text-ellipsis overflow-hidden">
         <div className="text-base">

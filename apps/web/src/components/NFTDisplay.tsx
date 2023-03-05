@@ -17,7 +17,6 @@ const NFTDisplay = ({ nft }: Props) => {
   const elRef = useRef();
   const entry = useIntersectionObserver(elRef, {});
   const isVisible = !!entry?.isIntersecting;
-  console.log(nft);
   const {
     isLoading,
     error,

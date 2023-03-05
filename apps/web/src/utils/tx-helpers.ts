@@ -374,7 +374,7 @@ const getSingleCall = (tx: PopulatedTransferPart): Sequance => {
     return {
       contractAddress: tx.contractAddress,
       method: callsMapping.ERC1155_TRANSFER,
-      args: [tx.from, tx.to, tx.tokenId, tx.amount],
+      args: [tx.from, tx.to, tx.tokenId, tx.amount, []],
       type: 'erc1155',
     };
   }
