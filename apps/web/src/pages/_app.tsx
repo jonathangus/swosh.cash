@@ -12,6 +12,7 @@ import { useTxStore } from '../stores/useTxStore';
 import { useHoldingsStore } from '../stores/useHoldingsStore';
 import { useDidMountEffect } from '../hooks/useDidMountEffect';
 import { Toaster } from 'sonner';
+import Head from 'next/head';
 
 const queryClient = new QueryClient();
 
@@ -34,6 +35,10 @@ function MyApp({ Component, pageProps }: AppProps) {
           <PageLayout>
             <Component {...pageProps} />
             <Floater />
+
+            <Head>
+              <title>swosh.cash</title>
+            </Head>
           </PageLayout>
           <NotificationHandler />
         </Web3Provider>

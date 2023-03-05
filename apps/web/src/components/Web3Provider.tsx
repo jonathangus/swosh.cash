@@ -24,9 +24,9 @@ import {
 } from '@wagmi/chains';
 
 const scrollTesnet = {
-  chainId: 534353,
+  chainId: 534_353,
   name: 'scroll',
-  network: 'scroll testnet',
+  network: 'scroll-testnet',
   nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
   testnet: true,
   rpcUrls: {
@@ -39,6 +39,7 @@ const scrollTesnet = {
   },
 };
 
+console.log(arbitrumGoerli);
 const wantedChains = [
   // optimismGoerli,
   goerli,
@@ -68,8 +69,6 @@ const wagmiClient = createClient({
 });
 
 const Web3Provider = ({ children }) => {
-  const network = useNetwork();
-  console.log(network);
   return (
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains} theme={darkTheme({})}>

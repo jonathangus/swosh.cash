@@ -17,6 +17,7 @@ const TransferFlow = ({ parts, chainId, sender }: Props) => {
 
   const { items } = useTransferContext();
   const groups = getTxGroups(txs, swoshAddress as string, items, sender);
+
   const { chain } = useNetwork();
   const isCorrectChain = chain?.id == chainId;
   const network = useSwitchNetwork({ chainId });

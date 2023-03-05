@@ -1,9 +1,16 @@
 export * from './typechain';
 import * as _typechain from './typechain';
-import { localhost, goerli, baseGoerli, optimismGoerli } from 'wagmi/chains';
+import {
+  localhost,
+  goerli,
+  baseGoerli,
+  optimismGoerli,
+  arbitrumGoerli,
+} from 'wagmi/chains';
 import swoshGoerli from './deployments/goerli/Swosh.json';
 import swoshBaseGoerli from './deployments/baseGoerli/Swosh.json';
 import optimismGoerliDeployment from './deployments/optimismGoerli/Swosh.json';
+import arbitrumGoerliDeployment from './deployments/arbitrumGoerli/Swosh.json';
 
 export const contracts = {
   MockERC20_1: _typechain.MockERC20__factory.name,
@@ -42,9 +49,6 @@ type PartialRecord<K extends AvailableContractNames, T> = {
 type AddressRecord = PartialRecord<AvailableContractNames, string>;
 
 export const addresses: Record<number, AddressRecord> = {
-  // [localhost.id]: {
-  //   [contracts.Counter]: '0x000',
-  // },
   [goerli.id]: {
     [contracts.Swosh]: swoshGoerli.address,
   },
@@ -53,6 +57,9 @@ export const addresses: Record<number, AddressRecord> = {
   },
   [optimismGoerli.id]: {
     [contracts.Swosh]: optimismGoerliDeployment.address,
+  },
+  [arbitrumGoerli.id]: {
+    [contracts.Swosh]: arbitrumGoerliDeployment.address,
   },
 };
 

@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { ERC1155Token, ERC721Token, ERC20Token, Token } from 'shared-config';
-import { mainnet, useAccount, useChainId, useNetwork } from 'wagmi';
 import { erc1155 } from 'web3-config/typechain/@openzeppelin/contracts/token';
 import { useHoldingsStore } from '../stores/useHoldingsStore';
 import { useTxStore } from '../stores/useTxStore';

@@ -192,9 +192,8 @@ const handler: NextApiHandler = async (req, res) => {
       chainId: Number(req.query.chainId),
     });
     address = ethers.utils.getAddress(address);
-    console.log('Request: chainId: ', chainId, ', address: ', address);
     const nft = true;
-    const fetchNft = true;
+    const fetchNft = [1, 5].includes(chainId);
 
     //base testnet
     // if (chainId === 84531) {

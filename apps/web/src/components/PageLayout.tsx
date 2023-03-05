@@ -13,9 +13,13 @@ const PageLayout = ({ children }: Props) => {
 
   if (!address) {
     return (
-      <div className="h-screen flex justify-center items-center">
+      <div className="h-screen flex justify-center items-center max-w-full px-4">
         <div>
-          <Image {...logo} className="max-w-3xl mb-12" alt="logo" priority />
+          <div className="max-w-3xl ">
+            {' '}
+            <Image {...logo} className="mb-12" alt="logo" priority />
+          </div>
+
           <ConnectButton />
         </div>
       </div>
@@ -25,7 +29,7 @@ const PageLayout = ({ children }: Props) => {
   return (
     <>
       <div className=" mt-4 flex justify-between items-center px-8">
-        <div className="max-w-[100] md:max-w-[200px] ">
+        <div className="max-w-[70] sm:max-w-[200px] pr-4">
           <Image {...logo} alt="logo" />
         </div>
 

@@ -12,7 +12,7 @@ import { useHoldingsQuery } from '../hooks/useHoldingsQuery';
 import { useHoldingsStore } from '../stores/useHoldingsStore';
 import { Swosh__factory } from 'web3-config';
 import { useAddress } from 'wagmi-lfg';
-import { baseGoerli } from '@wagmi/chains';
+import { arbitrumGoerli, baseGoerli } from '@wagmi/chains';
 
 export const onChainContext = createContext<OnChainStateContext>(null);
 
@@ -39,6 +39,9 @@ export const OnChainProvider = ({ children }: PropsWithChildren<Props>) => {
       // address = '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e';
       address = '0xca11bde05977b3631167028862be2a173976ca11';
     }
+    if (chainId === arbitrumGoerli.id) {
+      address = '0xcA11bde05977b3631167028862bE2a173976CA11';
+    }
 
     return new Multicall({
       ethersProvider: provider,
@@ -46,6 +49,7 @@ export const OnChainProvider = ({ children }: PropsWithChildren<Props>) => {
       multicallCustomContractAddress: address,
     });
   }, [provider, chainId]);
+
   const holdingsLength = useHoldingsStore((state) => state.holdings.length);
   const setHoldings = useHoldingsStore((state) => state.setHoldings);
   const setLoading = useHoldingsStore((state) => state.setLoading);
@@ -61,6 +65,7 @@ export const OnChainProvider = ({ children }: PropsWithChildren<Props>) => {
 
     try {
       const { results } = await multicall.call(calls);
+
       for (const key in results) {
         finalState[key] = {};
         for (let value of results[key].callsReturnContext) {
@@ -111,6 +116,7 @@ export const OnChainProvider = ({ children }: PropsWithChildren<Props>) => {
           ...match,
           balance,
           symbol,
+          tokenURI,
           name,
           decimals,
         });
