@@ -116,6 +116,7 @@ const config: HardhatUserConfig = {
       optimismGoerli: `${process.env.OPTIMISM_ETHERSCAN_API_KEY}`,
       polygonMumbai: `${process.env.MUMBAI_ETHERSCAN_API_KEY}`,
       arbitrumGoerli: `${process.env.ARBITRUM_ETHERSCAN_API_KEY}`,
+      scrollTestnet: `${process.env.ETHERSCAN_API_KEY}`,
     },
     customChains: [
       {
