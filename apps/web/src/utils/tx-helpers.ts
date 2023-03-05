@@ -486,7 +486,11 @@ export const getTxGroups = (
     .map((group) => {
       const sequance = group.sequance.map((call) => ({
         ...call,
-        id: sender + call.method + call.contractAddress,
+        id:
+          sender +
+          call.method +
+          call.contractAddress +
+          JSON.stringify(call.args),
       }));
 
       return {
