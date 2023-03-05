@@ -1,10 +1,11 @@
-import { useAccount, useProvider } from 'wagmi';
-import useLensData from '../hooks/useLensData';
-import AsyncSelect from 'react-select/async';
-import { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
-import { ScrollArea } from './ui/ScrollArea';
+import { useEffect, useState } from 'react';
+import AsyncSelect from 'react-select/async';
+import { useAccount, useProvider } from 'wagmi';
+
+import useLensData from '../hooks/useLensData';
 import { formatAddressToShort } from '../utils/formatter';
+import { ScrollArea } from './ui/ScrollArea';
 
 type Props = {
   value: string;

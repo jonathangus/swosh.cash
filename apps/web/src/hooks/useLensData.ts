@@ -1,7 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
 import { gql, request } from 'graphql-request';
-import { useAccount } from 'wagmi';
-import { useAddress } from 'wagmi-lfg';
 
 const queryOne = gql`
   query Following($address: EthereumAddress!) {

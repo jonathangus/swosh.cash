@@ -6,48 +6,45 @@ import {
   RainbowKitProvider,
 } from '@rainbow-me/rainbowkit';
 import {
+  arbitrumGoerli,
+  baseGoerli,
+  polygonMumbai,
+} from '@wagmi/chains';
+import {
   configureChains,
   createClient,
   goerli,
   mainnet,
-  useNetwork,
   WagmiConfig,
 } from 'wagmi';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
-import { config } from '../config/config';
-import {
-  arbitrumGoerli,
-  optimismGoerli,
-  polygonMumbai,
-  baseGoerli,
-} from '@wagmi/chains';
+
 
 const scrollTesnet = {
-  chainId: 534_353,
-  name: 'scroll',
+  id: 534_353,
+  name: 'Scroll network',
   network: 'scroll-testnet',
   nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
   testnet: true,
   rpcUrls: {
-    default: {
-      http: [`https://alpha-rpc.scroll.io/l2`],
-    },
-    alchemy: {
-      http: [`https://alpha-rpc.scroll.io/l2`],
-    },
+    default: { http: ['https://alpha-rpc.scroll.io/l2'] },
+    public: { http: ['https://alpha-rpc.scroll.io/l2'] },
+
+    alchemy: { http: ['https://alpha-rpc.scroll.io/l2'] },
+  },
+  blockExplorers: {
+    default: { name: 'BronoScan', url: 'https://tbroscan.bronos.org' },
   },
 };
 
-console.log(arbitrumGoerli);
 const wantedChains = [
-  // optimismGoerli,
   goerli,
   mainnet,
   polygonMumbai,
   arbitrumGoerli,
   baseGoerli,
-  // scrollTesnet,
+  scrollTesnet,
 ];
 
 const { chains, provider } = configureChains(wantedChains, [

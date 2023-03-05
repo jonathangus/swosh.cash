@@ -2,6 +2,7 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Image from 'next/image';
 import { ReactNode } from 'react';
 import { useAccount } from 'wagmi';
+
 import logo from '../logo.png';
 
 type Props = {

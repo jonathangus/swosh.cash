@@ -1,10 +1,8 @@
-import { ethers } from 'ethers';
 import { PopulatedTransferPart } from 'shared-config';
+
 import { useTransferContext } from '../context/TransferContext';
 import { formatAddressToShort, formatUnitPerType } from '../utils/formatter';
 import Artwork from './Artwork';
-import TokenImage from './TokenImage';
-import TokenRow from './TokenRow';
 
 type Props = {
   tx: PopulatedTransferPart;

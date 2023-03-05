@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import { useEffect, useRef, useState } from 'react';
 import { ERCType } from 'shared-config';
+
 import { useIntersectionObserver } from '../hooks/useInteractionObserver';
 
 type Props = {

@@ -1,8 +1,8 @@
 import { BigNumber } from '@ethersproject/bignumber';
-import { Contract, ethers } from 'ethers';
+import { ethers } from 'ethers';
 import { useEffect, useState } from 'react';
-import { PopulatedTransferPart, TransferPart } from 'shared-config';
-import { useNetwork, useProvider, useSigner } from 'wagmi';
+import { TransferPart } from 'shared-config';
+import { useNetwork } from 'wagmi';
 
 export const usePrepareTxs = (
   parts: TransferPart[],

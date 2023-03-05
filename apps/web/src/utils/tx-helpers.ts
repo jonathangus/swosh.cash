@@ -1,3 +1,5 @@
+import groupBy from 'lodash/groupBy';
+import uniqBy from 'lodash/uniqBy';
 import {
   AllowanceMap,
   OnChainTransferItem,
@@ -5,15 +7,13 @@ import {
   Sequance,
   TransferGroups,
 } from 'shared-config';
-import uniqBy from 'lodash/uniqBy';
-import groupBy from 'lodash/groupBy';
 import {
   ERC20ParamStruct,
-  MultiERC20ParamStruct,
   ERC721ParamStruct,
+  ERC1155ParamStruct,
+  MultiERC20ParamStruct,
   MultiERC721ParamStruct,
   MultiERC1155ParamStruct,
-  ERC1155ParamStruct,
 } from 'web3-config/typechain/contracts/Swosh';
 
 export const ERC_1155_SET_APPROVAL_GAS_LIMIT = 120_000;

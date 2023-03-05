@@ -1,5 +1,5 @@
 import { TransferGroups } from 'shared-config';
-import { useTransferContext } from '../context/TransferContext';
+
 import ApproveArea from './ApproveArea';
 import SendTx from './SendTx';
 import TransferItem from './TransferItem';

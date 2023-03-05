@@ -1,13 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
-import { ERC1155Token, ERC721Token, ExternalNftData } from 'shared-config';
-import { getMetadataFromTokenURI } from '../utils/ipfs';
-import Artwork from './Artwork';
-import TokenRow from './TokenRow';
-import Selection from './Selection';
+import { useRef } from 'react';
+import { ERC721Token, ERC1155Token, ExternalNftData } from 'shared-config';
+
+import { useIntersectionObserver } from '../hooks/useInteractionObserver';
 import { useSelectionStore } from '../stores/useSelectionStore';
 import { formatAddressToShort } from '../utils/formatter';
-import { useIntersectionObserver } from '../hooks/useInteractionObserver';
-import { useRef } from 'react';
+import { getMetadataFromTokenURI } from '../utils/ipfs';
+import Artwork from './Artwork';
+import Selection from './Selection';
+import TokenRow from './TokenRow';
 
 type Props = {
   nft: ERC721Token | ERC1155Token;

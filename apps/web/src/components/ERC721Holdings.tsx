@@ -1,4 +1,5 @@
-import { ERC721Token, ERC1155Token, Token } from 'shared-config';
+import { ERC721Token, ERC1155Token } from 'shared-config';
+
 import NFTDisplay from './NFTDisplay';
 
 type Props = {

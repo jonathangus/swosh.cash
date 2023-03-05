@@ -51,6 +51,7 @@
     "clsx": "^1.2.1",
     "config": "*",
     "eslint": "8.33.0",
+    "eslint-plugin-unused-imports": "^2.0.0",
     "lucide-react": "^0.115.0",
     "postcss": "^8.4.21",
     "tailwind-merge": "^1.10.0",

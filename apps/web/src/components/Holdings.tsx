@@ -1,10 +1,6 @@
-import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
-import { ERC1155Token, ERC721Token, ERC20Token, Token } from 'shared-config';
-import { erc1155 } from 'web3-config/typechain/@openzeppelin/contracts/token';
+import { ERC20Token,ERC721Token, ERC1155Token } from 'shared-config';
+
 import { useHoldingsStore } from '../stores/useHoldingsStore';
-import { useTxStore } from '../stores/useTxStore';
-import ERC1155Holdings from './ERC1155Holdings';
 import ERC721Holdings from './ERC721Holdings';
 import TokenHoldings from './TokenHoldings';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/Tabs';

@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { Token } from 'shared-config';
 import { toast } from 'sonner';
-import { mainnet, useAccount, useNetwork } from 'wagmi';
+import { useAccount, useNetwork } from 'wagmi';
 
 export const useHoldingsQuery = () => {
   const { address } = useAccount();

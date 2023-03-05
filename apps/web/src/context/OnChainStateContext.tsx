@@ -1,26 +1,18 @@
-import { createContext, PropsWithChildren, useEffect, useMemo } from 'react';
-
-import {
-  Multicall,
-  ContractCallResults,
-  ContractCallContext,
-} from 'ethereum-multicall';
-import { useAccount, useBlockNumber, useNetwork, useProvider } from 'wagmi';
-import { getCalls } from '../utils/multicall';
+import { arbitrumGoerli, baseGoerli } from '@wagmi/chains';
+import { Multicall } from 'ethereum-multicall';
 import { BigNumber } from 'ethers';
+import { createContext, PropsWithChildren, useEffect, useMemo } from 'react';
+import { useAccount, useBlockNumber, useNetwork, useProvider } from 'wagmi';
+import { useAddress } from 'wagmi-lfg';
+import { Swosh__factory } from 'web3-config';
+
 import { useHoldingsQuery } from '../hooks/useHoldingsQuery';
 import { useHoldingsStore } from '../stores/useHoldingsStore';
-import { Swosh__factory } from 'web3-config';
-import { useAddress } from 'wagmi-lfg';
-import { arbitrumGoerli, baseGoerli } from '@wagmi/chains';
+import { getCalls } from '../utils/multicall';
 
-export const onChainContext = createContext<OnChainStateContext>(null);
+export const onChainContext = createContext<any>(null);
 
-type OnChainStateContext = {};
-
-type Props = {};
-
-export const OnChainProvider = ({ children }: PropsWithChildren<Props>) => {
+export const OnChainProvider = ({ children }: PropsWithChildren<any>) => {
   const result = {};
   const { data: holdings = [], isLoading } = useHoldingsQuery();
   const { address } = useAccount();

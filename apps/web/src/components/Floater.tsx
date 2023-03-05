@@ -1,15 +1,15 @@
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import { useTxStore } from '../stores/useTxStore';
+import { BigNumber, ethers } from 'ethers';
+import { motion } from 'framer-motion';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
 import { useAccount, useNetwork } from 'wagmi';
+
 import { useCheckoutStore } from '../stores/useCheckoutStore';
-import { motion } from 'framer-motion';
-import { Button } from './ui/Button';
 import { useSelectionStore } from '../stores/useSelectionStore';
-import { BigNumber, ethers } from 'ethers';
-import { useRouter } from 'next/router';
-import { toast } from 'sonner';
+import { useTxStore } from '../stores/useTxStore';
+import { Button } from './ui/Button';
 
 const variants = {
   show: {

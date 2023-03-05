@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { NextApiHandler } from 'next';
 import { Token } from 'shared-config';
 import { z } from 'zod';

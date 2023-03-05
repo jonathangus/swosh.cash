@@ -2,8 +2,8 @@ import { BigNumber, ethers } from 'ethers';
 import { useEffect, useState } from 'react';
 import { ERCType } from 'shared-config';
 import styled from 'styled-components';
+
 import AddressSelector from './AddressSelector';
-import { Input } from './ui/Input';
 
 type Props = {
   type: ERCType;

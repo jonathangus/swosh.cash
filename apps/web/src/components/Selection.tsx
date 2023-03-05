@@ -1,7 +1,8 @@
 import clsx from 'clsx';
 import { BigNumber, ethers } from 'ethers';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { ERCType } from 'shared-config';
+
 import { useTxStore } from '../stores/useTxStore';
 import SelectionRow from './SelectionRow';
 

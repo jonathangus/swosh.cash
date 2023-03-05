@@ -1,4 +1,3 @@
-import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Holdings from '../components/Holdings';
 import { OnChainProvider } from '../context/OnChainStateContext';
 

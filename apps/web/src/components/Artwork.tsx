@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useRef } from 'react';
 import { ERCType } from 'shared-config';
+
 import { useIntersectionObserver } from '../hooks/useInteractionObserver';
 import TokenImage from './TokenImage';
 
