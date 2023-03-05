@@ -1,6 +1,9 @@
 {
-  "address": "0x485046bE5B148dEd68A45bCCbA5eE35623eaB5D4",
-  "constructorArguments": [],
+  "address": "0x2E599f071b5D37712f2325F3713EfebC14De9640",
+  "constructorArguments": [
+    "fake USDC",
+    "fUSDC"
+  ],
   "abi": [
     {
       "inputs": [
@@ -664,5 +667,5 @@
       "type": "function"
     }
   ],
-  "blockNumber": 8596839
+  "blockNumber": 8597644
 }

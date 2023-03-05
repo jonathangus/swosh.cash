@@ -44,20 +44,17 @@ let methodMapping = {
 
 const ApproveItem = ({ item }: PropsItem) => {
   const factory = factoryMapping[item.type];
-  const { write, isLoading, waitForTxResult } = useContractWrite(
-    factory as any,
-    item.method,
-    {
-      address: item.contractAddress,
-      reckless: true,
-      onSuccess: () => {
-        toast.success(`${item.match?.name} is approved`);
-      },
-      onError: (e) => {
-        toast.error(`Error: ${e.message}`);
-      },
-    }
-  );
+  const { write, isLoading } = useContractWrite(factory as any, item.method, {
+    address: item.contractAddress,
+    reckless: true,
+    args: item.args,
+    onSuccess: () => {
+      toast.success(`${item.match?.name} is approved`);
+    },
+    onError: (e) => {
+      toast.error(`Error: ${e.message}`);
+    },
+  });
 
   const handleApprove = () => {
     try {

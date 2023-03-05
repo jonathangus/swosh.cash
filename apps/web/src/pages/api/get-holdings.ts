@@ -2,9 +2,8 @@ import axios from 'axios';
 import { ethers } from 'ethers';
 import { NextApiHandler } from 'next';
 import { RawTokenResult, Token } from 'shared-config';
-
+import BaseTokenList from 'web3-config/deployments/baseGoerli/TokenList.json';
 import { z } from 'zod';
-import { mock } from './mock';
 
 import {
   Multicall,
@@ -116,65 +115,74 @@ const nftABI = [
   },
 ];
 
-const applyIPFSResolver = async (items: Token[], chainId: number) => {
-  try {
-    let provider = new ethers.providers.AlchemyProvider(
-      chainId,
-      process.env.NEXT_PUBLIC_ALCHEMY_KEY
-    );
+// const applyIPFSResolver = async (items: Token[], chainId: number) => {
+//   try {
+//     let provider = new ethers.providers.AlchemyProvider(
+//       chainId,
+//       process.env.NEXT_PUBLIC_ALCHEMY_KEY
+//     );
 
-    const multicall = new Multicall({
-      ethersProvider: provider,
-      tryAggregate: true,
-    });
+//     const multicall = new Multicall({
+//       ethersProvider: provider,
+//       tryAggregate: true,
+//     });
 
-    const calls = [];
+//     const calls = [];
 
-    for (let item of items) {
-      if (item.type === 'erc20') {
-        continue;
-      }
+//     for (let item of items) {
+//       if (item.type === 'erc20') {
+//         continue;
+//       }
 
-      if (item.external_data) {
-        continue;
-      }
+//       if (item.external_data) {
+//         continue;
+//       }
 
-      calls.push({
-        reference: 'top' + item.id,
-        contractAddress: item.contract_address,
-        abi: nftABI,
-        calls: [
-          {
-            reference: item.id,
-            methodName: 'tokenURI',
-            methodParameters: [item.token_id],
-          },
-        ],
-      });
-    }
+//       calls.push({
+//         reference: 'top' + item.id,
+//         contractAddress: item.contract_address,
+//         abi: nftABI,
+//         calls: [
+//           {
+//             reference: item.id,
+//             methodName: 'tokenURI',
+//             methodParameters: [item.token_id],
+//           },
+//         ],
+//       });
+//     }
 
-    const { results }: ContractCallResults = await multicall.call(calls);
+//     const { results }: ContractCallResults = await multicall.call(calls);
 
-    let finalResults = [...items];
+//     let finalResults = [...items];
 
-    for (let result of Object.values(results)) {
-      if (result.callsReturnContext[0].success) {
-        finalResults = finalResults.map((item) =>
-          item.id === result.callsReturnContext[0].reference
-            ? {
-                ...item,
-                tokenURI: result.callsReturnContext[0].returnValues[0],
-              }
-            : item
-        );
-      }
-    }
+//     for (let result of Object.values(results)) {
+//       if (result.callsReturnContext[0].success) {
+//         finalResults = finalResults.map((item) =>
+//           item.id === result.callsReturnContext[0].reference
+//             ? {
+//                 ...item,
+//                 tokenURI: result.callsReturnContext[0].returnValues[0],
+//               }
+//             : item
+//         );
+//       }
+//     }
 
-    return finalResults;
-  } catch (e) {
-    console.error('applyIPFSResolver', e);
-    return items;
-  }
+//     return finalResults;
+//   } catch (e) {
+//     console.error('applyIPFSResolver', e);
+//     return items;
+//   }
+// };
+
+const getBaseHoldings = () => {
+  const a = BaseTokenList;
+
+  return a.map((holding, i) => ({
+    ...holding,
+    uniqBy: holding.contract_address,
+  }));
 };
 
 const handler: NextApiHandler = async (req, res) => {
@@ -188,6 +196,12 @@ const handler: NextApiHandler = async (req, res) => {
     const nft = true;
     const fetchNft = true;
 
+    //base testnet
+    // if (chainId === 84531) {
+    //   res.setHeader('Cache-Control', 'max-age=20, s-maxage=20');
+    //   res.status(200).send(getBaseHoldings());
+    //   return;
+    // }
     // const itemz = await applyIPFSResolver(mock as any, chainId);
 
     const url = `https://api.covalenthq.com/v1/${chainId}/address/${address}/balances_v2/?key=${process.env.COVALENT_API_KEY}&nft=${nft}&no-nft-fetch=${fetchNft}`;
@@ -203,11 +217,11 @@ const handler: NextApiHandler = async (req, res) => {
       .flatMap((item) => item)
       .filter(Boolean);
 
-    const mappedItems = await applyIPFSResolver(items as any, chainId);
     res.setHeader('Cache-Control', 'max-age=20, s-maxage=20');
-    res.status(200).send(mappedItems);
+    res.status(200).send(items);
   } catch (e) {
-    console.error(e);
+    console.log(e.respodata);
+
     res.status(500).send({ messsage: e.message || 'uknown error' });
   }
 };

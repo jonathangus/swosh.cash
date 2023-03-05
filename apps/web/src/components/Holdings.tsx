@@ -23,6 +23,7 @@ const Holdings = () => {
   const ERC20Items = items.filter(
     (item) => item.type === 'erc20'
   ) as ERC20Token[];
+
   return (
     <>
       <Tabs defaultValue="assets" className="mt-12">

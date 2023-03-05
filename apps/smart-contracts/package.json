@@ -8,10 +8,15 @@
     "test::gas": "hardhat run --network localhost scripts/swosh-gas-tests.ts",
     "deploy::swosh": "hardhat run scripts/deploy/deploy-swosh.ts",
     "deploy::mocks": "hardhat run scripts/deploy/deploy-mocks.ts",
+    "deploy::defender::mockERC20": "hardhat run scripts/deploy/defender/defender-deploy-mockERC20.ts",
+    "deploy::defender::mockERC721": "hardhat run scripts/deploy/defender/defender-deploy-mockERC721.ts",
+    "deploy::defender::mockERC1155": "hardhat run scripts/deploy/defender/defender-deploy-mockERC1155.ts",
+    "mint::mocks::arbitrumGoerli": "hardhat run --network arbitrumGoerli scripts/arbitrumGoerli/mint-mocks.ts",
+    "mint::mocks::base": "hardhat run --network baseGoerli scripts/base/mint-mocks.ts",
     "mint::mocks::goerli": "hardhat run --network goerli scripts/goerli/mint-mocks.ts",
     "mint::mocks::mumbai": "hardhat run --network mumbai scripts/mumbai/mint-mocks.ts",
-    "mint::mocks::scroll": "hardhat run --network scrollTestnet scripts/scroll/mint-mocks.ts",
-    "mint::mocks::base": "hardhat run --network baseGoerli scripts/base/mint-mocks.ts"
+    "mint::mocks::optimismGoerli": "hardhat run --network optimismGoerli scripts/optimismGoerli/mint-mocks.ts",
+    "mint::mocks::scroll": "hardhat run --network scrollTestnet scripts/scroll/mint-mocks.ts"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "2.2.2",

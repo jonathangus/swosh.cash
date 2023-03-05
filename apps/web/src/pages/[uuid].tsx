@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { PacmanLoader } from 'react-spinners';
 import TransferFlow from '../components/TransferFlow';
 import { TransferContextProvider } from '../context/TransferContext';
 import { useCheckoutStore } from '../stores/useCheckoutStore';
@@ -13,7 +14,11 @@ const ProgressPage = ({}: Props) => {
   });
 
   if (!check) {
-    return <div>...loading</div>;
+    return (
+      <div>
+        <PacmanLoader color="white" />
+      </div>
+    );
   }
 
   const { parts, chainId, sender } = check;

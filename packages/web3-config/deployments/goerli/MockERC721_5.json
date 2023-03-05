@@ -1,6 +1,10 @@
 {
-  "address": "0x95b2642BBD0ab9ad1abAFab59a62AD8fa22C50Ce",
-  "constructorArguments": [],
+  "address": "0x3af48b2F581199a9f34d64998E494613d048D14a",
+  "constructorArguments": [
+    "Fake Anotherblock PFP",
+    "fABPFP",
+    "https://pfp-metadata.anotherblock.io/"
+  ],
   "abi": [
     {
       "inputs": [
@@ -774,5 +778,5 @@
       "type": "function"
     }
   ],
-  "blockNumber": 8596850
+  "blockNumber": 8597733
 }

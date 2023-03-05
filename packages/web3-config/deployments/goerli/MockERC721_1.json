@@ -1,6 +1,10 @@
 {
-  "address": "0x465cBCD63cb7173f46CD190a8d7bD2ee5A48dad0",
-  "constructorArguments": [],
+  "address": "0x6F2396353356d9C834Ff680992e1bFfA4C0C8864",
+  "constructorArguments": [
+    "Fake BAYC",
+    "fBAYC",
+    "ipfs://QmeSjSinHpPnmXmspMjwiXyN6zS4E9zccariGR3jxcaWtq/"
+  ],
   "abi": [
     {
       "inputs": [
@@ -774,5 +778,5 @@
       "type": "function"
     }
   ],
-  "blockNumber": 8596846
+  "blockNumber": 8597729
 }

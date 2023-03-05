@@ -1,6 +1,8 @@
 {
-  "address": "0x1d23c7F0BF266FED32BF83301A04A333eAADDb91",
-  "constructorArguments": [],
+  "address": "0x1c19BDc541f9261aDcb0A39Ae0B5f96436E90C56",
+  "constructorArguments": [
+    "https://gateway.pinata.cloud/ipfs/QmQxo8Jogon3DaC59y1CjVWHns9QiQDbxr9fQPdo5VpbPY"
+  ],
   "abi": [
     {
       "inputs": [
@@ -735,5 +737,5 @@
       "type": "function"
     }
   ],
-  "blockNumber": 8596855
+  "blockNumber": 8597752
 }

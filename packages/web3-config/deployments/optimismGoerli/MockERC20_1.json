@@ -1,9 +1,23 @@
 {
-  "address": "0xb404E80540C4BD6b9Fbee4FaAc561520EabcCae5",
-  "constructorArguments": [],
+  "address": "0xDB82576ec7062D982f3B8fBaF585285596967236",
+  "constructorArguments": [
+    "fake USDC",
+    "fUSDC"
+  ],
   "abi": [
     {
-      "inputs": [],
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "symbol",
+          "type": "string"
+        }
+      ],
       "stateMutability": "nonpayable",
       "type": "constructor"
     },
@@ -464,12 +478,12 @@
       "inputs": [
         {
           "internalType": "address",
-          "name": "to",
+          "name": "_to",
           "type": "address"
         },
         {
           "internalType": "uint256",
-          "name": "amount",
+          "name": "_amount",
           "type": "uint256"
         }
       ],
@@ -653,5 +667,5 @@
       "type": "function"
     }
   ],
-  "blockNumber": 8574932
+  "blockNumber": 6267813
 }

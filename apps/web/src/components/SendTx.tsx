@@ -25,28 +25,25 @@ type Props = { data: Sequance; allowanceIsOk: boolean };
 
 const SendTx = ({ data, allowanceIsOk }: Props) => {
   const isBulk =
-    data.type === 'megaTransferMultiple' || data.type === 'megaTransfer';
+    data.type === 'megaTransferMultiple' ||
+    data.type === 'megaTransfer' ||
+    data.isBulkCall;
   const factory = isBulk ? Swosh__factory : factoryMap[data.type];
   const addTx = useCheckoutStore((state) => state.addTx);
   const completedTx = useCheckoutStore((state) => state.completedTxs[data.id]);
 
-  const { write, isLoading, waitForTxResult } = useContractWrite(
-    factory,
-    data.method,
-    {
-      address: data.contractAddress,
-      reckless: true,
-      args: data.args,
-      onError: (e) => {
-        toast.error(`Error: ${e.message}`);
-      },
-      onSuccess: (txData) => {
-        console.log('sUCCC:ESS!', data.id, txData, data);
-        toast.success('Transfer succesfull');
-        addTx(data.id, txData);
-      },
-    }
-  );
+  const { write, isLoading } = useContractWrite(factory, data.method, {
+    address: data.contractAddress,
+    reckless: true,
+    args: data.args,
+    onError: (e) => {
+      toast.error(`Error: ${e.message}`);
+    },
+    onSuccess: (txData) => {
+      toast.success('Transfer succesfull');
+      addTx(data.id, txData);
+    },
+  });
 
   const doTx = async () => {
     const tx = await write({ args: data.args || [] });

@@ -5,6 +5,7 @@ import Artwork from './Artwork';
 import TokenRow from './TokenRow';
 import Selection from './Selection';
 import { useSelectionStore } from '../stores/useSelectionStore';
+import { formatAddressToShort } from '../utils/formatter';
 
 type Props = {
   nft: ERC721Token | ERC1155Token;
@@ -31,20 +32,36 @@ const NFTDisplay = ({ nft }: Props) => {
     }
   );
 
+  // console.log(metadata, nft);
+
   const isSelected = useSelectionStore((state) =>
     state.selected.some((selectedItem) => selectedItem.id === nft.id)
   );
   const setSelected = useSelectionStore((state) => state.setSelected);
   const removeSelected = useSelectionStore((state) => state.removeSelected);
 
+  let name = metadata?.name || nft.contract_ticker_symbol;
+  name += ' ' + formatAddressToShort(nft.contract_address);
+
   return (
     <TokenRow
       title={
-        metadata?.name || nft.contract_ticker_symbol || nft.contract_address
+        <span>
+          {metadata?.name || nft.contract_ticker_symbol || nft.contract_address}{' '}
+          <span className="text-xs">
+            {' '}
+            ({formatAddressToShort(nft.contract_address)})
+          </span>
+        </span>
       }
-      subText={nft.contract_name || `#${nft.token_id}`}
+      subText={<span>{nft.contract_name || `#${nft.token_id}`}  </span>}
       image={
-        <Artwork image={metadata?.image} fallback={!Boolean(metadata?.image)} />
+        <Artwork
+          image={metadata?.image}
+          type={nft.type}
+          contractAddress={nft.contract_address}
+          name={name}
+        />
       }
       onSelect={() => {
         isSelected ? removeSelected(nft) : setSelected(nft);

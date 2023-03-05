@@ -28,8 +28,9 @@ async function main() {
   const JONT = '0x5abbdbfe7257e30ffd40903bdc7d2e27557db60d';
   const MORKE = '0xb17D45a7d3A130B44c9114A485DAFB721e08fCE7';
   const PILOU = '0x301933aEf6bB308f090087e9075ed5bFcBd3e0B3';
+  const ERIKO = '0xfA045B2F2A25ad0B7365010eaf9AC2Dd9905895c';
 
-  const TESTERS = [JONT, MORKE, PILOU];
+  const TESTERS = [JONT, MORKE, ERIKO, PILOU];
 
   const [deployer] = await ethers.getSigners();
 
@@ -80,21 +81,11 @@ async function main() {
 
     console.log('MINTED ERC-20s for : ', TESTERS[i]);
 
-    await m721_1.connect(deployer).mint(TESTERS[i]);
-    await m721_1.connect(deployer).mint(TESTERS[i]);
-    await m721_1.connect(deployer).mint(TESTERS[i]);
-    await m721_2.connect(deployer).mint(TESTERS[i]);
-    await m721_2.connect(deployer).mint(TESTERS[i]);
-    await m721_2.connect(deployer).mint(TESTERS[i]);
-    await m721_3.connect(deployer).mint(TESTERS[i]);
-    await m721_3.connect(deployer).mint(TESTERS[i]);
-    await m721_3.connect(deployer).mint(TESTERS[i]);
-    await m721_3.connect(deployer).mint(TESTERS[i]);
-    await m721_4.connect(deployer).mint(TESTERS[i]);
-    await m721_4.connect(deployer).mint(TESTERS[i]);
-    await m721_5.connect(deployer).mint(TESTERS[i]);
-    await m721_5.connect(deployer).mint(TESTERS[i]);
-    await m721_5.connect(deployer).mint(TESTERS[i]);
+    await m721_1.connect(deployer).mintMultiple(TESTERS[i], 10);
+    await m721_2.connect(deployer).mintMultiple(TESTERS[i], 8);
+    await m721_3.connect(deployer).mintMultiple(TESTERS[i], 6);
+    await m721_4.connect(deployer).mintMultiple(TESTERS[i], 5);
+    await m721_5.connect(deployer).mintMultiple(TESTERS[i], 4);
 
     console.log('MINTED ERC-721s for : ', TESTERS[i]);
 

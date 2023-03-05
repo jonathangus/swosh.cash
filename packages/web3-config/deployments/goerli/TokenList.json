@@ -1,0 +1,66 @@
+[
+  {
+    "type": "erc20",
+    "contract_address": "0x2E599f071b5D37712f2325F3713EfebC14De9640"
+  },
+  {
+    "type": "erc20",
+    "contract_address": "0x305e644d1C8b6f64eeEA5121206DDBCE83816b13"
+  },
+  {
+    "type": "erc20",
+    "contract_address": "0xe8a04224994DB00807c11d168E34EF9B07f11e2E"
+  },
+  {
+    "type": "erc20",
+    "contract_address": "0x09C1c740CaC74062CE29C445Ecb4160994ABdB63"
+  },
+  {
+    "type": "erc20",
+    "contract_address": "0x92c665bC30245a69B2AE1B23645572f3A223dF43"
+  },
+  {
+    "type": "erc20",
+    "contract_address": "0x436C40A5574EC4E5eb7fbed934eCE425936b5cA5"
+  },
+  {
+    "type": "erc721",
+    "contract_address": "0x6F2396353356d9C834Ff680992e1bFfA4C0C8864"
+  },
+  {
+    "type": "erc721",
+    "contract_address": "0x135121b96D5913e516B90c4D3cA7ede01ea5F6e1"
+  },
+  {
+    "type": "erc721",
+    "contract_address": "0x7F3B62042A2574FB1Cc35A39aB2C89f810Ebc459"
+  },
+  {
+    "type": "erc721",
+    "contract_address": "0xDC83F7c643f0A4feB68c91184529EA6f76bed732"
+  },
+  {
+    "type": "erc721",
+    "contract_address": "0x3af48b2F581199a9f34d64998E494613d048D14a"
+  },
+  {
+    "type": "erc1155",
+    "contract_address": "0x1c87b78b7D4A3410bE9e2EFf9B4041DEE515E4E4"
+  },
+  {
+    "type": "erc1155",
+    "contract_address": "0xb23CdaeA19064b2D12028Bae0ad4F637EA915717"
+  },
+  {
+    "type": "erc1155",
+    "contract_address": "0x5f00e297fE9de76a1E8b62aFEf2012194FEFF700"
+  },
+  {
+    "type": "erc1155",
+    "contract_address": "0x8EbC453356304f5C85c35cDa825f32178e11cFB8"
+  },
+  {
+    "type": "erc1155",
+    "contract_address": "0x1c19BDc541f9261aDcb0A39Ae0B5f96436E90C56"
+  }
+]
