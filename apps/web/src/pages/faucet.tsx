@@ -1,4 +1,3 @@
-
 import TokenFaucet from '../components/TokenFaucet';
 
 // fDAI   -> MockERC20_2.json
@@ -14,12 +13,7 @@ const FaucetPage = ({}) => {
   return (
     <>
       {/* <div>ERC-20 :</div> */}
-      <TokenFaucet
-        tokenAddress="0x09C1c740CaC74062CE29C445Ecb4160994ABdB63"
-        tokenName="fake Ether"
-        tokenSymbol="fETH"
-        type="erc20"
-      />
+      <TokenFaucet />
     </>
   );
 };

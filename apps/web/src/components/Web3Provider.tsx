@@ -5,11 +5,7 @@ import {
   getDefaultWallets,
   RainbowKitProvider,
 } from '@rainbow-me/rainbowkit';
-import {
-  arbitrumGoerli,
-  baseGoerli,
-  polygonMumbai,
-} from '@wagmi/chains';
+import { arbitrumGoerli, baseGoerli, polygonMumbai } from '@wagmi/chains';
 import {
   configureChains,
   createClient,
@@ -19,7 +15,6 @@ import {
 } from 'wagmi';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
-
 
 const scrollTesnet = {
   id: 534_353,
@@ -34,7 +29,7 @@ const scrollTesnet = {
     alchemy: { http: ['https://alpha-rpc.scroll.io/l2'] },
   },
   blockExplorers: {
-    default: { name: 'BronoScan', url: 'https://tbroscan.bronos.org' },
+    default: { name: 'blockscout', url: 'https://blockscout.scroll.io/' },
   },
 };
 

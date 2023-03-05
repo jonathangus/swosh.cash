@@ -16,7 +16,7 @@ const TransferItem = ({ tx }: Props) => {
   );
   return (
     <div className="flex">
-      <div className="w-12 h-12 shrink-0 overflow-hidden rounded-full ">
+      <div className="w-12 h-12 shrink-0  ">
         <Artwork
           name={match?.symbol}
           contractAddress={match?.contract_address}

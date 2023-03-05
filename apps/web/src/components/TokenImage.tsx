@@ -20,6 +20,8 @@ const TokenImage = ({ logoUrl, type, contractAddress, name }: Props) => {
   const [showOk, setShowOk] = useState(false);
   const [fallback, showFallback] = useState(false);
 
+  console.log(type);
+
   useEffect(() => {
     if (isVisible && logoUrl) {
       setImgOk(true);
@@ -31,7 +33,12 @@ const TokenImage = ({ logoUrl, type, contractAddress, name }: Props) => {
 
   let hexFallback = contractAddress && `#${contractAddress.slice(5, 11)}`;
   return (
-    <div ref={elRef} className="h-full ">
+    <div ref={elRef} className="h-full relative">
+      {type && (
+        <div className="absolute text-[8px] right-0 bottom-0 font-extrabold z-10 translate-y-[5px]">
+          {type}
+        </div>
+      )}
       {fallback && (
         <div
           style={{ backgroundColor: hexFallback }}

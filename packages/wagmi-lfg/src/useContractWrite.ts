@@ -83,10 +83,11 @@ export function useContractWrite<
     args: args || [],
     enabled,
 
-    onError: (e) => {},
+    onError: (e) => {
+      console.log('ERROR:', e);
+    },
   });
 
-  console.log({ address });
   const useContractWriteOptions = options?.useContractWriteOptions || {};
 
   let finalOptions: UseContractWriteConfig = {

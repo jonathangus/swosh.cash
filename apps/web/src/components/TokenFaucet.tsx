@@ -1,5 +1,7 @@
+import { ethers } from 'ethers';
 import { HashLoader } from 'react-spinners';
 import { ERCType } from 'shared-config';
+import { toast } from 'sonner';
 import { useAccount } from 'wagmi';
 import { useAddress, useContractWrite } from 'wagmi-lfg';
 import {
@@ -10,14 +12,7 @@ import {
 
 import { Button } from './ui/Button';
 
-type Props = {
-  tokenAddress: string;
-  tokenName: string;
-  tokenSymbol: string;
-  type: ERCType;
-};
-
-const TokenFaucet = ({ tokenAddress, tokenName, tokenSymbol, type }: Props) => {
+const TokenFaucet = () => {
   const { address } = useAccount();
 
   const erc20Address = useAddress(MockERC20__factory);
@@ -31,6 +26,13 @@ const TokenFaucet = ({ tokenAddress, tokenName, tokenSymbol, type }: Props) => {
   } = useContractWrite(MockERC721__factory, 'mintMultiple', {
     address: erc721Address as string,
     reckless: true,
+    args: [address, 10],
+    onError: (e) => {
+      toast.error(`Failed to get item from faucet: Error: ${e.message}`);
+    },
+    onSuccess: () => {
+      toast.success('Minting erc721 success!');
+    },
   });
 
   const {
@@ -40,6 +42,13 @@ const TokenFaucet = ({ tokenAddress, tokenName, tokenSymbol, type }: Props) => {
   } = useContractWrite(MockERC20__factory, 'mint', {
     address: erc20Address as string,
     reckless: true,
+    args: [address, ethers.utils.parseEther('10')],
+    onError: (e) => {
+      toast.error(`Failed to get item from faucet: Error: ${e.message}`);
+    },
+    onSuccess: () => {
+      toast.success('Minting erc20 success!');
+    },
   });
 
   const {
@@ -49,19 +58,27 @@ const TokenFaucet = ({ tokenAddress, tokenName, tokenSymbol, type }: Props) => {
   } = useContractWrite(MockERC1155__factory, 'mint', {
     address: erc1155Address as string,
     reckless: true,
+    args: [address, 1, 10, []],
+    onError: (e) => {
+      toast.error(`Failed to get item from faucet: Error: ${e.message}`);
+    },
+    onSuccess: () => {
+      toast.success('Minting erc1155 success!');
+    },
   });
 
   return (
     <>
       <div className="mb-12">
-        {/* <div>
-          {tokenName} ({tokenSymbol})
-        </div> */}
         <h2>Mint erc20</h2>
         {isLoadingErc20 ? (
           <HashLoader size={30} color="white" />
         ) : (
-          <Button onClick={() => mintErc20({ args: [address, 10] })}>
+          <Button
+            onClick={() =>
+              mintErc20({ args: [address, ethers.utils.parseEther('10')] })
+            }
+          >
             Mint
           </Button>
         )}
