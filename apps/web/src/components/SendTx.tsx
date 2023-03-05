@@ -25,7 +25,9 @@ type Props = { data: Sequance; allowanceIsOk: boolean };
 
 const SendTx = ({ data, allowanceIsOk }: Props) => {
   const isBulk =
-    data.type === 'megaTransferMultiple' || data.type === 'megaTransfer';
+    data.type === 'megaTransferMultiple' ||
+    data.type === 'megaTransfer' ||
+    data.isBulkCall;
   const factory = isBulk ? Swosh__factory : factoryMap[data.type];
   const addTx = useCheckoutStore((state) => state.addTx);
   const completedTx = useCheckoutStore((state) => state.completedTxs[data.id]);

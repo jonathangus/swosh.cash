@@ -1,7 +1,9 @@
 export * from './typechain';
 import * as _typechain from './typechain';
-import { localhost, goerli } from 'wagmi/chains';
+import { localhost, goerli, baseGoerli, optimismGoerli } from 'wagmi/chains';
 import swoshGoerli from './deployments/goerli/Swosh.json';
+import swoshBaseGoerli from './deployments/baseGoerli/Swosh.json';
+import optimismGoerliDeployment from './deployments/optimismGoerli/Swosh.json';
 
 export const contracts = {
   MockERC20_1: _typechain.MockERC20__factory.name,
@@ -45,6 +47,12 @@ export const addresses: Record<number, AddressRecord> = {
   // },
   [goerli.id]: {
     [contracts.Swosh]: swoshGoerli.address,
+  },
+  [baseGoerli.id]: {
+    [contracts.Swosh]: swoshBaseGoerli.address,
+  },
+  [optimismGoerli.id]: {
+    [contracts.Swosh]: optimismGoerliDeployment.address,
   },
 };
 
