@@ -2,11 +2,14 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { Token } from 'shared-config';
 import { toast } from 'sonner';
-import { mainnet, useAccount, useChainId, useNetwork } from 'wagmi';
+import { useAccount, useNetwork } from 'wagmi';
 
 export const useHoldingsQuery = () => {
   const { address } = useAccount();
-  const chainId = useChainId() || mainnet.id;
+  // const chainId = useChainId() || mainnet.id;
+  const network = useNetwork();
+
+  const chainId = network?.chain?.id;
 
   return useQuery<Token[]>(
     [address, chainId],
@@ -17,7 +20,7 @@ export const useHoldingsQuery = () => {
       return data;
     },
     {
-      enabled: Boolean(address),
+      enabled: Boolean(address && chainId),
       refetchOnMount: true,
       onError: (e) => {
         toast.error(`Failed to fetch holdings from chain ${chainId}`);

@@ -1,10 +1,10 @@
 import { ERC20Token } from 'shared-config';
 
+import { useSelectionStore } from '../stores/useSelectionStore';
+import { formatBigNumber } from '../utils/formatter';
+import Selection from './Selection';
 import TokenImage from './TokenImage';
 import TokenRow from './TokenRow';
-import { formatBigNumber, formatNumber } from '../utils/formatter';
-import { useSelectionStore } from '../stores/useSelectionStore';
-import Selection from './Selection';
 
 type Props = { token: ERC20Token };
 

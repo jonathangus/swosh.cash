@@ -1,15 +1,9 @@
 import axios from 'axios';
 import { ethers } from 'ethers';
 import { NextApiHandler } from 'next';
-import { RawTokenResult, Token } from 'shared-config';
+import { RawTokenResult } from 'shared-config';
 import BaseTokenList from 'web3-config/deployments/baseGoerli/TokenList.json';
 import { z } from 'zod';
-
-import {
-  Multicall,
-  ContractCallResults,
-  ContractCallContext,
-} from 'ethereum-multicall';
 
 const RequestData = z.object({
   chainId: z.number(),
@@ -192,9 +186,8 @@ const handler: NextApiHandler = async (req, res) => {
       chainId: Number(req.query.chainId),
     });
     address = ethers.utils.getAddress(address);
-    console.log('Request: chainId: ', chainId, ', address: ', address);
     const nft = true;
-    const fetchNft = true;
+    const fetchNft = [1, 5].includes(chainId);
 
     //base testnet
     // if (chainId === 84531) {

@@ -1,23 +1,22 @@
-import { BigNumber, ethers } from 'ethers';
+import { BigNumber } from 'ethers';
 import { OnChainTransferItem, Sequance } from 'shared-config';
+import { toast } from 'sonner';
 import { useContractWrite } from 'wagmi-lfg';
 import {
-  ERC1155__factory,
   ERC20__factory,
   ERC721__factory,
-  Swosh__factory,
+  ERC1155__factory,
 } from 'web3-config';
+
 import { useTransferContext } from '../context/TransferContext';
-import { Button } from './ui/Button';
+import { formatAddressToShort } from '../utils/formatter';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from './ui/Accordian';
-import { boolean } from 'zod';
-import { toast } from 'sonner';
-import { formatAddressToShort } from '../utils/formatter';
+import { Button } from './ui/Button';
 
 type Props = {
   items: Sequance[];

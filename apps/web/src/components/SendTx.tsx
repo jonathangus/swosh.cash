@@ -1,19 +1,17 @@
-import { ethers } from 'ethers';
 import { HashLoader } from 'react-spinners';
 import { Sequance } from 'shared-config';
 import { toast } from 'sonner';
-import { useSendTransaction, useSigner } from 'wagmi';
 import { useContractWrite } from 'wagmi-lfg';
 import {
-  ERC1155__factory,
   ERC20__factory,
   ERC721__factory,
+  ERC1155__factory,
   Swosh__factory,
 } from 'web3-config';
+
 import { useCheckoutStore } from '../stores/useCheckoutStore';
 import SuccessTx from './SuccessTx';
 import { Button } from './ui/Button';
-import Spinner from './ui/Spinner';
 
 let factoryMap = {
   erc20: ERC20__factory,

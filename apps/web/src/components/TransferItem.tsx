@@ -1,10 +1,8 @@
-import { ethers } from 'ethers';
 import { PopulatedTransferPart } from 'shared-config';
+
 import { useTransferContext } from '../context/TransferContext';
 import { formatAddressToShort, formatUnitPerType } from '../utils/formatter';
 import Artwork from './Artwork';
-import TokenImage from './TokenImage';
-import TokenRow from './TokenRow';
 
 type Props = {
   tx: PopulatedTransferPart;
@@ -16,13 +14,15 @@ const TransferItem = ({ tx }: Props) => {
     (item) =>
       item.contract_address.toLowerCase() === tx.contractAddress.toLowerCase()
   );
-
   return (
     <div className="flex">
-      <div className="w-12 h-12 overflow-hidden rounded-full mr-4">
-        <Artwork image="https://logos.covalenthq.com/tokens/1/0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2.png" />
+      <div className="w-12 h-12 shrink-0 overflow-hidden rounded-full ">
+        <Artwork
+          name={match?.symbol}
+          contractAddress={match?.contract_address}
+        />
       </div>
-      <div className="ml-4 font-medium">
+      <div className="ml-4 font-medium w-full text-ellipsis overflow-hidden">
         <div className="text-base">
           <span>
             {formatUnitPerType(tx.amount, tx.type, {
@@ -33,7 +33,7 @@ const TransferItem = ({ tx }: Props) => {
           <span className="text-gray-400">to </span>
           {formatAddressToShort(tx.to)}
         </div>
-        <div className="text-gray-400">
+        <div className="text-gray-400 w-full text-ellipsis overflow-hidden">
           {match?.name || match?.symbol} (<span>{match?.type}</span>)
         </div>
       </div>

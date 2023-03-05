@@ -1,7 +1,5 @@
 import {
   ERCType,
-  Token,
-  Transfer,
   TransferData,
   TransferPart,
 } from 'shared-config';

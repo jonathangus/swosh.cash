@@ -126,6 +126,9 @@ export const addresses: Record<number, AddressRecord> = {
     [contracts.MockERC1155_1]: mockERC1155_1_Mumbai.address,
     [contracts.MockERC1155_3]: mockERC1155_3_Mumbai.address,
   },
+  [arbitrumGoerli.id]: {
+    [contracts.Swosh]: arbitrumGoerliDeployment.address,
+  },
 };
 
 export const getAddress = (

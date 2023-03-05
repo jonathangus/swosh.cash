@@ -3,6 +3,7 @@ import { TransferPart } from 'shared-config';
 import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi';
 import { useAddress } from 'wagmi-lfg';
 import { Swosh__factory } from 'web3-config';
+
 import { useTransferContext } from '../context/TransferContext';
 import { usePrepareTxs } from '../hooks/usePrepareTxs';
 import { getTxGroups } from '../utils/tx-helpers';
@@ -17,6 +18,7 @@ const TransferFlow = ({ parts, chainId, sender }: Props) => {
 
   const { items } = useTransferContext();
   const groups = getTxGroups(txs, swoshAddress as string, items, sender);
+
   const { chain } = useNetwork();
   const isCorrectChain = chain?.id == chainId;
   const network = useSwitchNetwork({ chainId });

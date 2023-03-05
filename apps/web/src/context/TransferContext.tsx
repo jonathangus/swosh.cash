@@ -1,3 +1,8 @@
+import { baseGoerli } from '@wagmi/core/chains';
+import {
+  Multicall,
+} from 'ethereum-multicall';
+import { BigNumber } from 'ethers';
 import {
   createContext,
   PropsWithChildren,
@@ -6,19 +11,12 @@ import {
   useMemo,
   useState,
 } from 'react';
-
-import {
-  Multicall,
-  ContractCallResults,
-  ContractCallContext,
-} from 'ethereum-multicall';
-import { useAccount, useBlockNumber, useNetwork, useProvider } from 'wagmi';
-import { getCalls } from '../utils/multicall';
-import { BigNumber } from 'ethers';
 import { OnChainTransferItem, Token, TransferPart } from 'shared-config';
-import { Swosh__factory } from 'web3-config';
+import { useAccount, useBlockNumber, useProvider } from 'wagmi';
 import { useAddress } from 'wagmi-lfg';
-import { baseGoerli } from '@wagmi/core/chains';
+import { Swosh__factory } from 'web3-config';
+
+import { getCalls } from '../utils/multicall';
 
 export const transferContext = createContext<TransferContext>(null);
 

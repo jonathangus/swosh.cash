@@ -1,4 +1,5 @@
 import { ERC20Token } from 'shared-config';
+
 import TokenDisplay from './TokenDisplay';
 
 type Props = {

@@ -1,16 +1,15 @@
 import { ContractCallContext } from 'ethereum-multicall';
+import uniqBy from 'lodash/uniqBy';
 import {
-  ERC1155Token,
   ERC20Token,
   ERC721Token,
-  PopulatedTransferPart,
+  ERC1155Token,
   Token,
-  TransferGroups,
 } from 'shared-config';
-import uniqBy from 'lodash/uniqBy';
+
 import erc20ABI from './abi/ERC20.json';
-import erc1155ABI from './abi/ERC1155.json';
 import erc721ABI from './abi/ERC721.json';
+import erc1155ABI from './abi/ERC1155.json';
 
 export const getCalls = (
   holdings: Token[],

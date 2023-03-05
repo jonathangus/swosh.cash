@@ -1,6 +1,6 @@
 import clsx from 'clsx';
-import { AnimatePresence, motion } from 'framer-motion';
 import { ReactNode } from 'react';
+
 import { Checkbox } from './ui/Checkbox';
 
 type Props = {
@@ -22,7 +22,7 @@ const TokenRow = ({
   prefix,
   selection,
   isSelected,
-  onSelect = () => {},
+  onSelect,
 }: Props) => {
   return (
     <div

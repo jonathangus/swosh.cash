@@ -1,10 +1,7 @@
-import * as React from 'react';
-import { render } from 'react-dom';
 import { motion } from 'framer-motion';
+import * as React from 'react';
 
-type Props = {};
-
-const Spinner = ({}: Props) => {
+const Spinner = () => {
   return (
     <motion.div
       style={{

@@ -1,17 +1,20 @@
-import type { AppProps } from 'next/app';
-import React, { useEffect } from 'react';
-import Web3Provider from '../components/Web3Provider';
-import { NotificationsProvider } from 'reapop';
-import NotificationHandler from '../components/NotificationHandler';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import '../styles/main.css';
-import PageLayout from '../components/PageLayout';
-import Floater from '../components/Floater';
-import { useAccount, useNetwork } from 'wagmi';
-import { useTxStore } from '../stores/useTxStore';
-import { useHoldingsStore } from '../stores/useHoldingsStore';
-import { useDidMountEffect } from '../hooks/useDidMountEffect';
+
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import type { AppProps } from 'next/app';
+import Head from 'next/head';
+import React from 'react';
+import { NotificationsProvider } from 'reapop';
 import { Toaster } from 'sonner';
+import { useAccount, useNetwork } from 'wagmi';
+
+import Floater from '../components/Floater';
+import NotificationHandler from '../components/NotificationHandler';
+import PageLayout from '../components/PageLayout';
+import Web3Provider from '../components/Web3Provider';
+import { useDidMountEffect } from '../hooks/useDidMountEffect';
+import { useHoldingsStore } from '../stores/useHoldingsStore';
+import { useTxStore } from '../stores/useTxStore';
 
 const queryClient = new QueryClient();
 
@@ -34,6 +37,10 @@ function MyApp({ Component, pageProps }: AppProps) {
           <PageLayout>
             <Component {...pageProps} />
             <Floater />
+
+            <Head>
+              <title>swosh.cash</title>
+            </Head>
           </PageLayout>
           <NotificationHandler />
         </Web3Provider>
