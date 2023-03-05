@@ -1,8 +1,8 @@
 # SWOSH.CASH - making token transfers smooth
 
-Making token transfers efficient, easy while and not reliant on centralized players. Based on more than 100 conducted interviews we've realized there is an issue with transfering tokens, especially NFTs. Respondents usually use one of the marketplaces, their mobile wallet or real die hard people go via etherscan. This come's with a couple of important challenges, it takes a lot of time, a lot of calls and users don't get a good overview of what is happening. 
+Making token transfers efficient, easy while and not reliant on centralized players. Based on more than 100 conducted interviews we've realized there is an issue with transferring tokens, especially NFTs. Respondents usually use one of the marketplaces, their mobile wallet or real die-hard people go via Etherscan. This come's with a couple of important challenges, it takes a lot of time, and a lot of calls, and users don't get a good overview of what is happening.
 
--We’ve created an optimised way to transfer any tokens (ERC 20/721/1155) and added smartness to either batch transactions of multiple tokens or individual sends. A decentralized, smart and optimised way to move assets smoothly. 
+-We’ve created an optimized way to transfer any tokens (ERC 20/721/1155) and added smartness to either batch transactions of multiple tokens or individual sends. A decentralized, smart, and optimized way to move assets smoothly.  
 
 
 # Sponsor & Bounties
