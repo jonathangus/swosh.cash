@@ -12,11 +12,28 @@ Fetching the asset data of ERC 20/721/1155 across all swosh.cash supported chain
 ### Lens
 integrated Lens following used as an address book to easily find recipients for your token transfers. Almost like a Lens-transfer ;) 
 
+
+## Future is multichain!
+### Polygon
+The future of the Ethereum ecosystem is multichain, and polygon has a proven track record of bringing in fast and cheap transaction and a thriving community. Being the home to Lens and newly moved Yoots it’s a chain that would benefit greately from a new and easy way to transfer tokens around community members and for offloading from hot to cold storage.
+
+We want to push this tool on Polygon because the massive community and we believe that we can satisfy its needs!
+
+### Base
+Simple and smooth deployment, we also created a faucet for people to easily get their hands on their first BASE NFT via https://swosh.cash/faucet
+to also help the future base devs to be up and running to try with free mint ERC 20/721/1155.
+
+### Scroll 
+Great experience of Scroll alphanet: open the docs, check the rpc and we we're done! Only challenge we had was that scroll is not supported by wagmi so we had some small issues with the config. We're strong believers in the growth of scroll zkEVM with lower cost+shorter block times and higher throughput! Looking forward for a etherscan block explorer
+
+
+
 ### Open zeppelin defender 
 goerli	Goerli                  Faucet Deployer	0x4809c3d61fa5cdfcb91a065368d67a3dfc03423a
 optimism goerli	Optimism Goerli Faucet Deployer	0x826dc5cabf29eb88fe821d4315210104d46e46d1
 arbitrum goerli	Arbitrum Goerli Faucet Deployer	0x393bf480cf88688df32eb17b0d3d55be9f8bc43c
 mumbai	Mumbai                  Faucet Deployer	0xdc2c63f60c1b3ca6765e4f50c827f925d05b84c3
+
 
 Openzeppelin Defender Deployment scripts
 
@@ -26,14 +43,7 @@ Openzeppelin Defender Deployment scripts
 
 [https://github.com/jonathangus/eth-denver-hackathon/blob/main/apps/smart-contracts/scripts/deploy/defender/defender-deploy-mockERC1155.ts](https://github.com/jonathangus/eth-denver-hackathon/blob/main/apps/smart-contracts/scripts/deploy/defender/defender-deploy-mockERC1155.ts)`
 
-<img width="700" alt="Screenshot 2023-03-04 at 14 49 04" src="https://user-images.githubusercontent.com/42701407/222931434-7699cf73-3348-4c1d-ad8d-7f3f5e6b9e02.png">
-
-## Future is multichain!
-### Polygon
-
-### Base
-
-### Scroll 
+<img width="500" alt="Screenshot 2023-03-04 at 14 49 04" src="https://user-images.githubusercontent.com/42701407/222931434-7699cf73-3348-4c1d-ad8d-7f3f5e6b9e02.png">
 
 
 ### Swosh Contracts Address Registry
