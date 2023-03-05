@@ -11,7 +11,7 @@ const Page = () => {
           <div className="self-end mt-4">
             <ConnectButton />
           </div>
-          <div className="self-center md:w-[500px]">
+          <div className="self-center w-full">
             <Holdings />
           </div>
         </div>

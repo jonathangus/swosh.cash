@@ -67,15 +67,20 @@ const Floater = () => {
     }
   };
   return (
-    <motion.div
-      className="fixed bottom-0 w-full z-50 py-2 flex justify-center"
-      variants={variants}
-      animate={gotMatch ? 'show' : 'hide'}
-    >
-      <Button className="w-[300px]" onClick={() => handleChange()}>
-        Go to checkout ({validTxs.length})
-      </Button>
-    </motion.div>
+    <div className="fixed bottom-0 left-0 right-0 w-full z-50 flex mb-4 justify-center">
+      <motion.div
+        className="w-[90%]"
+        variants={variants}
+        animate={gotMatch ? 'show' : 'hide'}
+      >
+        <Button
+          className="w-full bg-white text-black"
+          onClick={() => handleChange()}
+        >
+          Go to checkout ({validTxs.length})
+        </Button>
+      </motion.div>
+    </div>
   );
 };
 
