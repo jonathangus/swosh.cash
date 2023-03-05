@@ -12,7 +12,6 @@ import swoshBaseGoerli from './deployments/baseGoerli/Swosh.json';
 import swoshOptimismGoerli from './deployments/optimismGoerli/Swosh.json';
 import swoshArbitrumGoerli from './deployments/arbitrumGoerli/Swosh.json';
 import swoshPolygonMumbai from './deployments/mumbai/Swosh.json';
-
 import mockERC20_2_Goerli from './deployments/goerli/MockERC20_2.json';
 import mockERC20_4_Goerli from './deployments/goerli/MockERC20_4.json';
 import mockERC721_2_Goerli from './deployments/goerli/MockERC721_2.json';
@@ -51,7 +50,7 @@ export const contracts = {
   MockERC20_4: _typechain.MockERC20__factory.name,
   MockERC20_5: _typechain.MockERC20__factory.name,
   MockERC20_6: _typechain.MockERC20__factory.name,
-  MockERC721_1: _typechain.MockERC721__factory.name,
+  MockERC721: _typechain.MockERC721__factory.name,
   MockERC721_2: _typechain.MockERC721__factory.name,
   MockERC721_3: _typechain.MockERC721__factory.name,
   MockERC721_4: _typechain.MockERC721__factory.name,
@@ -92,9 +91,9 @@ export const addresses: Record<number, AddressRecord> = {
   },
   [baseGoerli.id]: {
     [contracts.Swosh]: swoshBaseGoerli.address,
+    [contracts.MockERC721]: mockERC721_2_BaseGoerli.address,
     [contracts.MockERC20_2]: mockERC20_2_BaseGoerli.address,
     [contracts.MockERC20_4]: mockERC20_4_BaseGoerli.address,
-    [contracts.MockERC721_2]: mockERC721_2_BaseGoerli.address,
     [contracts.MockERC721_3]: mockERC721_3_BaseGoerli.address,
     [contracts.MockERC1155_1]: mockERC1155_1_BaseGoerli.address,
     [contracts.MockERC1155_3]: mockERC1155_3_BaseGoerli.address,
@@ -126,8 +125,14 @@ export const addresses: Record<number, AddressRecord> = {
     [contracts.MockERC1155_1]: mockERC1155_1_Mumbai.address,
     [contracts.MockERC1155_3]: mockERC1155_3_Mumbai.address,
   },
-  [arbitrumGoerli.id]: {
-    [contracts.Swosh]: arbitrumGoerliDeployment.address,
+  [polygonMumbai.id]: {
+    [contracts.Swosh]: swoshPolygonMumbai.address,
+    [contracts.MockERC20_2]: mockERC20_2_Mumbai.address,
+    [contracts.MockERC20_4]: mockERC20_4_Mumbai.address,
+    [contracts.MockERC721_2]: mockERC721_2_Mumbai.address,
+    [contracts.MockERC721_3]: mockERC721_3_Mumbai.address,
+    [contracts.MockERC1155_1]: mockERC1155_1_Mumbai.address,
+    [contracts.MockERC1155_3]: mockERC1155_3_Mumbai.address,
   },
 };
 
@@ -135,6 +140,7 @@ export const getAddress = (
   contract: AvailableContractNames,
   chain: number
 ): string | void => {
+  console.log(contract, chain);
   if (!addresses[chain]) {
     console.warn(`missing chain ${chain} in getAddress`);
     return;

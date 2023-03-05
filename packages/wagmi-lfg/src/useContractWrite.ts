@@ -86,6 +86,7 @@ export function useContractWrite<
     onError: (e) => {},
   });
 
+  console.log({ address });
   const useContractWriteOptions = options?.useContractWriteOptions || {};
 
   let finalOptions: UseContractWriteConfig = {

@@ -15,18 +15,18 @@ const FaucetPage = ({}) => {
   let { chain } = useNetwork();
   const chainId = chain?.id;
 
-  useEffect(() => {
-  }, [chainId]);
+  useEffect(() => {}, [chainId]);
   return (
     <>
-      <div>Faucets</div>
-      <div>ERC-20 :</div>
+      {/* <div>ERC-20 :</div> */}
       <TokenFaucet
         tokenAddress="0x09C1c740CaC74062CE29C445Ecb4160994ABdB63"
         tokenName="fake Ether"
         tokenSymbol="fETH"
         type="erc20"
       />
+
+      {/*       
       <TokenFaucet
         tokenAddress="0x305e644d1C8b6f64eeEA5121206DDBCE83816b13"
         tokenName="fake Dai"
@@ -58,7 +58,7 @@ const FaucetPage = ({}) => {
         tokenName="fake Parallel"
         tokenSymbol="fPARALLEL"
         type="erc1155"
-      />
+      /> */}
     </>
   );
 };
