@@ -13,9 +13,9 @@ const PageLayout = ({ children }: Props) => {
 
   if (!address) {
     return (
-      <div className="h-screen flex justify-center items-center">
-        <div>
-          <Image {...logo} className="max-w-3xl mb-12" alt="logo" priority />
+      <div>
+        <div className="h-screen w-full flex justify-center items-center">
+          <Image {...logo} className="max-w-[60%] mb-12" alt="logo" priority />
           <ConnectButton />
         </div>
       </div>

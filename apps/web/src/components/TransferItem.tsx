@@ -18,26 +18,24 @@ const TransferItem = ({ tx }: Props) => {
   );
 
   return (
-    <div className="flex w-[300px]">
-      <div className="w-12 h-12 w-full overflow-hidden rounded-full mr-4">
+    <>
+      <div className="flex w-12 h-12 overflow-hidden rounded-full mr-4">
         <Artwork image="https://logos.covalenthq.com/tokens/1/0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2.png" />
       </div>
-      <div className="ml-4 font-medium w-full text-ellipsis overflow-hidden">
+      <div className="ml-4 font-medium">
         <div className="text-base">
           <span>
             {formatUnitPerType(tx.amount, tx.type, {
-              decimals: match?.decimals,
-            })}{' '}
-            {match?.name}{' '}
-          </span>
+	@@ -33,7 +33,7 @@ const TransferItem = ({ tx }: Props) => {
           <span className="text-gray-400">to </span>
           {formatAddressToShort(tx.to)}
+          </span>
         </div>
-        <div className="text-gray-400 w-full text-ellipsis overflow-hidden">
+        <div className="text-gray-400">
           {match?.name || match?.symbol} (<span>{match?.type}</span>)
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

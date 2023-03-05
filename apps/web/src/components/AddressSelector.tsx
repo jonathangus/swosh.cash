@@ -73,7 +73,7 @@ const AddressSelector = ({ onChange, value }: Props) => {
           }, 300);
         }}
         value={value}
-        placeholder="Receiving address or ENS"
+        placeholder="Receiving address or ens or lens"
         className="rounded text-white bg-black focus-visible:shadow-none pl-2 pt-1 pr-2 pb-1 mr-2 w-full focus:box-shadow focus:outline-none outline-none"
         onChange={(e) => onChange({ address: e.target.value })}
       />
@@ -112,7 +112,6 @@ const AddressSelector = ({ onChange, value }: Props) => {
       )}
     </div>
   );
-
   return (
     <div className="relative w-full">
       <AsyncSelect
@@ -155,7 +154,7 @@ const AddressSelector = ({ onChange, value }: Props) => {
           });
         }}
         loadOptions={promiseOptions}
-        placeholder="Receiving address or ENS"
+        placeholder="Receiving address or ens"
       />
     </div>
   );
@@ -168,5 +167,4 @@ const AddressSelector = ({ onChange, value }: Props) => {
     />
   );
 };
-
 export default AddressSelector;
