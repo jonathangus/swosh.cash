@@ -15,7 +15,7 @@ const PageLayout = ({ children }: Props) => {
     return (
       <div className="h-screen flex justify-center items-center">
         <div>
-          <Image {...logo} className="max-w-3xl mb-12" />
+          <Image {...logo} className="max-w-3xl mb-12" alt="logo" priority />
           <ConnectButton />
         </div>
       </div>
@@ -26,7 +26,7 @@ const PageLayout = ({ children }: Props) => {
     <>
       <div className=" mt-4 flex justify-between items-center px-8">
         <div className="max-w-[100] md:max-w-[200px] ">
-          <Image {...logo} />
+          <Image {...logo} alt="logo" />
         </div>
 
         <ConnectButton />
