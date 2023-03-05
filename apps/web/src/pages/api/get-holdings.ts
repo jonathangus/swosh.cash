@@ -220,7 +220,8 @@ const handler: NextApiHandler = async (req, res) => {
     res.setHeader('Cache-Control', 'max-age=20, s-maxage=20');
     res.status(200).send(items);
   } catch (e) {
-    console.error(e);
+    console.log(e.respodata);
+
     res.status(500).send({ messsage: e.message || 'uknown error' });
   }
 };

@@ -39,13 +39,12 @@ const scrollTesnet = {
   },
 };
 
-console.log({ goerli, optimismGoerli });
 const wantedChains = [
+  // optimismGoerli,
   goerli,
   mainnet,
   polygonMumbai,
   arbitrumGoerli,
-  optimismGoerli,
   baseGoerli,
   // scrollTesnet,
 ];

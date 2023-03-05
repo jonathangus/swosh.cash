@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { Token } from 'shared-config';
+import { toast } from 'sonner';
 import { mainnet, useAccount, useChainId, useNetwork } from 'wagmi';
 
 export const useHoldingsQuery = () => {
@@ -18,6 +19,9 @@ export const useHoldingsQuery = () => {
     {
       enabled: Boolean(address),
       refetchOnMount: true,
+      onError: (e) => {
+        toast.error(`Failed to fetch holdings from chain ${chainId}`);
+      },
     }
   );
 };

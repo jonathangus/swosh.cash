@@ -373,7 +373,7 @@ const getSingleCall = (tx: PopulatedTransferPart): Sequance => {
   if (tx.type === 'erc1155') {
     return {
       contractAddress: tx.contractAddress,
-      method: callsMapping.ERC20_TRANSFER,
+      method: callsMapping.ERC1155_TRANSFER,
       args: [tx.from, tx.to, tx.tokenId, tx.amount],
       type: 'erc1155',
     };
