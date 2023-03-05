@@ -1,13 +1,14 @@
+import { HashLoader } from 'react-spinners';
 import { ERCType } from 'shared-config';
 import { useAccount } from 'wagmi';
 import { useAddress, useContractWrite } from 'wagmi-lfg';
 import {
-  MockERC1155__factory,
   MockERC20__factory,
   MockERC721__factory,
+  MockERC1155__factory,
 } from 'web3-config';
+
 import { Button } from './ui/Button';
-import { HashLoader } from 'react-spinners';
 
 type Props = {
   tokenAddress: string;
@@ -17,19 +18,6 @@ type Props = {
 };
 
 const TokenFaucet = ({ tokenAddress, tokenName, tokenSymbol, type }: Props) => {
-  // const { write: mint20, isLoading: isMinted20 } = useContractWrite(
-  //   MockERC20__factory,
-  //   'mint',
-  //   {
-
-  //     reckless: true,
-  //     args: ,
-  //     onSuccess: () => {},
-  //     onError: (e) => {},
-  //   }
-  // );
-
-  // const address = useAddress(MockERC721__factory);
   const { address } = useAccount();
 
   const erc20Address = useAddress(MockERC20__factory);
@@ -62,21 +50,6 @@ const TokenFaucet = ({ tokenAddress, tokenName, tokenSymbol, type }: Props) => {
     address: erc1155Address as string,
     reckless: true,
   });
-  console.log(erc721Address);
-
-  // const { write: mint1155, isLoading: isMinted1155 } = useContractWrite(
-  //   MockERC1155__factory,
-  //   'mint',
-  //   {
-  //     address: ,
-  //     reckless: true,
-  //     args: ,
-  //     onSuccess: () => {},
-  //     onError: (e) => {},
-  //   }
-  // );
-
-  console.log;
 
   return (
     <>
@@ -92,7 +65,7 @@ const TokenFaucet = ({ tokenAddress, tokenName, tokenSymbol, type }: Props) => {
             Mint
           </Button>
         )}
-        <div> {writeResult.data && writeResult.data?.hash}</div>{' '}
+        <div> {erc20Write.data && erc20Write.data?.hash}</div>{' '}
       </div>
 
       <div className="mb-12">
@@ -102,7 +75,7 @@ const TokenFaucet = ({ tokenAddress, tokenName, tokenSymbol, type }: Props) => {
         ) : (
           <Button onClick={() => mint721({ args: [address, 10] })}>Mint</Button>
         )}
-        <div>{erc20Write.data && erc20Write.data?.hash}</div>
+        <div>{writeResult.data && writeResult.data?.hash}</div>
       </div>
 
       <div className="mb-12">

@@ -5,6 +5,7 @@ import { ReactNode } from 'react';
 import { useAccount } from 'wagmi';
 
 import logo from '../logo.png';
+import Footer from './Footer';
 
 type Props = {
   children: ReactNode;
@@ -40,6 +41,10 @@ const PageLayout = ({ children }: Props) => {
         <ConnectButton />
       </div>
       <main className="container px-4 mx-auto mt-12">{children}</main>
+
+      <div className="container px-4 mx-auto mt-12">
+        <Footer />
+      </div>
     </>
   );
 };
