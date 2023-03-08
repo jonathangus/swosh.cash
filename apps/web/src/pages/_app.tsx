@@ -1,6 +1,7 @@
 import '../styles/main.css';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Analytics } from '@vercel/analytics/react';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import React from 'react';
@@ -33,6 +34,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <NotificationsProvider>
         <Toaster />
+        <Analytics />
         <Web3Provider>
           <PageLayout>
             <Component {...pageProps} />
