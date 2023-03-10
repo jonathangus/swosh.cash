@@ -10,11 +10,13 @@ const NftHoldings = ({ items }: Props) => {
   return (
     <div>
       <div className="grid grid-rows-1 gap-4	">
-        {items.map((item, i) => (
-          <div key={i}>
-            <NFTDisplay nft={item} />
-          </div>
-        ))}
+        {items
+          .filter((item) => item.balance > 0)
+          .map((item, i) => (
+            <div key={i}>
+              <NFTDisplay nft={item} />
+            </div>
+          ))}
       </div>
     </div>
   );

@@ -52,7 +52,6 @@ const NFTDisplay = ({ nft }: Props) => {
     }
   );
 
-  console.log(metadata, nft);
   let name = metadata?.name || nft.contract_ticker_symbol;
   name += ' ' + formatAddressToShort(nft.contract_address);
 

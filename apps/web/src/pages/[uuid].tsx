@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import { PacmanLoader } from 'react-spinners';
+import { useAccount } from 'wagmi';
 
 import TransferFlow from '../components/TransferFlow';
 import { TransferContextProvider } from '../context/TransferContext';
@@ -10,6 +11,7 @@ const ProgressPage = () => {
   const check = useCheckoutStore((state) => {
     return state.checkout[query.uuid as string];
   });
+  const { address } = useAccount();
 
   if (!check) {
     return (
@@ -17,6 +19,10 @@ const ProgressPage = () => {
         <PacmanLoader color="white" />
       </div>
     );
+  }
+
+  if (address && address.toLowerCase() !== check.sender.toLowerCase()) {
+    return <div>Connected to the wrong account. Expected: {check.sender}</div>;
   }
 
   const { parts, chainId, sender } = check;

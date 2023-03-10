@@ -1,7 +1,5 @@
 import { baseGoerli } from '@wagmi/core/chains';
-import {
-  Multicall,
-} from 'ethereum-multicall';
+import { Multicall } from 'ethereum-multicall';
 import { BigNumber } from 'ethers';
 import {
   createContext,
@@ -43,7 +41,6 @@ export const TransferContextProvider = ({
   const swoshAddress = useAddress(Swosh__factory, chainId) as string;
   const { data: blockNumber } = useBlockNumber({ watch: true });
 
-  console.log(address, 'CURRENT USER:');
   const calls = getCalls(holdings, { user: address, swoshAddress });
   const provider = useProvider();
   const multicall = useMemo(() => {

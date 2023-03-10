@@ -72,7 +72,7 @@ const AddressSelector = ({ onChange, value }: Props) => {
       />
       {focus && (
         <div className="absolute w-[300px] z-40 bg-gray-700">
-          <ScrollArea className="h-72  ">
+          <ScrollArea className={items.length > 10 ? 'h-72' : ''}>
             {ensMatch && (
               <div
                 className=" font-mediu p-4 hover:bg-gray-600 flex justify-between w-full"
