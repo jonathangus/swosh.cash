@@ -47,11 +47,19 @@ const TokenImage = ({ logoUrl, type, contractAddress, name }: Props) => {
             showOk ? 'opacity-1 h-auto' : 'opacity-0 h-0',
             'object-cover h-full w-full'
           )}
-          onLoad={() => setShowOk(true)}
-          onError={() => showFallback(true)}
+          onLoad={() => {
+            setShowOk(true);
+            setLoading(false);
+          }}
+          onError={(e) => {
+            setLoading(false);
+            showFallback(true);
+          }}
         />
       )}
-      {isLoading && !fallback && <div className="w-12 h-12 bg-gray-400"></div>}
+      {isLoading && !fallback && (
+        <div className="w-12 h-12 bg-gray-400 animate-pulse"></div>
+      )}
     </div>
   );
 };

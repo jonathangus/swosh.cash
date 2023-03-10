@@ -36,12 +36,8 @@ const NFTDisplay = ({ nft }: Props) => {
     removeBase(nft.id);
   };
 
-  const {
-    isLoading,
-    error,
-    data: metadata,
-  } = useQuery<ExternalNftData, any, any>(
-    [nft.id],
+  const { data: metadata } = useQuery<ExternalNftData, any, any>(
+    [nft.id, nft.contract_address],
     async () => {
       if (nft.external_data) {
         return Promise.resolve(nft.external_data);
@@ -56,8 +52,15 @@ const NFTDisplay = ({ nft }: Props) => {
     }
   );
 
+  console.log(metadata, nft);
   let name = metadata?.name || nft.contract_ticker_symbol;
   name += ' ' + formatAddressToShort(nft.contract_address);
+
+  let subText = nft.contract_name || '';
+
+  if (nft.token_id) {
+    subText += ` #${nft.token_id}`;
+  }
 
   return (
     <div ref={elRef}>
@@ -73,17 +76,17 @@ const NFTDisplay = ({ nft }: Props) => {
             </span>
           </span>
         }
-        subText={<span>{nft.contract_name || `#${nft.token_id}`}  </span>}
+        subText={<span>{subText} </span>}
         image={
           <Artwork
-            image={metadata?.image}
+            image={metadata?.image || metadata?.image_url}
             type={nft.type}
             contractAddress={nft.contract_address}
             name={name}
           />
         }
         onSelect={() => {
-          isSelected ? removeSelected(nft) : setSelected(nft);
+          isSelected ? removeSelected() : setSelected();
         }}
         isSelected={isSelected}
         selection={

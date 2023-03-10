@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import { useRef } from 'react';
 import { ERCType } from 'shared-config';
 
@@ -26,18 +25,7 @@ const Artwork = ({ image, type, contractAddress, name }: Props) => {
     [image],
     async () => {
       if (!image) {
-        return '0....';
-      }
-      if (image.includes('ipfs://')) {
-        const url = image.replace('ipfs://', 'https://ipfs.io/ipfs/');
-
-        const { data } = await axios.get(url);
-
-        const encoded = btoa(data);
-        if (data.includes('<svg')) {
-          return 'data:image/svg+xml;base64,' + encoded;
-        }
-        return data;
+        return null;
       }
 
       return image;

@@ -1,7 +1,7 @@
 import { ERC20Token, ERC721Token, ERC1155Token } from 'shared-config';
 
 import { useHoldingsStore } from '../stores/useHoldingsStore';
-import ERC721Holdings from './ERC721Holdings';
+import NftHoldings from './NftHoldings';
 import TokenHoldings from './TokenHoldings';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/Tabs';
 
@@ -31,7 +31,7 @@ const Holdings = () => {
         </TabsContent>
 
         <TabsContent value="nfts">
-          <ERC721Holdings items={[...ERC721Items, ...ERC1155Items]} />
+          <NftHoldings items={[...ERC721Items, ...ERC1155Items]} />
         </TabsContent>
       </Tabs>
 

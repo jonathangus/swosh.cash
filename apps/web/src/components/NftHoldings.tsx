@@ -1,12 +1,12 @@
-import {ERC1155Token } from 'shared-config';
+import { ERC721Token, ERC1155Token } from 'shared-config';
 
 import NFTDisplay from './NFTDisplay';
 
 type Props = {
-  items: ERC1155Token[];
+  items: (ERC721Token | ERC1155Token)[];
 };
 
-const ERC1155Holdings = ({ items }: Props) => {
+const NftHoldings = ({ items }: Props) => {
   return (
     <div>
       <div className="grid grid-rows-1 gap-4	">
@@ -20,4 +20,4 @@ const ERC1155Holdings = ({ items }: Props) => {
   );
 };
 
-export default ERC1155Holdings;
+export default NftHoldings;
