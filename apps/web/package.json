@@ -30,7 +30,6 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-query": "^3.39.3",
-    "react-select": "^5.7.0",
     "react-spinners": "^0.13.8",
     "reapop": "4.2.1",
     "sonner": "^0.1.6",

@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import { ERC721Token, ERC1155Token, ExternalNftData } from 'shared-config';
 
 import { useIntersectionObserver } from '../hooks/useInteractionObserver';
-import { useSelectionStore } from '../stores/useSelectionStore';
+import { useTxStore } from '../stores/useTxStore';
 import { formatAddressToShort } from '../utils/formatter';
 import { getMetadataFromTokenURI } from '../utils/ipfs';
 import Artwork from './Artwork';
@@ -18,6 +18,24 @@ const NFTDisplay = ({ nft }: Props) => {
   const elRef = useRef();
   const entry = useIntersectionObserver(elRef, {});
   const isVisible = !!entry?.isIntersecting;
+  const isSelected = useTxStore((state) => Boolean(state.parts[nft.id]));
+
+  const addBase = useTxStore((state) => state.addBase);
+  const removeBase = useTxStore((state) => state.removeBase);
+
+  const setSelected = () => {
+    addBase({
+      id: nft.id,
+      contractAddress: nft.contract_address,
+      type: nft.type,
+      tokenId: nft.token_id,
+    });
+  };
+
+  const removeSelected = () => {
+    removeBase(nft.id);
+  };
+
   const {
     isLoading,
     error,
@@ -37,12 +55,6 @@ const NFTDisplay = ({ nft }: Props) => {
       enabled: Boolean(nft.external_data || nft.tokenURI) && isVisible,
     }
   );
-
-  const isSelected = useSelectionStore((state) =>
-    state.selected.some((selectedItem) => selectedItem.id === nft.id)
-  );
-  const setSelected = useSelectionStore((state) => state.setSelected);
-  const removeSelected = useSelectionStore((state) => state.removeSelected);
 
   let name = metadata?.name || nft.contract_ticker_symbol;
   name += ' ' + formatAddressToShort(nft.contract_address);

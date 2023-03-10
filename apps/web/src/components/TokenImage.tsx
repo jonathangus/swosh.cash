@@ -20,8 +20,6 @@ const TokenImage = ({ logoUrl, type, contractAddress, name }: Props) => {
   const [showOk, setShowOk] = useState(false);
   const [fallback, showFallback] = useState(false);
 
-  console.log(type);
-
   useEffect(() => {
     if (isVisible && logoUrl) {
       setImgOk(true);

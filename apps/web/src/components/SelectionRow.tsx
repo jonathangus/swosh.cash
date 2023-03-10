@@ -132,12 +132,12 @@ const SelectionRow = ({
       {onRemove ? (
         <div
           onClick={() => onRemove()}
-          className="flex items-center pl-4 saturate-0 w-12"
+          className="flex items-center justify-end saturate-0 w-10"
         >
           ❌
         </div>
       ) : (
-        <div className="w-16" />
+        <div className="w-10" />
       )}
 
       <div>

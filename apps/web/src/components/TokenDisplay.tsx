@@ -1,6 +1,6 @@
 import { ERC20Token } from 'shared-config';
 
-import { useSelectionStore } from '../stores/useSelectionStore';
+import { useTxStore } from '../stores/useTxStore';
 import { formatBigNumber } from '../utils/formatter';
 import Selection from './Selection';
 import TokenImage from './TokenImage';
@@ -9,11 +9,22 @@ import TokenRow from './TokenRow';
 type Props = { token: ERC20Token };
 
 const TokenDisplay = ({ token }: Props) => {
-  const isSelected = useSelectionStore((state) =>
-    state.selected.some((selectedItem) => selectedItem.id === token.id)
-  );
-  const setSelected = useSelectionStore((state) => state.setSelected);
-  const removeSelected = useSelectionStore((state) => state.removeSelected);
+  const addBase = useTxStore((state) => state.addBase);
+  const removeBase = useTxStore((state) => state.removeBase);
+
+  const setSelected = () => {
+    addBase({
+      id: token.id,
+      contractAddress: token.contract_address,
+      type: token.type,
+    });
+  };
+
+  const removeSelected = () => {
+    removeBase(token.id);
+  };
+
+  const isSelected = useTxStore((state) => Boolean(state.parts[token.id]));
 
   return (
     <TokenRow
@@ -33,13 +44,10 @@ const TokenDisplay = ({ token }: Props) => {
             decimals: token.contract_decimals,
             maxDecimals: 2,
           })}
-          {/* {' '}
-          {token.contract_ticker_symbol} ($
-          {formatNumber(token.quote, { maxDecimals: 2 })}) */}
         </div>
       }
       onSelect={() => {
-        isSelected ? removeSelected(token) : setSelected(token);
+        isSelected ? removeSelected() : setSelected();
       }}
       isSelected={isSelected}
       selection={

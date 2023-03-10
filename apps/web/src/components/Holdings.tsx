@@ -1,4 +1,4 @@
-import { ERC20Token,ERC721Token, ERC1155Token } from 'shared-config';
+import { ERC20Token, ERC721Token, ERC1155Token } from 'shared-config';
 
 import { useHoldingsStore } from '../stores/useHoldingsStore';
 import ERC721Holdings from './ERC721Holdings';
@@ -25,7 +25,6 @@ const Holdings = () => {
         <TabsList>
           <TabsTrigger value="assets">Assets</TabsTrigger>
           <TabsTrigger value="nfts">NFTs</TabsTrigger>{' '}
-          {/* <TabsTrigger value="erc1155">ERC1155</TabsTrigger> */}
         </TabsList>
         <TabsContent value="assets">
           <TokenHoldings items={ERC20Items} />
@@ -34,10 +33,6 @@ const Holdings = () => {
         <TabsContent value="nfts">
           <ERC721Holdings items={[...ERC721Items, ...ERC1155Items]} />
         </TabsContent>
-
-        {/*         <TabsContent value="erc1155">
-          <ERC1155Holdings items={ERC1155Items} />
-        </TabsContent> */}
       </Tabs>
 
       {isLoading && <div className="animate-pulse text-2xl">⏳</div>}

@@ -7,7 +7,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { useAccount, useNetwork } from 'wagmi';
 
 import { useCheckoutStore } from '../stores/useCheckoutStore';
-import { useSelectionStore } from '../stores/useSelectionStore';
 import { useTxStore } from '../stores/useTxStore';
 import { Button } from './ui/Button';
 
@@ -22,13 +21,13 @@ const variants = {
   },
 };
 const Floater = () => {
-  const selected = useSelectionStore((state) => state.selected);
-
   const allTxs = useTxStore((state) => {
     return Object.values(state.parts)
+      .filter(Boolean)
       .map((part) => part.txs)
       .flatMap((val) => val);
   });
+
   const router = useRouter();
 
   const addCheckout = useCheckoutStore((state) => state.addCheckout);
@@ -42,14 +41,14 @@ const Floater = () => {
       if (!amount.gt(0)) {
         throw new Error('Bad amount');
       }
-      let to = ethers.utils.getAddress(tx.to);
+      ethers.utils.getAddress(tx.to);
       return true;
     } catch (e) {
       return false;
     }
   });
-  const gotMatch =
-    selected.length > 0 && validTxs.length > 0 && chain && router.route == '/';
+
+  const gotMatch = validTxs.length > 0 && chain && router.route == '/';
 
   const handleChange = () => {
     if (chain && address) {

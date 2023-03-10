@@ -1,6 +1,5 @@
 import { ethers } from 'ethers';
 import { HashLoader } from 'react-spinners';
-import { ERCType } from 'shared-config';
 import { toast } from 'sonner';
 import { useAccount } from 'wagmi';
 import { useAddress, useContractWrite } from 'wagmi-lfg';

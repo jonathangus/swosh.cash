@@ -1,8 +1,4 @@
-import {
-  ERCType,
-  TransferData,
-  TransferPart,
-} from 'shared-config';
+import { ERCType, TransferData, TransferPart } from 'shared-config';
 import { create } from 'zustand';
 
 interface TxStoreState {
@@ -18,6 +14,7 @@ interface TxStoreState {
     type: ERCType;
     tokenId?: string;
   }) => void;
+  removeBase: (id: string) => void;
   removeEntry: (id: string, rowId: string) => void;
   reset: () => void;
   parts: Record<string, TransferPart>;
@@ -63,6 +60,16 @@ export const useTxStore = create<TxStoreState>((set) => ({
       };
     });
   },
+
+  removeBase: (id: string) =>
+    set((state) => ({
+      ...state,
+      parts: {
+        ...state.parts,
+        [id]: undefined,
+      },
+    })),
+
   addEntry: (id: string, data: TransferData) =>
     set((state) => ({
       parts: {

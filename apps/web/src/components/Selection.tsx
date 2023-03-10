@@ -40,13 +40,6 @@ const Selection = ({
 
   useEffect(() => {
     if (txs.length === 0) {
-      addBase({
-        id,
-        contractAddress,
-        type,
-        tokenId,
-      });
-
       const amount =
         type === 'erc721' ? BigNumber.from('1') : BigNumber.from('0');
       const result = {

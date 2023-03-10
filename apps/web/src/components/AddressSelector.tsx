@@ -1,6 +1,4 @@
-import { ethers } from 'ethers';
 import { useEffect, useState } from 'react';
-import AsyncSelect from 'react-select/async';
 import { useAccount, useProvider } from 'wagmi';
 
 import useLensData from '../hooks/useLensData';
@@ -18,12 +16,6 @@ const AddressSelector = ({ onChange, value }: Props) => {
 
   const provider = useProvider({ chainId: 1 });
   const [focus, setFocus] = useState(false);
-  const options = items.map((item) => {
-    return {
-      value: ethers.utils.getAddress(item.profile.address),
-      label: item.profile.handle,
-    };
-  });
 
   const [ensResolvers, setEnsResolvers] = useState({});
 
@@ -80,7 +72,7 @@ const AddressSelector = ({ onChange, value }: Props) => {
       />
       {focus && (
         <div className="absolute w-[300px] z-40 bg-gray-700">
-          <ScrollArea className="m-h-[300px]  ">
+          <ScrollArea className="h-72  ">
             {ensMatch && (
               <div
                 className=" font-mediu p-4 hover:bg-gray-600 flex justify-between w-full"
@@ -112,60 +104,6 @@ const AddressSelector = ({ onChange, value }: Props) => {
         </div>
       )}
     </div>
-  );
-  return (
-    <div className="relative w-full">
-      <AsyncSelect
-        styles={{
-          container: (baseStyles) => ({
-            width: '100%',
-            background: 'transparent',
-            border: '1px solid #3A3A3A',
-          }),
-          indicatorSeparator: (baseStyles) => ({
-            ...baseStyles,
-            backgroundColor: '#3A3A3A',
-          }),
-          control: (baseStyles, state) => ({
-            ...baseStyles,
-            border: 'none',
-            borderColor: 'transparent',
-            backgroundColor: 'transparent',
-            ':hover': {
-              borderColor: 'transparent',
-              boxShadow: 'none',
-            },
-          }),
-          option: (baseStyle) => ({
-            ...baseStyle,
-            color: 'black',
-          }),
-        }}
-        theme={(theme) => ({
-          ...theme,
-          borderRadius: 0,
-        })}
-        defaultValue={value}
-        isSearchable
-        cacheOptions
-        defaultOptions={options}
-        onChange={(value) => {
-          onChange({
-            address: value.value,
-          });
-        }}
-        loadOptions={promiseOptions}
-        placeholder="Receiving address or ens"
-      />
-    </div>
-  );
-  return (
-    <input
-      value={value}
-      placeholder="Receiving address"
-      className="rounded text-white bg-black pl-2 pt-1 pr-2 pb-1 mr-2 w-full"
-      onChange={(e) => onChange({ address: e.target.value })}
-    />
   );
 };
 export default AddressSelector;
