@@ -1,19 +1,10 @@
 import { BigNumber } from '@ethersproject/bignumber';
 import { ethers } from 'ethers';
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 import { TransferPart } from 'shared-config';
-import { useNetwork } from 'wagmi';
 
-export const usePrepareTxs = (
-  parts: TransferPart[],
-  from: string,
-  chainId: number
-) => {
-  const [preparedTxs, setPreparedTxs] = useState([]);
-  const { chain } = useNetwork();
-  const isCorrectChain = chain?.id == chainId;
-
-  useEffect(() => {
+export const usePrepareTxs = (parts: TransferPart[], from: string) => {
+  const preparedTxs = useMemo(() => {
     let arr = [];
     for (let part of parts) {
       let contractAddress;
@@ -30,7 +21,6 @@ export const usePrepareTxs = (
             throw new Error('Bad amount');
           }
           let to = ethers.utils.getAddress(tx.to);
-
           arr.push({
             to,
             from,
@@ -39,14 +29,14 @@ export const usePrepareTxs = (
             type: part.type,
             tokenId: part.tokenId,
             id: tx.rowId,
+            originalId: tx.originalId,
           });
         }
       } catch (e) {
         continue;
       }
     }
-    setPreparedTxs(arr);
-  }, parts);
-
+    return arr;
+  }, [parts]);
   return preparedTxs;
 };

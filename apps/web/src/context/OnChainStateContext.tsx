@@ -114,6 +114,7 @@ export const OnChainProvider = ({ children }: PropsWithChildren<any>) => {
         });
       }
     }
+    console.log(items);
 
     setHoldings(items);
     setLoading(false);

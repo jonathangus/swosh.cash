@@ -10,6 +10,7 @@ type Props = {
   footer?: ReactNode;
   prefix?: ReactNode;
   selection?: ReactNode;
+  info?: ReactNode;
   isSelected?: boolean;
   onSelect?: () => void;
 };
@@ -22,13 +23,14 @@ const TokenRow = ({
   prefix,
   selection,
   isSelected,
+  info,
   onSelect,
 }: Props) => {
   return (
     <div
       onClick={() => !isSelected && onSelect && onSelect()}
       className={clsx(
-        'p-4 rounded-2xl transition-colors   cursor-pointer hover:bg-gray-800  ',
+        'p-4 rounded-2xl relative transition-colors   cursor-pointer hover:bg-gray-800  ',
         isSelected ? 'bg-gray-700' : ''
       )}
     >
@@ -50,49 +52,10 @@ const TokenRow = ({
           </h3>
           <div className="text-gray-400 max-w-[300px] truncate">{title}</div>
         </div>
+        {info && <div className="absolute right-2 top-2">{info}</div>}
         <div className="ml-auto text-m text-gray-400">{footer}</div>
       </div>
       {isSelected && selection}
-      {/* <AnimatePresence>
-        {isSelected && (
-          <motion.div
-            key="selection"
-            className={'overflow-hidden'}
-            initial={{
-              height: isSelected ? 'auto' : '0',
-              opacity: isSelected ? 1 : 0,
-            }}
-            exit={{
-              height: '0',
-              opacity: 0,
-              transition: {
-                height: {
-                  duration: 0.4,
-                },
-                opacity: {
-                  duration: 0.25,
-                  delay: 0.15,
-                },
-              },
-            }}
-            animate={{
-              height: 'auto',
-              opacity: 1,
-              transition: {
-                height: {
-                  duration: 0.4,
-                },
-                opacity: {
-                  duration: 0.25,
-                  delay: 0.15,
-                },
-              },
-            }}
-          >
-            {selection}
-          </motion.div>
-        )}
-      </AnimatePresence> */}
     </div>
   );
 };

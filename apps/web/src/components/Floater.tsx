@@ -29,12 +29,12 @@ const Floater = () => {
   });
 
   const router = useRouter();
-
   const addCheckout = useCheckoutStore((state) => state.addCheckout);
   const { chain } = useNetwork();
   const { address } = useAccount();
   const parts = useTxStore((state) => state.parts);
   const [uuid] = useState(uuidv4());
+
   const validTxs = allTxs.filter((tx) => {
     try {
       let amount = BigNumber.from(tx.amount);

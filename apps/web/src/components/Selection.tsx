@@ -16,18 +16,9 @@ type Props = {
   tokenId?: string;
 };
 
-const Selection = ({
-  multiple,
-  type,
-  balance,
-  contractAddress,
-  decimals,
-  id,
-  tokenId,
-}: Props) => {
+const Selection = ({ multiple, type, balance, decimals, id }: Props) => {
   const txs = useTxStore((state) => state.parts[id]?.txs || []);
   const addEntry = useTxStore((state) => state.addEntry);
-  const addBase = useTxStore((state) => state.addBase);
   const removeEntry = useTxStore((state) => state.removeEntry);
 
   const total = txs.reduce(
@@ -45,6 +36,7 @@ const Selection = ({
       const result = {
         to: '',
         amount,
+        originalId: id,
         rowId: id + '-' + txs.length,
       };
 
@@ -60,6 +52,7 @@ const Selection = ({
       to: data.receiver,
       amount: data.amount,
       rowId,
+      originalId: id,
     };
     addEntry(id, result);
   };
@@ -75,6 +68,7 @@ const Selection = ({
     const result = {
       to: '',
       amount: BigNumber.from('0'),
+      originalId: id,
       rowId: id + '-' + txs.length,
     };
 

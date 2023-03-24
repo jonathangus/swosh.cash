@@ -1,14 +1,12 @@
-import { useQuery } from '@tanstack/react-query';
 import { useRef } from 'react';
-import { ERC721Token, ERC1155Token, ExternalNftData } from 'shared-config';
+import { ERC721Token, ERC1155Token } from 'shared-config';
 
-import { useIntersectionObserver } from '../hooks/useInteractionObserver';
 import { useTxStore } from '../stores/useTxStore';
 import { formatAddressToShort } from '../utils/formatter';
-import { getMetadataFromTokenURI } from '../utils/ipfs';
 import Artwork from './Artwork';
 import Selection from './Selection';
 import TokenRow from './TokenRow';
+import { HoverCard, HoverCardContent, HoverCardTrigger } from './ui/HoverCard';
 
 type Props = {
   nft: ERC721Token | ERC1155Token;
@@ -16,8 +14,6 @@ type Props = {
 
 const NFTDisplay = ({ nft }: Props) => {
   const elRef = useRef();
-  const entry = useIntersectionObserver(elRef, {});
-  const isVisible = !!entry?.isIntersecting;
   const isSelected = useTxStore((state) => Boolean(state.parts[nft.id]));
 
   const addBase = useTxStore((state) => state.addBase);
@@ -36,52 +32,45 @@ const NFTDisplay = ({ nft }: Props) => {
     removeBase(nft.id);
   };
 
-  const { data: metadata } = useQuery<ExternalNftData, any, any>(
-    [nft.id, nft.contract_address],
-    async () => {
-      if (nft.external_data) {
-        return Promise.resolve(nft.external_data);
-      }
-      if (nft.tokenURI) {
-        return getMetadataFromTokenURI(nft.tokenURI);
-      }
-      return Promise.reject();
-    },
-    {
-      enabled: Boolean(nft.external_data || nft.tokenURI) && isVisible,
-    }
-  );
-
-  let name = metadata?.name || nft.contract_ticker_symbol;
-  name += ' ' + formatAddressToShort(nft.contract_address);
-
-  let subText = nft.contract_name || '';
-
-  if (nft.token_id) {
-    subText += ` #${nft.token_id}`;
-  }
+  const contractName =
+    nft.collection?.name === 'Unidentified contract'
+      ? nft.contract?.name
+      : nft.collection?.name || nft.contract?.name;
 
   return (
     <div ref={elRef}>
       <TokenRow
         title={
           <span>
-            {metadata?.name ||
-              nft.contract_ticker_symbol ||
-              nft.contract_address}{' '}
+            {contractName}{' '}
             <span className="text-xs">
               {' '}
               ({formatAddressToShort(nft.contract_address)})
             </span>
           </span>
         }
-        subText={<span>{subText} </span>}
+        info={
+          <HoverCard openDelay={200}>
+            <HoverCardTrigger>ℹ</HoverCardTrigger>
+            <HoverCardContent>
+              <div className="space-y-2 text-black">
+                <h4 className="text-sm font-semibold">
+                  {nft.collection?.name}
+                </h4>
+                <p className="text-sm"> {nft.contract_address}</p>
+                <p className="text-sm"> {nft.collection?.description}</p>
+              </div>
+            </HoverCardContent>
+          </HoverCard>
+        }
+        subText={
+          <span>{nft.name || nft.contract?.name || nft.contract?.symbol} </span>
+        }
         image={
           <Artwork
-            image={metadata?.image || metadata?.image_url}
+            image={nft.image_url}
             type={nft.type}
             contractAddress={nft.contract_address}
-            name={name}
           />
         }
         onSelect={() => {

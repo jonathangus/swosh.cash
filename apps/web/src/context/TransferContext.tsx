@@ -40,7 +40,6 @@ export const TransferContextProvider = ({
   })) as any as Token[];
   const swoshAddress = useAddress(Swosh__factory, chainId) as string;
   const { data: blockNumber } = useBlockNumber({ watch: true });
-
   const calls = getCalls(holdings, { user: address, swoshAddress });
   const provider = useProvider();
   const multicall = useMemo(() => {

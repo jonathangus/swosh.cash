@@ -8,11 +8,13 @@ interface TxStoreState {
     contractAddress,
     type,
     tokenId,
+    originalId,
   }: {
     id: string;
     contractAddress: string;
     type: ERCType;
     tokenId?: string;
+    originalId: string;
   }) => void;
   removeBase: (id: string) => void;
   removeEntry: (id: string, rowId: string) => void;

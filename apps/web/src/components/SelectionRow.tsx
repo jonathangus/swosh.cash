@@ -1,7 +1,6 @@
 import { BigNumber, ethers } from 'ethers';
 import { useEffect, useState } from 'react';
 import { ERCType } from 'shared-config';
-import styled from 'styled-components';
 
 import AddressSelector from './AddressSelector';
 
@@ -16,8 +15,6 @@ type Props = {
     amount: string;
   };
 };
-
-const StyledTest = styled.div``;
 
 const SelectionRow = ({
   type,
@@ -139,10 +136,6 @@ const SelectionRow = ({
       ) : (
         <div className="w-10" />
       )}
-
-      <div>
-        <StyledTest />
-      </div>
     </div>
   );
 };

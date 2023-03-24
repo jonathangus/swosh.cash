@@ -50,6 +50,7 @@ export type PopulatedTransferPart = TransferPart & {
   to: string;
   id: string;
   from: string;
+  originalId?: string;
 };
 
 export type TransferData = {
@@ -81,20 +82,46 @@ export type ExternalNftData = {
   name?: string;
 };
 
-export type ERC721Token = TokenBase & {
-  type: 'erc721';
+export type ERC721Token = TokenBase &
+  SimpleHashNFT & {
+    type: 'erc721';
+  };
+
+type SimpleHashNFT = {
+  nft_id: string;
+  chain: string;
+  contract_address: string;
   token_id: string;
-  external_data: ExternalNftData;
-  tokenURI?: string;
+  name: string;
+  description: string;
+  previews: Previews;
+  image_url: string;
+  image_properties: ImageProperties;
+  video_url?: null;
+  video_properties?: null;
+  audio_url?: null;
+  audio_properties?: null;
+  model_url?: null;
+  model_properties?: null;
+  background_color?: null;
+  external_url?: null;
+  created_date: string;
+  status: string;
+  token_count: number;
+  owner_count: number;
+  owners?: OwnersEntity[] | null;
+  last_sale?: null;
+  first_created: FirstCreated;
+  contract: Contract;
+  collection: Collection;
+  rarity: Rarity;
+  extra_metadata: ExtraMetadata;
 };
 
-export type ERC1155Token = TokenBase & {
-  type: 'erc1155';
-  token_id: string;
-  external_data: ExternalNftData;
-
-  tokenURI?: string;
-};
+export type ERC1155Token = TokenBase &
+  SimpleHashNFT & {
+    type: 'erc1155';
+  };
 
 export type ERC20Token = TokenBase & {
   type: 'erc20';
@@ -106,6 +133,91 @@ export type ERC20Token = TokenBase & {
   symbol?: string;
   decimals?: number;
 };
+export interface Previews {
+  image_small_url: string;
+  image_medium_url: string;
+  image_large_url: string;
+  image_opengraph_url: string;
+  blurhash: string;
+  predominant_color: string;
+}
+export interface ImageProperties {
+  width: number;
+  height: number;
+  size: number;
+  mime_type: string;
+}
+export interface OwnersEntity {
+  owner_address: string;
+  quantity: number;
+  first_acquired_date: string;
+  last_acquired_date: string;
+}
+export interface FirstCreated {
+  minted_to: string;
+  quantity: number;
+  timestamp: string;
+  block_number: number;
+  transaction: string;
+  transaction_initiator: string;
+}
+export interface Contract {
+  type: string;
+  name: string;
+  symbol: string;
+  deployed_by: string;
+  deployed_via_contract?: null;
+}
+export interface Collection {
+  collection_id: string;
+  name: string;
+  description: string;
+  image_url: string;
+  banner_image_url: string;
+  external_url: string;
+  twitter_username: string;
+  discord_url?: null;
+  marketplace_pages?: MarketplacePagesEntity[] | null;
+  metaplex_mint?: null;
+  metaplex_first_verified_creator?: null;
+  floor_prices?: FloorPricesEntity[] | null;
+  distinct_owner_count: number;
+  distinct_nft_count: number;
+  total_quantity: number;
+  top_contracts?: string[] | null;
+}
+export interface MarketplacePagesEntity {
+  marketplace_id: string;
+  marketplace_name: string;
+  marketplace_collection_id: string;
+  nft_url: string;
+  collection_url: string;
+  verified: boolean;
+}
+export interface FloorPricesEntity {
+  marketplace_id: string;
+  marketplace_name: string;
+  value: number;
+  payment_token: PaymentToken;
+}
+export interface PaymentToken {
+  payment_token_id: string;
+  name: string;
+  symbol: string;
+  address?: null;
+  decimals: number;
+}
+export interface Rarity {
+  rank?: null;
+  score?: null;
+  unique_attributes?: null;
+}
+export interface ExtraMetadata {
+  attributes?: null[] | null;
+  image_original_url: string;
+  animation_original_url?: null;
+  metadata_original_url?: null;
+}
 
 export type RawTokenResult = {
   id: string;
